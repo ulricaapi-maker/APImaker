@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新建实习生 Offer 申请</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8;flex-shrink:0}.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}.sidebar-group{padding:8px 0}.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;text-decoration:none;display:block}.sidebar-item:hover,.sidebar-item.active{background:#e7f0ff;color:#0E66FB}.sidebar-item.active{font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}.user-info{font-size:13px}
+.content{flex:1;padding:24px;overflow-y:auto}.page-header{margin-bottom:24px}.page-title{font-size:18px;font-weight:600;color:#000819}.workbench{display:block}
+.card{background:#fff;border-radius:4px;margin-bottom:16px}.card-header{padding:0;margin-bottom:12px}.card-title{font-size:14px;font-weight:600;color:#1A2130;padding:4px 10px;background:#E8F0FE;border-radius:3px;display:inline-block}.card-body{padding:24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 32px}.form-item{display:flex;flex-direction:column;min-width:0}.form-item.full{grid-column:1/-1}.form-label{font-size:14px;color:#333947;margin-bottom:8px;display:flex;align-items:center;gap:4px;min-height:20px}.required{color:#F74C4C}.optional-required{color:#F74C4C;display:none}.optional-required.show{display:inline}.label-name{white-space:nowrap}.hint-icon{width:16px;height:16px;border:1px solid #B9CDFD;color:#0E66FB;background:#F4F7FF;border-radius:50%;font-size:12px;line-height:14px;text-align:center;cursor:pointer;position:relative;flex-shrink:0}.hint-icon:hover .hint-pop{display:block}.hint-pop{display:none;position:absolute;left:50%;top:22px;transform:translateX(-50%);width:230px;padding:8px 10px;background:#fff;border:1px solid #E6E6E8;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,.12);color:#333947;font-size:12px;line-height:1.6;text-align:left;z-index:20}.rule-link{font-size:12px;color:#0E66FB;cursor:pointer;margin-left:4px}.rule-link:hover{text-decoration:underline}
+.form-input,.form-select{height:36px;border:1px solid #E6E6E8;border-radius:4px;padding:0 12px;font-size:14px;color:#333947;background:#fff;outline:none}.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}.form-input:focus,.form-select:focus{border-color:#0E66FB}.form-input:disabled,.form-select:disabled,.disabled{background:#f5f6f7;color:#999ca3;cursor:not-allowed}.form-textarea{border:1px solid #E6E6E8;border-radius:4px;padding:8px 12px;font-size:14px;min-height:76px;resize:vertical;font-family:inherit}.error-text{display:none;margin-top:6px;font-size:12px;color:#F74C4C}.error-text.show{display:block}
+.inline-actions{display:flex;gap:8px}.inline-actions .form-select,.inline-actions .form-input{flex:1}.btn{height:36px;padding:0 20px;border-radius:4px;font-size:14px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:6px}.btn:hover{opacity:.85}.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}.btn-default{background:#fff;color:#333947;border-color:#ccced1}.btn-default:hover{border-color:#0E66FB;color:#0E66FB}.btn-mini{height:36px;padding:0 12px;font-size:13px;white-space:nowrap}
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.upload-card{border:1px dashed #ccced1;border-radius:4px;padding:16px;background:#fff;min-height:86px}.upload-card:hover{border-color:#0E66FB}.upload-title{font-size:13px;color:#333947;margin-bottom:8px;display:flex;align-items:center;gap:4px}.upload-text{font-size:12px;color:#999ca3}.footer{height:56px;background:#fff;border-top:1px solid #E6E6E8;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:12px}
+.rule-panel{position:fixed;top:0;right:0;width:360px;max-width:90vw;height:100vh;background:#fff;border-left:1px solid #E6E6E8;box-shadow:-8px 0 24px rgba(0,0,0,.12);z-index:1200;transform:translateX(100%);transition:transform .2s ease}.rule-panel.show{transform:translateX(0)}.rule-panel-head{padding:16px 18px;border-bottom:1px solid #E6E6E8;font-weight:600;color:#1A2130;display:flex;align-items:center;justify-content:space-between}.rule-close{border:none;background:transparent;font-size:20px;color:#999ca3;cursor:pointer;width:28px;height:28px}.rule-panel-body{padding:16px 18px;overflow-y:auto;max-height:calc(100vh - 61px)}.rule-empty{font-size:13px;color:#999ca3;line-height:1.7}.rule-block{display:none}.rule-block.show{display:block}.rule-section{margin-bottom:14px}.rule-title{font-size:13px;color:#666b75;margin-bottom:6px}.rule-text{font-size:13px;color:#333947;line-height:1.7}.rule-step{padding:8px 10px;background:#F7F9FC;border-radius:4px;margin-bottom:8px;font-size:13px;line-height:1.6}.active-rule{box-shadow:0 0 0 2px #E8F0FE;border-radius:4px}
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1000;align-items:center;justify-content:center}.confirm-overlay.show{display:flex}.confirm-modal{width:440px;background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.18)}.confirm-head{padding:16px 20px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#000819}.confirm-body{padding:20px;font-size:14px;line-height:1.8}.confirm-foot{padding:12px 20px;border-top:1px solid #E6E6E8;display:flex;justify-content:flex-end;gap:12px}
+(max-width:1120px){.upload-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.form-grid,.upload-grid{grid-template-columns:1fr}.sidebar{display:none}}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group"><div class="sidebar-group-title">招聘管理</div><a class="sidebar-item" href="招聘需求列表.html">招聘需求</a><a class="sidebar-item active" href="offer列表.html">offer管理</a></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">编制管理</div><a class="sidebar-item" href="编制配置_v3.html">编制配置</a><div class="sidebar-item">编制明细</div></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">组织管理</div><div class="sidebar-item">组织明细</div><div class="sidebar-item">职位库</div></div>
+  </div>
+  <div class="main">
+    <div class="header"><div class="breadcrumb">招聘管理 / offer管理 / <span>新建实习生offer申请</span></div><div class="user-info">谭花花 (zt24701)</div></div>
+    <div class="content">
+      <div class="page-header"><div class="page-title">新建实习生 Offer 申请</div></div>
+      <div class="workbench">
+        <div>
+          <section class="card">
+            <div class="card-body">
+              <div class="card-header"><div class="card-title">基本信息</div></div>
+              <div class="form-grid">
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">姓名</span></div><input id="candidateName" class="form-input" placeholder="请输入姓名" value="李小青"></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">工作地区</span><span class="rule-link" onclick="showRule('workRegion',this)">规则说明</span></div><select id="workRegion" class="form-select" onchange="toggleRegionRules()"><option>中国大陆</option><option>中国港澳台</option><option>其他国家和地区</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">个人邮箱</span><span class="rule-link" onclick="showRule('email',this)">规则说明</span></div><input id="email" class="form-input" placeholder="请输入个人邮箱" value="xiaoqing.li@example.com"></div>
+                <div class="form-item"><div class="form-label"><span id="phoneRequired" class="required">*</span><span class="label-name">手机号码</span><span class="hint-icon">?<span class="hint-pop">海外人员请填写：+区号xxxx</span></span><span class="rule-link" onclick="showRule('phone',this)">规则说明</span></div><input id="mobile" class="form-input" placeholder="请输入手机号码" value="13800138000"></div>
+                <div class="form-item"><div class="form-label"><span id="idTypeRequired" class="required">*</span><span class="label-name">证件类型</span><span class="rule-link" onclick="showRule('idType',this)">规则说明</span></div><select id="idType" class="form-select" onchange="toggleIdNumber()"><option>身份证</option><option>护照</option><option>港澳居民来往内地通行证</option><option>台湾居民来往大陆通行证</option></select></div>
+                <div class="form-item"><div class="form-label"><span id="idNoRequired" class="required">*</span><span class="label-name">证件号码</span><span class="rule-link" onclick="showRule('idNo',this)">规则说明</span></div><input id="idNo" class="form-input" placeholder="选择证件类型后填写" value="440300199901011234"></div>
+                <div class="form-item" id="rehireField"><div class="form-label"><span class="required">*</span><span class="label-name">是否重聘入职</span><span class="rule-link" onclick="showRule('rehire',this)">规则说明</span></div><div class="inline-actions"><select id="rehireFlag" class="form-select"><option>否</option><option>是</option></select><button class="btn btn-default btn-mini" onclick="simulateRehireHit()">识别重聘</button></div></div>
+                <div class="form-item"><div class="form-label"><span id="oldEmpRequired" class="optional-required">*</span><span class="label-name">原工号</span><span class="rule-link" onclick="showRule('oldEmpNo',this)">规则说明</span></div><input id="oldEmpNo" class="form-input" placeholder="国内确认重聘后自动带出，海外手动填写"></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">最高学历</span><span class="rule-link" onclick="showRule('education',this)">规则说明</span></div><select id="education" class="form-select"><option>本科</option><option>硕士</option><option>大专</option><option>高中/中专</option><option>其他</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">籍贯</span><span class="rule-link" onclick="showRule('nativePlace',this)">规则说明</span></div><select id="nativePlace" class="form-select"><option>广东省深圳市南山区</option><option>中国香港</option><option>马来西亚</option><option>美国</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">性别</span><span class="rule-link" onclick="showRule('gender',this)">规则说明</span></div><select id="gender" class="form-select"><option>请选择</option><option>男</option><option>女</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">年龄</span><span class="rule-link" onclick="showRule('age',this)">规则说明</span></div><input id="age" class="form-input" type="number" min="1" placeholder="请输入正整数"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-body">
+              <div class="card-header"><div class="card-title">需求信息</div></div>
+              <div class="form-grid">
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">招聘需求</span><span class="rule-link" onclick="showRule('recruitDemand',this)">规则说明</span></div><select class="form-select" onchange="fillDemandInfo()"><option>请选择进行中的招聘需求</option><option selected>RD202605001 - 实习生 - 人力资源部</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">需求类型</span><span class="rule-link" onclick="showRule('demandType',this)">规则说明</span></div><select id="demandType" class="form-select" onchange="toggleDemandType()"><option>新增</option><option>离职替补</option><option>调岗替补</option></select></div>
+                <div class="form-item" id="replacePersonField" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">替补人员</span><span class="rule-link" onclick="showRule('replacePerson',this)">规则说明</span></div><select class="form-select"><option>王小明（离职）</option><option>赵小兰（调岗）</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">招聘负责人</span><span class="rule-link" onclick="showRule('recruiter',this)">规则说明</span></div><select class="form-select"><option>张三 (zt00001)</option><option>李四 (zt00002)</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">是否有协助招聘负责人</span><span class="hint-icon">?<span class="hint-pop">寻源HR可享有招聘寻源部分奖金。若寻源与后续招聘动作为同一人，该字段填“否”。</span></span><span class="rule-link" onclick="showRule('assistFlag',this)">规则说明</span></div><select id="assistFlag" class="form-select" onchange="toggleAssistRecruiter()"><option>否</option><option>是</option></select></div>
+                <div class="form-item" id="assistRecruiterField" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">协助招聘负责人</span><span class="rule-link" onclick="showRule('assistRecruiter',this)">规则说明</span></div><select class="form-select"><option>请选择在职/试用人员</option><option>周五 (zt00005)</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">招聘渠道</span></div><select id="channelSelect" class="form-select" onchange="toggleChannelFields()"><option>招聘网站</option><option>校园招聘</option><option>内部推荐</option><option>其他渠道</option></select></div>
+                <div class="form-item" id="referrerField" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">内推人</span><span class="rule-link" onclick="showRule('referrer',this)">规则说明</span></div><select class="form-select"><option>请选择内推人，含离职人员</option><option>陈小华（在职）</option><option>刘小敏（离职）</option></select></div>
+                <div class="form-item" id="otherChannelField" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">其他渠道</span><span class="rule-link" onclick="showRule('otherChannel',this)">规则说明</span></div><input class="form-input" placeholder="请输入其他渠道"></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">招聘启动日期</span><span class="rule-link" onclick="showRule('startDate',this)">规则说明</span></div><input id="startDate" class="form-input" value="2026-05-14" disabled></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-body">
+              <div class="card-header"><div class="card-title">任职信息</div></div>
+              <div class="form-grid">
+                <div class="form-item"><div class="form-label"><span class="label-name">录用部门</span><span class="rule-link" onclick="showRule('dept',this)">规则说明</span></div><input class="form-input" value="纵腾集团/人力资源中心/招聘部" disabled></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">录用职位</span><span class="rule-link" onclick="showRule('position',this)">规则说明</span></div><select class="form-select" onchange="fillPositionInfo()"><option>HR实习生</option><option>招聘实习生</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">录用职级</span><span class="rule-link" onclick="showRule('level',this)">规则说明</span></div><select class="form-select"><option>I1</option><option>I2</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">职族</span><span class="rule-link" onclick="showRule('jobFamily',this)">规则说明</span></div><input class="form-input" value="职能族" disabled></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">职类</span><span class="rule-link" onclick="showRule('jobClass',this)">规则说明</span></div><input class="form-input" value="人力资源类" disabled></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">领色</span><span class="rule-link" onclick="showRule('collar',this)">规则说明</span></div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">计划入职日期</span><span class="rule-link" onclick="showRule('planJoinDate',this)">规则说明</span></div><input class="form-input" type="date"></div>
+                <div class="form-item"><div class="form-label"><span class="label-name">用工形式</span></div><input class="form-input" value="实习生" disabled></div>
+                <div class="form-item overseas-only" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">员工类型一级</span><span class="rule-link" onclick="showRule('empType1',this)">规则说明</span></div><select id="empType1" class="form-select" onchange="filterEmpType2()"><option>职能</option><option>营销</option><option>操作</option></select></div>
+                <div class="form-item overseas-only" style="display:none"><div class="form-label"><span class="required">*</span><span class="label-name">员工类型二级</span><span class="rule-link" onclick="showRule('empType2',this)">规则说明</span></div><select id="empType2" class="form-select"><option>请选择</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">合同类型</span></div><select id="contractType" class="form-select" onchange="toggleContractSubject()"><option>实习协议</option><option>无</option></select></div>
+                <div class="form-item"><div class="form-label"><span id="contractSubjectRequired" class="required">*</span><span class="label-name">合同主体</span><span class="rule-link" onclick="showRule('contractSubject',this)">规则说明</span></div><select id="contractSubject" class="form-select"><option>纵腾集团</option><option>纵腾物流</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">划分区域</span><span class="rule-link" onclick="showRule('divisionArea',this)">规则说明</span></div><select class="form-select"><option>HQU</option><option>LBU</option><option>FBU</option><option>DBU</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">工作城市</span><span class="rule-link" onclick="showRule('workCity',this)">规则说明</span></div><select id="workCity" class="form-select" onchange="validateWorkCity()"><option value="深圳市" data-region="cn-city">深圳市</option><option value="中国" data-region="cn-country">中国</option><option value="美国" data-region="foreign-country">美国</option><option value="达拉斯" data-region="foreign-city">达拉斯</option></select><div id="workCityError" class="error-text"></div></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">办公地点</span><span class="rule-link" onclick="showRule('office',this)">规则说明</span></div><select class="form-select"><option>深圳总部</option><option>上海办公室</option></select></div>
+                <div class="form-item"><div class="form-label"><span class="required">*</span><span class="label-name">报到地点</span><span class="hint-icon">?<span class="hint-pop">发送Offer附件【报到地点】会引用此地点，用于告知员工入职日报到地点。</span></span><span class="rule-link" onclick="showRule('checkin',this)">规则说明</span></div><select class="form-select"><option>深圳总部</option><option>上海办公室</option></select></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-body">
+              <div class="card-header"><div class="card-title">定薪结果</div></div>
+              <div class="form-grid"><div class="form-item"><div class="form-label"><span class="label-name">定薪说明</span></div><input class="form-input" value="当前字段清单未提供具体定薪字段，审批通过后展示定薪结果" disabled></div></div>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-body">
+              <div class="card-header"><div class="card-title">附件提供</div></div>
+              <div class="upload-grid">
+                <div class="upload-card"><div class="upload-title"><span class="required">*</span>毕业证书学信网查询认证</div><div class="upload-text">必填，支持多文件上传</div></div>
+                <div class="upload-card"><div class="upload-title"><span class="required">*</span>薪酬建议表（请上传图片）</div><div class="upload-text">必填，支持多文件上传</div></div>
+                <div class="upload-card"><div class="upload-title">候选人简历</div><div class="upload-text">非必填，支持多文件上传</div></div>
+                <div class="upload-card"><div class="upload-title">面试评估表</div><div class="upload-text">非必填，支持多文件上传</div></div>
+                <div class="upload-card"><div class="upload-title"><span class="required">*</span>offer letter</div><div class="upload-text">必填，支持多文件上传</div></div>
+                <div class="upload-card"><div class="upload-title">其他附件</div><div class="upload-text">非必填，支持多文件上传</div></div>
+              </div>
+              <div class="form-item full" style="margin-top:16px"><div class="form-label"><span class="label-name">备注</span></div><textarea class="form-textarea" placeholder="请输入备注"></textarea></div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="rule-panel">
+          <div class="rule-panel-head"><span>字段规则说明</span><button class="rule-close" onclick="closeRulePanel()">&times;</button></div>
+          <div class="rule-panel-body">
+            <div id="ruleEmpty" class="rule-empty">点击字段后的“规则说明”，这里展示对应业务规则。字段后的小问号仅用于系统提示语。</div>
+            <div id="ruleContent" class="rule-block"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <div class="footer"><button class="btn btn-default" onclick="location.href='offer列表.html'">取消</button><button class="btn btn-default">保持为草稿</button><button class="btn btn-primary">提交</button></div>
+  </div>
+</div>
+
+<div class="confirm-overlay" id="rehireConfirm">
+  <div class="confirm-modal">
+    <div class="confirm-head">确认重聘识别结果</div>
+    <div class="confirm-body">识别到该员工有历史任职，请确认是否要识别为重聘员工。<br>确认后，“是否重聘入职”将置为“是”且不可编辑，并带出原工号、最高学历、籍贯、性别。</div>
+    <div class="confirm-foot"><button class="btn btn-default" onclick="rejectRehire()">否</button><button class="btn btn-primary" onclick="confirmRehire()">是</button></div>
+  </div>
+</div>
+
+<script>
+var rules={
+  workRegion:'<div class="rule-section"><div class="rule-title">工作地区</div><div class="rule-text">取 DW 工作地区，单选且必填。工作地区会影响手机号码、证件类型、证件号码、籍贯、员工类型字段的必填和展示规则。</div></div>',
+  email:'<div class="rule-section"><div class="rule-title">个人邮箱</div><div class="rule-text">必填，需要进行邮箱格式校验。国内重聘识别时，邮箱作为第三优先级匹配条件。</div></div>',
+  phone:'<div class="rule-section"><div class="rule-title">手机号码</div><div class="rule-step">1. 工作地区=中国大陆时必填。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时非必填。</div><div class="rule-step">3. 国内重聘识别时，手机号码作为第二优先级匹配条件。</div></div>',
+  idType:'<div class="rule-section"><div class="rule-title">证件类型</div><div class="rule-text">取 DW 证件类型。国内必填，海外非必填。</div></div>',
+  idNo:'<div class="rule-section"><div class="rule-title">证件号码</div><div class="rule-step">1. 选择证件类型后处于可填写状态。</div><div class="rule-step">2. 国内必填，并按证件类型校验证件号码格式。</div><div class="rule-step">3. 国内重聘识别时，证件类型+证件号码为第一优先级匹配条件。</div></div>',
+  rehire:'<div class="rule-section"><div class="rule-title">是否重聘入职</div><div class="rule-step">1. 国内：根据姓名 + 证件类型/证件号码、手机号码、邮箱识别人员状态=离职的历史记录，匹配优先级为证件、手机号码、邮箱。</div><div class="rule-step">2. 若命中历史任职，弹窗提示“识别到该员工有历史任职，请确认是否要识别为重聘员工”。</div><div class="rule-step">3. 用户确认“是”后，字段置为“是”且不可编辑；带出原工号、最高学历、籍贯、性别。</div><div class="rule-step">4. 海外：用户手动填写。</div></div>',
+  oldEmpNo:'<div class="rule-section"><div class="rule-title">原工号</div><div class="rule-text">当是否重聘入职=是时必填。国内确认重聘后，获取最近一段任职工号并带出，不可编辑；海外由用户手动填写。</div></div>',
+  education:'<div class="rule-section"><div class="rule-title">最高学历</div><div class="rule-text">必填、单选。重聘确认后自动带出且可编辑。</div></div>',
+  nativePlace:'<div class="rule-section"><div class="rule-title">籍贯</div><div class="rule-step">1. 工作地区=中国大陆时，选择城市地区至县级。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时，选择国籍。</div><div class="rule-step">3. 重聘确认后自动带出且可编辑。</div></div>',
+  gender:'<div class="rule-section"><div class="rule-title">性别</div><div class="rule-text">单选、必填。重聘确认后自动带出且可编辑。</div></div>',
+  age:'<div class="rule-section"><div class="rule-title">年龄</div><div class="rule-text">正整数、必填。重聘确认后自动带出且可编辑。</div></div>',
+  recruitDemand:'<div class="rule-section"><div class="rule-title">招聘需求</div><div class="rule-text">选择进行中的招聘需求，单选且必填。选择后默认带出需求类型、替补人员、招聘启动日期、录用部门等信息。</div></div>',
+  demandType:'<div class="rule-section"><div class="rule-title">需求类型</div><div class="rule-text">单选且必填。选择招聘需求后默认带出，允许编辑。</div></div>',
+  replacePerson:'<div class="rule-section"><div class="rule-title">替补人员</div><div class="rule-text">当需求类型=离职替补/调岗替补时展示并必填，支持选择离职人员。选择招聘需求后可默认带出，允许编辑。</div></div>',
+  recruiter:'<div class="rule-section"><div class="rule-title">招聘负责人</div><div class="rule-text">单选且必填，仅可选择人员状态=在职/试用的人。</div></div>',
+  assistFlag:'<div class="rule-section"><div class="rule-title">是否有协助招聘负责人</div><div class="rule-text">单选且必填。该字段的用户提示语放在小问号中，不作为规则说明正文。</div></div>',
+  assistRecruiter:'<div class="rule-section"><div class="rule-title">协助招聘负责人</div><div class="rule-text">当“是否有协助招聘负责人=是”时展示并必填；否则隐藏。仅可选择人员状态=在职/试用的人。</div></div>',
+  referrer:'<div class="rule-section"><div class="rule-title">内推人</div><div class="rule-text">当招聘渠道=内部推荐时展示并必填，可选择所有人员，包括离职人员。</div></div>',
+  otherChannel:'<div class="rule-section"><div class="rule-title">其他渠道</div><div class="rule-text">当招聘渠道=其他渠道时展示并必填。</div></div>',
+  startDate:'<div class="rule-section"><div class="rule-title">招聘启动日期</div><div class="rule-text">不可编辑，根据招聘需求自动带出。</div></div>',
+  dept:'<div class="rule-section"><div class="rule-title">录用部门</div><div class="rule-text">不可编辑，根据招聘需求自动带出，展示部门长名称。</div></div>',
+  position:'<div class="rule-section"><div class="rule-title">录用职位</div><div class="rule-text">单选且必填，选择录用部门下启用的职位。</div></div>',
+  level:'<div class="rule-section"><div class="rule-title">录用职级</div><div class="rule-step">1. 根据职位上的职序获取关联职级。</div><div class="rule-step">2. 根据职位上的最低职级和最高职级获取范围。</div><div class="rule-step">3. 两者取交集作为可选职级。</div></div>',
+  jobFamily:'<div class="rule-section"><div class="rule-title">职族</div><div class="rule-text">不可编辑，根据录用职位自动带出。</div></div>',
+  jobClass:'<div class="rule-section"><div class="rule-title">职类</div><div class="rule-text">不可编辑，根据录用职位自动带出。</div></div>',
+  collar:'<div class="rule-section"><div class="rule-title">领色</div><div class="rule-text">根据录用职位带出默认值，允许编辑。</div></div>',
+  planJoinDate:'<div class="rule-section"><div class="rule-title">计划入职日期</div><div class="rule-text">选择日期。</div></div>',
+  empType1:'<div class="rule-section"><div class="rule-title">员工类型一级</div><div class="rule-text">海外员工展示此字段且必填。根据职位上的成本分类带出默认值，允许编辑。</div></div>',
+  empType2:'<div class="rule-section"><div class="rule-title">员工类型二级</div><div class="rule-text">海外员工展示此字段且必填。根据员工类型一级过滤可选值。</div></div>',
+  contractSubject:'<div class="rule-section"><div class="rule-title">合同主体</div><div class="rule-text">单选且必填；当合同类型≠无时需要选择。当合同类型=无时可置灰。</div></div>',
+  divisionArea:'<div class="rule-section"><div class="rule-title">划分区域</div><div class="rule-text">国内、海外都需要填写。</div></div>',
+  workCity:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 单选且必填。</div><div class="rule-step">2. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">3. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
+  office:'<div class="rule-section"><div class="rule-title">办公地点</div><div class="rule-text">字典：办公地址。单选且必填。</div></div>',
+  checkin:'<div class="rule-section"><div class="rule-title">报到地点</div><div class="rule-text">字典：办公地址。单选且必填。用户提示语放在字段小问号中。</div></div>'
+};
+function showRule(key,el){
+  document.getElementById('ruleEmpty').style.display='none';
+  document.querySelector('.rule-panel').classList.add('show');
+  var content=document.getElementById('ruleContent');
+  content.innerHTML=rules[key]||'<div class="rule-text">暂无规则说明。</div>';
+  content.classList.add('show');
+  document.querySelectorAll('.active-rule').forEach(function(n){n.classList.remove('active-rule')});
+  var item=el&&el.closest('.form-item');
+  if(item)item.classList.add('active-rule');
+}
+function closeRulePanel(){document.querySelector('.rule-panel').classList.remove('show')}
+function isDomestic(){return document.getElementById('workRegion').value==='中国大陆'}
+function toggleRegionRules(){
+  var domestic=isDomestic();
+  document.getElementById('phoneRequired').style.display=domestic?'inline':'none';
+  document.getElementById('idTypeRequired').style.display=domestic?'inline':'none';
+  document.getElementById('idNoRequired').style.display=domestic?'inline':'none';
+  document.querySelectorAll('.overseas-only').forEach(function(el){el.style.display=domestic?'none':'flex'});
+  document.getElementById('rehireFlag').disabled=domestic;
+  if(!domestic){document.getElementById('rehireFlag').disabled=false;document.getElementById('oldEmpNo').disabled=false}
+  filterEmpType2();
+}
+function toggleIdNumber(){document.getElementById('idNo').disabled=!document.getElementById('idType').value}
+function simulateRehireHit(){
+  if(!isDomestic()){alert('海外人员由用户手动填写是否重聘入职。');return}
+  document.getElementById('rehireConfirm').classList.add('show');
+}
+function confirmRehire(){
+  document.getElementById('rehireConfirm').classList.remove('show');
+  var rehire=document.getElementById('rehireFlag');
+  rehire.value='是';rehire.disabled=true;
+  document.getElementById('oldEmpRequired').classList.add('show');
+  document.getElementById('oldEmpNo').value='zt13888';document.getElementById('oldEmpNo').disabled=true;
+  document.getElementById('education').value='本科';
+  document.getElementById('nativePlace').value='广东省深圳市南山区';
+  document.getElementById('gender').value='女';
+  document.getElementById('age').value='23';
+}
+function rejectRehire(){
+  document.getElementById('rehireConfirm').classList.remove('show');
+  document.getElementById('rehireFlag').value='否';
+}
+function toggleDemandType(){
+  var v=document.getElementById('demandType').value;
+  document.getElementById('replacePersonField').style.display=(v==='离职替补'||v==='调岗替补')?'flex':'none';
+}
+function toggleAssistRecruiter(){document.getElementById('assistRecruiterField').style.display=document.getElementById('assistFlag').value==='是'?'flex':'none'}
+function toggleChannelFields(){
+  var v=document.getElementById('channelSelect').value;
+  document.getElementById('referrerField').style.display=v==='内部推荐'?'flex':'none';
+  document.getElementById('otherChannelField').style.display=v==='其他渠道'?'flex':'none';
+}
+function fillDemandInfo(){document.getElementById('startDate').value='2026-05-14'}
+function fillPositionInfo(){}
+function filterEmpType2(){
+  var type1=document.getElementById('empType1');
+  var type2=document.getElementById('empType2');
+  if(!type1||!type2)return;
+  var data={职能:['人力资源','财务','行政'],营销:['销售','市场'],操作:['仓储操作','运输操作']};
+  type2.innerHTML=(data[type1.value]||['请选择']).map(function(v){return '<option>'+v+'</option>'}).join('');
+}
+function toggleContractSubject(){
+  var isNone=document.getElementById('contractType').value==='无';
+  document.getElementById('contractSubject').disabled=isNone;
+  document.getElementById('contractSubjectRequired').style.display=isNone?'none':'inline';
+}
+function validateWorkCity(){
+  var opt=document.getElementById('workCity').selectedOptions[0];
+  var type=opt.getAttribute('data-region');
+  var err=document.getElementById('workCityError');
+  if(type==='cn-country'){err.textContent='全国：请统一填写至【市】级';err.classList.add('show');return}
+  if(type==='foreign-city'){err.textContent='国外：请统一填写至具体国家';err.classList.add('show');return}
+  err.classList.remove('show');
+}
+document.addEventListener('DOMContentLoaded',function(){toggleRegionRules();toggleDemandType();toggleAssistRecruiter();toggleChannelFields();toggleContractSubject();validateWorkCity()});
+</script>
+</body>
+</html>

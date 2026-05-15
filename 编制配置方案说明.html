@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>编制配置方案说明</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f8fb;color:#1f2733;font-family:'PingFang SC','Microsoft YaHei',Arial,sans-serif;line-height:1.75}
+.page{width:min(1180px,calc(100% - 48px));margin:28px auto 48px}
+.hero{background:#fff;padding:28px 32px;border-radius:8px;border:1px solid #e6e9ef;margin-bottom:18px}
+.hero h1{margin:0 0 8px;font-size:28px;line-height:1.3}
+.hero p{margin:0;color:#617086}
+.section{background:#fff;border:1px solid #e6e9ef;border-radius:8px;padding:24px 28px;margin-top:16px}
+h2{margin:0 0 16px;font-size:20px;color:#132238}
+h3{margin:22px 0 10px;font-size:16px;color:#132238}
+p{margin:10px 0}
+ul{margin:10px 0 0 20px;padding:0}
+li{margin:4px 0}
+.lead{font-size:15px;color:#445268}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.layer-card,.mini-card{border:1px solid #e6e9ef;border-radius:6px;padding:16px;background:#fbfcfe}
+.layer-card h3,.mini-card h3{margin:0 0 8px;font-size:16px}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;background:#eaf2ff;color:#1664e3;margin-bottom:8px}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th,.table td{border:1px solid #e6e9ef;padding:10px 12px;vertical-align:top;text-align:left}
+.table th{background:#f5f7fb;font-weight:600}
+.diagram{margin-top:14px;border:1px solid #e6e9ef;background:#fbfcfe;border-radius:6px;padding:16px;overflow:auto}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.node{min-width:120px;padding:12px 14px;border-radius:6px;border:1px solid #bfd2f6;background:#fff;color:#17365d;text-align:center}
+.node.primary{background:#eaf2ff;border-color:#8fb5ff}
+.node.soft{background:#f7f9fc;border-color:#d7deea}
+.arrow{color:#7d8ba3;font-weight:600}
+.triple{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.logic-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.callout{margin-top:14px;padding:14px 16px;border-left:4px solid #1664e3;background:#f4f8ff;color:#34465f}
+.muted{color:#617086}
+.subtle{font-size:13px;color:#617086}
+.rule-stack{display:flex;flex-direction:column;gap:10px}
+.rule-row{display:grid;grid-template-columns:180px 1fr 120px;gap:12px;align-items:center;border:1px solid #e6e9ef;border-radius:6px;padding:12px;background:#fff}
+.pill-red,.pill-orange,.pill-green{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px}
+.pill-red{background:#ffe8e8;color:#e5484d}.pill-orange{background:#fff4df;color:#c87800}.pill-green{background:#e8f8ee;color:#16823a}
+.org-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:center}
+.org-box{padding:12px;border:1px solid #d9e2f2;border-radius:6px;text-align:center;background:#fff}
+.org-box.active{background:#eaf2ff;border-color:#8fb5ff}
+.footer-note{margin-top:18px;color:#617086;font-size:13px}
+@media (max-width:900px){
+  .grid-3,.triple,.logic-list,.org-flow{grid-template-columns:1fr}
+  .rule-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <h1>编制配置方案说明</h1>
+    <p>围绕预算规划层控编、编制执行层控编与人员占编规则，补充统一、可配置的编制策略能力。</p>
+  </header>
+
+  <section class="section">
+    <h2>1. 方案背景</h2>
+    <p class="lead">现有系统已具备编制全生命周期管理能力，能够支撑组织、职位、预算、招聘需求、Offer、入职、调动、离职等环节中的编制创建、占用、释放及状态流转。</p>
+    <ul>
+      <li>招聘需求基于具体编制发起。</li>
+      <li>入职后绑定并占用编制。</li>
+      <li>调动时完成调出编制释放、调入编制占用。</li>
+      <li>离职后自动释放编制。</li>
+      <li>编制调整、减编、调编等场景下，已具备对具体编制状态及关联业务的校验能力。</li>
+    </ul>
+    <div class="callout">本次方案并非重新定义已有编制业务，而是在既有执行层能力基础上，补充预算规划层的控编策略配置，并继续完善人员占编规则配置。</div>
+  </section>
+
+  <section class="section">
+    <h2>2. 整体业务框架</h2>
+    <div class="diagram">
+      <div class="flow">
+        <div class="node primary">组织</div><div class="arrow">→</div>
+        <div class="node primary">职位</div><div class="arrow">→</div>
+        <div class="node primary">预算 / 年度编制规划</div><div class="arrow">→</div>
+        <div class="node primary">具体编制</div><div class="arrow">→</div>
+        <div class="node">招聘需求</div><div class="arrow">→</div>
+        <div class="node">Offer</div><div class="arrow">→</div>
+        <div class="node">入职</div><div class="arrow">→</div>
+        <div class="node">在职人员</div>
+      </div>
+      <div class="flow" style="margin-top:14px">
+        <div class="node soft">在职人员</div><div class="arrow">→</div>
+        <div class="node">调动</div><div class="arrow">→</div>
+        <div class="node">编制释放 / 占用</div>
+        <div class="node soft" style="margin-left:20px">在职人员</div><div class="arrow">→</div>
+        <div class="node">离职</div><div class="arrow">→</div>
+        <div class="node">编制释放</div>
+      </div>
+    </div>
+    <div class="triple">
+      <div class="mini-card"><span class="tag">占编规则</span><h3>判断人员是否计入编制</h3><p class="muted">回答“谁算占编、谁不算占编”。</p></div>
+      <div class="mini-card"><span class="tag">控编规则</span><h3>判断业务动作是否突破边界</h3><p class="muted">回答“超出预算或编制边界时是否允许继续”。</p></div>
+      <div class="mini-card"><span class="tag">预算核算层级</span><h3>确定跨层级组织如何归集</h3><p class="muted">回答“更细组织发生业务时，应按哪一级组织核算”。</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>3. 编制管理能力分层</h2>
+    <div class="grid-3">
+      <div class="layer-card">
+        <span class="tag">第一层</span>
+        <h3>预算规划层的控编</h3>
+        <ul>
+          <li>年度规划允许多少编制</li>
+          <li>日常增编后是否超出预算</li>
+          <li>超出时是强控还是弱控</li>
+        </ul>
+        <p class="subtle">这是管理层通常所说的“控编”重点。</p>
+      </div>
+      <div class="layer-card">
+        <span class="tag">第二层</span>
+        <h3>编制执行层的控编</h3>
+        <ul>
+          <li>具体编制是否为空编</li>
+          <li>能否发起招聘</li>
+          <li>能否被调动占用</li>
+          <li>能否执行减编 / 调编</li>
+        </ul>
+        <p class="subtle">该层能力当前系统已较完整。</p>
+      </div>
+      <div class="layer-card">
+        <span class="tag">第三层</span>
+        <h3>人员占编规则</h3>
+        <ul>
+          <li>某个人员类型是否算占编</li>
+          <li>入职 / 调动后是否进入编制统计</li>
+        </ul>
+        <p class="subtle">对应本次新增的“占编规则配置”。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>4. 占编与控编的区别</h2>
+    <table class="table">
+      <thead><tr><th>类型</th><th>核心问题</th><th>典型示例</th></tr></thead>
+      <tbody>
+        <tr><td>占编</td><td>某类人员是否计入编制占用</td><td>实习生是否占编、外部员工是否占编</td></tr>
+        <tr><td>控编</td><td>当业务动作突破边界时，系统如何控制</td><td>超出年度预算后，是否允许继续增编</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>5. 控编模型设计</h2>
+    <p>控编不是单一开关，而是支持多个维度并行校验。不同维度可配置不同的控制强度，以兼顾总量控制和业务灵活性。</p>
+    <div class="diagram">
+      <div class="rule-stack">
+        <div class="rule-row"><strong>年度总编制预算</strong><span>控制全年总盘子</span><span class="pill-red">适合强控</span></div>
+        <div class="rule-row"><strong>组织编制数</strong><span>控制组织层面的生效编制总量</span><span class="pill-red">适合强控</span></div>
+        <div class="rule-row"><strong>职位编制数</strong><span>控制组织下某职位的编制结构</span><span class="pill-orange">可配置弱控</span></div>
+      </div>
+    </div>
+    <h3>5.1 多维并行校验</h3>
+    <div class="diagram">
+      <div class="flow">
+        <div class="node primary">业务动作</div><div class="arrow">→</div>
+        <div class="node">年度总编制预算校验</div>
+        <div class="node">组织编制数校验</div>
+        <div class="node">职位编制数校验</div><div class="arrow">→</div>
+        <div class="node primary">汇总结果</div>
+      </div>
+      <div class="triple">
+        <div class="mini-card"><h3>任一强控失败</h3><p class="muted">禁止继续，或发起超编审批。</p></div>
+        <div class="mini-card"><h3>仅弱控失败</h3><p class="muted">允许继续，但进行提示。</p></div>
+        <div class="mini-card"><h3>全部通过</h3><p class="muted">正常继续业务。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>6. 控制方式设计</h2>
+    <table class="table">
+      <thead><tr><th>控制方式</th><th>定义</th><th>超出后处理</th></tr></thead>
+      <tbody>
+        <tr><td>强控</td><td>超出控制边界时，不允许直接继续</td><td>禁止提交 / 发起超编审批</td></tr>
+        <tr><td>弱控</td><td>超出控制边界时，允许继续但需提示</td><td>仅提示</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">设计原则：总量类指标优先采用强控；结构类指标可根据管理要求采用弱控；不同子公司可配置不同策略。</div>
+  </section>
+
+  <section class="section">
+    <h2>7. 组织层级归集设计</h2>
+    <p>由于不同子公司的预算管理颗粒度不同，不适合为每个组织逐一维护预算归属关系。本方案采用“预算最细核算层级”配置，以支持按子公司进行差异化归集。</p>
+    <table class="table">
+      <thead><tr><th>子公司</th><th>预算最细核算层级</th><th>含义</th></tr></thead>
+      <tbody>
+        <tr><td>纵腾集团</td><td>七级组织</td><td>七级及以上按自身核算，八级及以下自动向上归集至最近七级组织</td></tr>
+        <tr><td>GOFO</td><td>六级组织</td><td>六级及以上按自身核算，七级及以下自动向上归集至最近六级组织</td></tr>
+      </tbody>
+    </table>
+    <div class="diagram">
+      <div class="org-flow">
+        <div class="org-box">五级组织</div>
+        <div class="org-box">六级组织</div>
+        <div class="org-box active">七级组织</div>
+        <div class="org-box">八级组织</div>
+        <div class="org-box">九级组织</div>
+      </div>
+      <p class="subtle">示例：当预算最细核算层级为七级时，八级、九级组织自动向上归集到最近的七级组织；五级、六级、七级组织按自身核算。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>8. 配置方案</h2>
+    <h3>8.1 编制配置</h3>
+    <div class="diagram">
+      <div class="flow">
+        <div class="node primary">编制配置</div><div class="arrow">→</div>
+        <div class="node">控编规则</div>
+        <div class="node">占编规则</div>
+      </div>
+    </div>
+    <h3>8.2 控编规则配置项</h3>
+    <table class="table">
+      <thead><tr><th>字段</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>规则名称</td><td>用户自定义规则名称</td></tr>
+        <tr><td>适用子公司</td><td>规则生效的子公司</td></tr>
+        <tr><td>控编维度</td><td>年度总编制预算 / 组织编制数 / 职位编制数</td></tr>
+        <tr><td>核算组织口径</td><td>当前组织 / 按预算最细层级归集</td></tr>
+        <tr><td>适用编制</td><td>正式编制 / 浮动编制</td></tr>
+        <tr><td>控制方式</td><td>强控 / 弱控</td></tr>
+        <tr><td>超出后处理</td><td>强控：禁止提交、发起超编审批；弱控：仅提示</td></tr>
+      </tbody>
+    </table>
+    <h3>8.3 预算核算层级配置</h3>
+    <p>用于维护各子公司的预算最细核算层级，为“按预算最细层级归集”的控编规则提供核算依据。</p>
+  </section>
+
+  <p class="footer-note">配套原型：编制配置_v4.html、预算核算层级配置.html</p>
+</main>
+</body>
+</html>

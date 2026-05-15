@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>占编规则配置</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}
+.sidebar-group{padding:8px 0}
+.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;cursor:pointer;text-decoration:none;display:block}
+.sidebar-item.sub{padding-left:44px;font-size:13px}
+.sidebar-item:hover{background:#e7f0ff}
+.sidebar-item.active{color:#0E66FB;background:#e7f0ff;font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}
+.user-info{font-size:13px;color:#333947}
+.content{flex:1;padding:24px;overflow-y:auto}
+.page-title{font-size:18px;font-weight:600;color:#1A2130;margin-bottom:16px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border-radius:4px}
+.card-header{padding:10px 20px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;background:#E8F0FE}
+.card-title{font-size:15px;font-weight:600;color:#1A2130}
+.card-body{padding:20px}
+.toolbar{display:flex;align-items:center;gap:8px}
+.btn{height:32px;padding:0 16px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:4px;transition:all .15s;background:#fff}
+.btn:hover{opacity:.88}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}
+.btn-default{background:#fff;color:#333947;border-color:#ccced1}
+.btn-default:hover{border-color:#0E66FB;color:#0E66FB}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.control-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.control-copy{display:flex;flex-direction:column;gap:4px}
+.control-title{font-size:14px;font-weight:500;color:#1A2130}
+.control-desc{font-size:13px;color:#666b75}
+.toggle{position:relative;width:42px;height:24px;display:inline-block}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:#ccced1;border-radius:999px;transition:.2s}
+.toggle-thumb{position:absolute;left:3px;top:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked + .toggle-track{background:#0E66FB}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(18px)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:1040px}
+th{background:#f5f6f7;font-size:13px;font-weight:500;color:#1A2130;padding:10px 12px;text-align:left;border-bottom:1px solid #E6E6E8;white-space:nowrap}
+td{font-size:13px;color:#333947;padding:12px;border-bottom:1px solid #E6E6E8;vertical-align:middle}
+tr:hover td{background:#f9fafe}
+.cond-summary{display:block;line-height:1.8;color:#4e5969}
+.cond-line{display:inline}
+.cond-join{display:inline;color:#86909c;margin:0 6px;white-space:nowrap}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:2px;font-size:12px;white-space:nowrap;word-break:keep-all;line-height:1.2}
+.badge-green{background:#e6f9ef;color:#1BA854}
+.badge-gray{background:#f5f6f7;color:#666b75}
+.badge-blue{background:#e7f0ff;color:#0E66FB}
+.row-actions{display:flex;align-items:center;justify-content:flex-start;gap:12px;white-space:nowrap;min-width:132px}
+.link{background:none;border:none;color:#0E66FB;font-size:13px;cursor:pointer}
+.link:hover{text-decoration:underline}
+.footer-bar{display:flex;align-items:center;gap:16px;padding:14px 20px;border-top:1px solid #E6E6E8;background:#FAFBFC}
+.footer-label{font-size:13px;color:#666b75}
+.radio-group{display:flex;align-items:center;gap:16px}
+.radio-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#333947}
+.radio-item input{accent-color:#0E66FB}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.form-item{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:13px;color:#333947}
+.form-input,.form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;color:#333947;background:#fff}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.test-result{margin-top:16px;padding:12px 14px;background:#F7F9FC;border-radius:4px;color:#333947;font-size:13px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1000;align-items:flex-start;justify-content:center;padding:30px 0;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal{width:760px;background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.15);display:flex;flex-direction:column}
+.modal-header{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:16px;font-weight:600;color:#000819}
+.modal-close{border:none;background:transparent;font-size:20px;color:#999ca3;cursor:pointer}
+.modal-body{padding:24px}
+.modal-footer{padding:12px 24px;border-top:1px solid #E6E6E8;display:flex;justify-content:flex-end;gap:12px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rule-block{margin-top:18px;border:1px solid #E6E6E8;border-radius:4px}
+.rule-block-title{padding:12px 16px;border-bottom:1px solid #E6E6E8;font-weight:500;color:#1A2130}
+.rule-block-body{padding:16px}
+.condition-row{display:grid;grid-template-columns:120px 100px 1fr 28px;gap:8px;align-items:center;margin-bottom:10px}
+.del-btn{border:none;background:transparent;color:#999ca3;font-size:18px;cursor:pointer}
+.add-link{color:#0E66FB;font-size:13px;cursor:pointer;background:none;border:none}
+.logic-row{margin-top:12px;display:flex;align-items:center;gap:16px}
+.result-row{margin-top:18px;display:flex;align-items:center;gap:16px}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">招聘管理</div>
+      <a class="sidebar-item" href="招聘需求列表.html">招聘需求</a>
+      <a class="sidebar-item" href="offer列表.html">offer管理</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">编制管理</div>
+      <div class="sidebar-item">编制明细</div>
+      <div class="sidebar-item">编制调整</div>
+      <a class="sidebar-item sub active" href="编制配置_v3.html">占编规则配置</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">组织管理</div>
+      <div class="sidebar-item">组织明细</div>
+      <div class="sidebar-item">职位库</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="header">
+      <div class="breadcrumb">编制管理 / 编制调整 / <span>占编规则配置</span></div>
+      <div class="user-info">谭花花 (zt24701)</div>
+    </div>
+    <div class="content">
+      <h1 class="page-title">占编规则配置</h1>
+      <div class="stack">
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">编制管控</div>
+          </div>
+          <div class="card-body">
+            <div class="control-row">
+              <div class="control-copy">
+                <div class="control-title">启用编制管控</div>
+                <div class="control-desc">启用后，系统将按占编规则判断人员是否占用编制。</div>
+              </div>
+              <div class="toolbar">
+                <label class="toggle">
+                  <input type="checkbox" checked>
+                  <span class="toggle-track"></span>
+                  <span class="toggle-thumb"></span>
+                </label>
+                <button class="btn btn-primary">保存配置</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">占编规则</div>
+            <div class="toolbar">
+              <button class="btn btn-primary btn-sm" onclick="openRuleModal()">＋ 新增规则</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:64px">序号</th>
+                  <th style="width:180px">规则名称</th>
+                  <th>条件</th>
+                  <th style="width:96px">匹配结果</th>
+                  <th style="width:88px">优先级</th>
+                  <th style="width:88px">状态</th>
+                  <th style="width:160px">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>外部实习临时不占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 外部员工、实习生、临时工</span></span></td>
+                  <td><span class="badge badge-gray">不占编</span></td>
+                  <td>10</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>内部操作岗不占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 内部</span><span class="cond-join">并且</span><span class="cond-line">员工类型二级 为 操作工、卡派司机、保安</span></span></td>
+                  <td><span class="badge badge-gray">不占编</span></td>
+                  <td>20</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>学徒兼职工操作不占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 学徒、兼职工</span><span class="cond-join">并且</span><span class="cond-line">员工类型一级 为 操作</span></span></td>
+                  <td><span class="badge badge-gray">不占编</span></td>
+                  <td>30</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>内部管理岗占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 内部</span><span class="cond-join">并且</span><span class="cond-line">员工类型二级 为 仓长/副仓长、副组长、组长、仓库文员、管培生、卡派负责人</span></span></td>
+                  <td><span class="badge badge-blue">占编</span></td>
+                  <td>40</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>内部职能营销占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 内部</span><span class="cond-join">并且</span><span class="cond-line">员工类型一级 为 职能、营销</span></span></td>
+                  <td><span class="badge badge-blue">占编</span></td>
+                  <td>50</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>学徒兼职工职能营销占编</td>
+                  <td><span class="cond-summary"><span class="cond-line">当 人员类型 为 学徒、兼职工</span><span class="cond-join">并且</span><span class="cond-line">员工类型一级 为 职能、营销</span></span></td>
+                  <td><span class="badge badge-blue">占编</span></td>
+                  <td>60</td>
+                  <td><span class="badge badge-green">启用</span></td>
+                  <td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer-bar">
+            <span class="footer-label">未命中规则时</span>
+            <div class="radio-group">
+              <label class="radio-item"><input type="radio" name="fallback" checked> 按不占编处理</label>
+              <label class="radio-item"><input type="radio" name="fallback"> 按占编处理</label>
+              <label class="radio-item"><input type="radio" name="fallback"> 阻断并提示人工确认</label>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="card-title">规则测试</div>
+          </div>
+          <div class="card-body">
+            <div class="test-grid">
+              <div class="form-item">
+                <label class="form-label">人员类型</label>
+                <select class="form-select">
+                  <option>内部</option>
+                  <option>外部员工</option>
+                  <option>实习生</option>
+                  <option>临时工</option>
+                  <option>学徒、兼职工</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-label">员工类型一级</label>
+                <select class="form-select">
+                  <option>职能</option>
+                  <option>营销</option>
+                  <option>操作</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-label">员工类型二级</label>
+                <select class="form-select">
+                  <option>仓长/副仓长</option>
+                  <option>副组长</option>
+                  <option>组长</option>
+                  <option>仓库文员</option>
+                  <option>管培生</option>
+                  <option>卡派负责人</option>
+                </select>
+              </div>
+            </div>
+            <div class="toolbar" style="margin-top:16px">
+              <button class="btn btn-primary">开始测试</button>
+              <button class="btn btn-default">清空</button>
+            </div>
+            <div class="test-result">测试结果：命中“内部职能营销占编”，匹配结果为“占编”。</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="ruleModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">新增规则</div>
+      <button class="modal-close" onclick="closeRuleModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-item">
+          <label class="form-label">规则编码</label>
+          <input class="form-input" placeholder="系统自动生成">
+        </div>
+        <div class="form-item">
+          <label class="form-label">规则名称</label>
+          <input class="form-input" placeholder="请输入规则名称">
+        </div>
+        <div class="form-item">
+          <label class="form-label">优先级</label>
+          <input class="form-input" placeholder="数字越小越先匹配">
+        </div>
+      </div>
+      <div class="rule-block">
+        <div class="rule-block-title">匹配条件</div>
+        <div class="rule-block-body">
+          <div class="condition-row">
+            <select class="form-select"><option>人员类型</option><option>员工类型一级</option><option>员工类型二级</option></select>
+            <select class="form-select"><option>为</option><option>不为</option></select>
+            <input class="form-input" placeholder="请输入或选择条件值">
+            <button class="del-btn">×</button>
+          </div>
+          <div class="condition-row">
+            <select class="form-select"><option>员工类型一级</option><option>人员类型</option><option>员工类型二级</option></select>
+            <select class="form-select"><option>为</option><option>不为</option></select>
+            <input class="form-input" placeholder="请输入或选择条件值">
+            <button class="del-btn">×</button>
+          </div>
+          <button class="add-link">＋ 添加条件</button>
+          <div class="logic-row">
+            <span class="form-label">条件关系</span>
+            <label class="radio-item"><input type="radio" name="logic" checked> 全部满足</label>
+            <label class="radio-item"><input type="radio" name="logic"> 任一满足</label>
+          </div>
+          <div class="result-row">
+            <span class="form-label">匹配结果</span>
+            <label class="radio-item"><input type="radio" name="result" checked> 占编</label>
+            <label class="radio-item"><input type="radio" name="result"> 不占编</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeRuleModal()">取消</button>
+      <button class="btn btn-primary">确定</button>
+    </div>
+  </div>
+</div>
+<script>
+function openRuleModal(){document.getElementById('ruleModal').classList.add('show')}
+function closeRuleModal(){document.getElementById('ruleModal').classList.remove('show')}
+</script>
+</body>
+</html>

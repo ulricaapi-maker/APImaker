@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>预算核算层级配置</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8}.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}
+.sidebar-group{padding:8px 0}.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;display:block;text-decoration:none}.sidebar-item.sub{padding-left:44px;font-size:13px}
+.sidebar-item:hover,.sidebar-item.active{background:#e7f0ff;color:#0E66FB}.sidebar-item.active{font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}.user-info{font-size:13px}.content{padding:24px}
+.page-title{font-size:18px;font-weight:600;color:#1A2130;margin-bottom:16px}.card{background:#fff;border-radius:4px}
+.card-header{padding:10px 20px;border-bottom:1px solid #E6E6E8;background:#E8F0FE;display:flex;align-items:center;justify-content:space-between}.card-title{font-size:15px;font-weight:600}
+.card-body{padding:20px}.btn{height:32px;padding:0 16px;border-radius:4px;font-size:13px;border:1px solid transparent;background:#fff;cursor:pointer}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}.btn-default{border-color:#ccced1;color:#333947}
+.tip{margin-bottom:16px;padding:12px 14px;background:#F7F9FC;border-radius:4px;line-height:1.8;color:#666b75}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}
+th{background:#f5f6f7;padding:10px 12px;text-align:left;border-bottom:1px solid #E6E6E8;font-weight:500}
+td{padding:12px;border-bottom:1px solid #E6E6E8}.badge{display:inline-flex;padding:2px 8px;border-radius:2px;font-size:12px;background:#e6f9ef;color:#1BA854}
+.row-actions{display:flex;gap:12px}.link{border:none;background:none;color:#0E66FB;font-size:13px}
+.example{margin-top:16px;padding:14px;border:1px solid #E6E6E8;border-radius:4px}
+.example-title{font-weight:500;color:#1A2130;margin-bottom:8px}.example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.example-item{padding:10px;background:#FAFBFC;border-radius:4px}.example-label{font-size:12px;color:#999ca3;margin-bottom:4px}.example-value{font-weight:500}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);align-items:flex-start;justify-content:center;padding-top:30px}.modal-overlay.show{display:flex}
+.modal{width:520px;background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.15)}.modal-header,.modal-footer{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between}
+.modal-footer{border-bottom:none;border-top:1px solid #E6E6E8;justify-content:flex-end;gap:12px}.modal-title{font-size:16px;font-weight:600}.modal-close{border:none;background:none;font-size:20px;color:#999ca3}
+.modal-body{padding:24px}.form-item{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}.form-label{font-size:13px}.form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group"><div class="sidebar-group-title">招聘管理</div><a class="sidebar-item" href="招聘需求列表.html">招聘需求</a><a class="sidebar-item" href="offer列表.html">offer管理</a></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">编制管理</div><div class="sidebar-item">编制明细</div><div class="sidebar-item">编制调整</div><a class="sidebar-item sub" href="编制配置_v4.html">编制配置</a></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">预算管理</div><div class="sidebar-item">预算方案</div><a class="sidebar-item active" href="预算核算层级配置.html">预算核算层级配置</a></div>
+  </div>
+  <div class="main">
+    <div class="header"><div class="breadcrumb">预算管理 / <span>预算核算层级配置</span></div><div class="user-info">谭花花 (zt24701)</div></div>
+    <div class="content">
+      <h1 class="page-title">预算核算层级配置</h1>
+      <section class="card">
+        <div class="card-header"><div class="card-title">预算最细核算层级</div><button class="btn btn-primary" onclick="openModal()">＋ 新增配置</button></div>
+        <div class="card-body">
+          <div class="tip">用于定义各子公司的预算最细可核算到哪一级组织。高于或等于该层级的组织按自身核算；低于该层级的下级组织，自动向上归集到最近的预算最细核算层级组织。</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:80px">序号</th><th>子公司</th><th>预算最细核算层级</th><th>状态</th><th style="width:160px">操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>纵腾集团</td><td>七级组织</td><td><span class="badge">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">停用</button></div></td></tr>
+                <tr><td>2</td><td>GOFO</td><td>六级组织</td><td><span class="badge">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">停用</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="example">
+            <div class="example-title">归集示例</div>
+            <div class="example-grid">
+              <div class="example-item"><div class="example-label">子公司</div><div class="example-value">纵腾集团</div></div>
+              <div class="example-item"><div class="example-label">当前组织</div><div class="example-value">八级组织</div></div>
+              <div class="example-item"><div class="example-label">预算最细核算层级</div><div class="example-value">七级组织</div></div>
+              <div class="example-item"><div class="example-label">控编核算组织</div><div class="example-value">最近上级七级组织</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="levelModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">新增预算核算层级</div><button class="modal-close" onclick="closeModal()">×</button></div>
+    <div class="modal-body">
+      <div class="form-item"><label class="form-label">子公司</label><select class="form-select"><option>纵腾集团</option><option>GOFO</option></select></div>
+      <div class="form-item"><label class="form-label">预算最细核算层级</label><select class="form-select"><option>四级组织</option><option>五级组织</option><option>六级组织</option><option>七级组织</option><option>八级组织</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-default" onclick="closeModal()">取消</button><button class="btn btn-primary">确定</button></div>
+  </div>
+</div>
+<script>
+function openModal(){document.getElementById('levelModal').classList.add('show')}
+function closeModal(){document.getElementById('levelModal').classList.remove('show')}
+</script>
+</body>
+</html>

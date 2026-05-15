@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>编制配置</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8}.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}
+.sidebar-group{padding:8px 0}.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;display:block;text-decoration:none}.sidebar-item.sub{padding-left:44px;font-size:13px}
+.sidebar-item:hover,.sidebar-item.active{background:#e7f0ff;color:#0E66FB}.sidebar-item.active{font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}.user-info{font-size:13px}.content{padding:24px;overflow-y:auto}
+.page-title{font-size:18px;font-weight:600;color:#1A2130;margin-bottom:16px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid #E6E6E8;margin-bottom:16px}
+.tab{height:38px;padding:0 18px;border:none;background:transparent;color:#666b75;font-size:14px;cursor:pointer}
+.tab.active{color:#0E66FB;font-weight:500;border-bottom:2px solid #0E66FB}
+.panel{display:none}.panel.active{display:block}.stack{display:flex;flex-direction:column;gap:16px}
+.card{background:#fff;border-radius:4px}.card-header{padding:10px 20px;border-bottom:1px solid #E6E6E8;background:#E8F0FE;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:15px;font-weight:600;color:#1A2130}.card-body{padding:20px}.toolbar{display:flex;align-items:center;gap:8px}
+.btn{height:32px;padding:0 16px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid transparent;background:#fff}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}.btn-default{border-color:#ccced1;color:#333947}.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.summary-item{padding:14px;background:#F7F9FC;border-radius:4px}
+.summary-label{font-size:12px;color:#999ca3;margin-bottom:6px}.summary-value{font-size:20px;font-weight:600;color:#1A2130}.summary-desc{font-size:12px;color:#666b75;margin-top:4px}
+.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:1180px}
+th{background:#f5f6f7;padding:10px 12px;text-align:left;font-size:13px;font-weight:500;color:#1A2130;border-bottom:1px solid #E6E6E8;white-space:nowrap}
+td{padding:12px;border-bottom:1px solid #E6E6E8;font-size:13px;vertical-align:middle}tr:hover td{background:#f9fafe}
+.badge{display:inline-flex;padding:2px 8px;border-radius:2px;font-size:12px;white-space:nowrap}
+.badge-blue{background:#e7f0ff;color:#0E66FB}.badge-green{background:#e6f9ef;color:#1BA854}.badge-orange{background:#fff7e6;color:#FF991C}.badge-red{background:#ffe6e6;color:#FB2323}.badge-gray{background:#f5f6f7;color:#666b75}
+.row-actions{display:flex;gap:12px;white-space:nowrap}.link{border:none;background:none;color:#0E66FB;cursor:pointer;font-size:13px}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.form-item{display:flex;flex-direction:column;gap:6px}.form-label{font-size:13px}
+.form-input,.form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;background:#fff}
+.form-select{appearance:none}
+.test-result{margin-top:16px;padding:12px 14px;background:#F7F9FC;border-radius:4px;line-height:1.8}
+.result-line{display:flex;gap:12px}.result-name{width:140px;color:#666b75}.result-strong{color:#FB2323;font-weight:500}.result-warn{color:#FF991C;font-weight:500}
+.cond-summary{display:block;line-height:1.8}.cond-join{color:#86909c;margin:0 6px;white-space:nowrap}
+.footer-bar{display:flex;align-items:center;gap:16px;padding:14px 20px;border-top:1px solid #E6E6E8;background:#FAFBFC}.radio-group{display:flex;gap:16px}.radio-item{display:flex;align-items:center;gap:6px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:10;align-items:flex-start;justify-content:center;padding:30px 0}
+.modal-overlay.show{display:flex}.modal{width:760px;background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.15)}
+.modal-header,.modal-footer{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;justify-content:space-between;align-items:center}.modal-footer{border-bottom:none;border-top:1px solid #E6E6E8;justify-content:flex-end;gap:12px}
+.modal-title{font-size:16px;font-weight:600}.modal-close{border:none;background:none;font-size:20px;color:#999ca3}.modal-body{padding:24px}
+.modal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.span-2{grid-column:1/-1}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group"><div class="sidebar-group-title">招聘管理</div><a class="sidebar-item" href="招聘需求列表.html">招聘需求</a><a class="sidebar-item" href="offer列表.html">offer管理</a></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">编制管理</div><div class="sidebar-item">编制明细</div><div class="sidebar-item">编制调整</div><a class="sidebar-item sub active" href="编制配置_v4.html">编制配置</a></div>
+    <div class="sidebar-group"><div class="sidebar-group-title">组织管理</div><div class="sidebar-item">组织明细</div><div class="sidebar-item">职位库</div></div>
+  </div>
+  <div class="main">
+    <div class="header"><div class="breadcrumb">编制管理 / 编制调整 / <span>编制配置</span></div><div class="user-info">谭花花 (zt24701)</div></div>
+    <div class="content">
+      <h1 class="page-title">编制配置</h1>
+      <div class="tabs"><button class="tab active" onclick="switchTab('control')">控编规则</button><button class="tab" onclick="switchTab('occupy')">占编规则</button></div>
+
+      <section id="controlPanel" class="panel active">
+        <div class="stack">
+          <section class="card">
+            <div class="card-header"><div class="card-title">控编概览</div></div>
+            <div class="card-body">
+              <div class="summary-grid">
+                <div class="summary-item"><div class="summary-label">启用规则数</div><div class="summary-value">4</div><div class="summary-desc">年度预算、组织、职位多维并行校验</div></div>
+                <div class="summary-item"><div class="summary-label">强控规则数</div><div class="summary-value">3</div><div class="summary-desc">命中后禁止继续提交</div></div>
+                <div class="summary-item"><div class="summary-label">弱控规则数</div><div class="summary-value">2</div><div class="summary-desc">命中后提示或补充说明</div></div>
+              </div>
+            </div>
+          </section>
+          <section class="card">
+            <div class="card-header"><div class="card-title">控编规则</div><button class="btn btn-primary btn-sm" onclick="openControlModal()">＋ 新增规则</button></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th style="width:64px">序号</th><th style="width:180px">规则名称</th><th style="width:120px">适用子公司</th><th style="width:150px">控编维度</th><th style="width:150px">核算组织口径</th><th style="width:120px">适用编制</th><th style="width:88px">控制方式</th><th style="width:140px">超出后处理</th><th style="width:88px">状态</th><th style="width:160px">操作</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>年度总编制预算强控</td><td>纵腾集团</td><td>年度总编制预算</td><td>按预算最细层级归集</td><td>正式编制</td><td><span class="badge badge-red">强控</span></td><td>禁止提交</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                  <tr><td>2</td><td>组织编制总量强控</td><td>纵腾集团</td><td>组织编制数</td><td>按预算最细层级归集</td><td>正式编制、浮动编制</td><td><span class="badge badge-red">强控</span></td><td>发起超编审批</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                  <tr><td>3</td><td>职位编制结构弱控</td><td>纵腾集团</td><td>职位编制数</td><td>按预算最细层级归集</td><td>正式编制</td><td><span class="badge badge-orange">弱控</span></td><td>仅提示</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                  <tr><td>4</td><td>GOFO职位编制弱控</td><td>GOFO</td><td>职位编制数</td><td>当前组织</td><td>正式编制、浮动编制</td><td><span class="badge badge-orange">弱控</span></td><td>仅提示</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <section class="card">
+            <div class="card-header"><div class="card-title">控编测试</div></div>
+            <div class="card-body">
+              <div class="form-grid">
+                <div class="form-item"><label class="form-label">子公司</label><select class="form-select"><option>纵腾集团</option><option>GOFO</option></select></div>
+                <div class="form-item"><label class="form-label">编制类型</label><select class="form-select"><option>正式编制</option><option>浮动编制</option></select></div>
+                <div class="form-item"><label class="form-label">本次申请数</label><input class="form-input" value="3"></div>
+                <div class="form-item"><label class="form-label">年度总编制预算</label><input class="form-input" value="100"></div>
+                <div class="form-item"><label class="form-label">组织生效编制数</label><input class="form-input" value="59"></div>
+                <div class="form-item"><label class="form-label">职位生效编制数</label><input class="form-input" value="9"></div>
+              </div>
+              <div class="toolbar" style="margin-top:16px"><button class="btn btn-primary">开始测试</button><button class="btn btn-default">清空</button></div>
+              <div class="test-result">
+                <div class="result-line"><span class="result-name">综合结论</span><span class="result-strong">禁止提交</span></div>
+                <div class="result-line"><span class="result-name">年度总编制预算</span><span class="result-strong">强控超出 1</span></div>
+                <div class="result-line"><span class="result-name">组织编制总量</span><span class="result-strong">强控超出 2</span></div>
+                <div class="result-line"><span class="result-name">职位编制结构</span><span class="result-warn">弱控超出 1，需填写原因</span></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="occupyPanel" class="panel">
+        <div class="stack">
+          <section class="card"><div class="card-header"><div class="card-title">占编规则</div><button class="btn btn-primary btn-sm">＋ 新增规则</button></div>
+            <div class="table-wrap"><table><thead><tr><th style="width:64px">序号</th><th style="width:180px">规则名称</th><th>条件</th><th style="width:96px">匹配结果</th><th style="width:88px">优先级</th><th style="width:88px">状态</th><th style="width:160px">操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>外部实习临时不占编</td><td><span class="cond-summary">当 人员类型 为 外部员工、实习生、临时工</span></td><td><span class="badge badge-gray">不占编</span></td><td>10</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                <tr><td>2</td><td>内部操作岗不占编</td><td><span class="cond-summary">当 人员类型 为 内部 <span class="cond-join">并且</span> 员工类型二级 为 操作工、卡派司机、保安</span></td><td><span class="badge badge-gray">不占编</span></td><td>20</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+                <tr><td>3</td><td>内部职能营销占编</td><td><span class="cond-summary">当 人员类型 为 内部 <span class="cond-join">并且</span> 员工类型一级 为 职能、营销</span></td><td><span class="badge badge-blue">占编</span></td><td>50</td><td><span class="badge badge-green">启用</span></td><td><div class="row-actions"><button class="link">编辑</button><button class="link">复制</button><button class="link">更多</button></div></td></tr>
+              </tbody></table></div>
+            <div class="footer-bar"><span>未命中规则时</span><div class="radio-group"><label class="radio-item"><input type="radio" checked> 按不占编处理</label><label class="radio-item"><input type="radio"> 按占编处理</label><label class="radio-item"><input type="radio"> 阻断并提示人工确认</label></div></div>
+          </section>
+          <section class="card"><div class="card-header"><div class="card-title">占编测试</div></div><div class="card-body"><div class="form-grid"><div class="form-item"><label class="form-label">人员类型</label><select class="form-select"><option>内部</option></select></div><div class="form-item"><label class="form-label">员工类型一级</label><select class="form-select"><option>职能</option></select></div><div class="form-item"><label class="form-label">员工类型二级</label><select class="form-select"><option>管培生</option></select></div></div><div class="toolbar" style="margin-top:16px"><button class="btn btn-primary">开始测试</button><button class="btn btn-default">清空</button></div><div class="test-result">测试结果：命中“内部职能营销占编”，匹配结果为“占编”。</div></div></section>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="controlModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">新增控编规则</div><button class="modal-close" onclick="closeControlModal()">×</button></div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="form-item"><label class="form-label">规则名称</label><input class="form-input" placeholder="请输入规则名称"></div>
+        <div class="form-item"><label class="form-label">适用子公司</label><select class="form-select"><option>纵腾集团</option><option>GOFO</option></select></div>
+        <div class="form-item"><label class="form-label">控编维度</label><select class="form-select"><option>年度总编制预算</option><option>组织编制数</option><option>职位编制数</option></select></div>
+        <div class="form-item"><label class="form-label">核算组织口径</label><select class="form-select"><option>按预算最细层级归集</option><option>当前组织</option></select></div>
+        <div class="form-item"><label class="form-label">适用编制</label><select class="form-select"><option>正式编制</option><option>浮动编制</option><option>正式编制、浮动编制</option></select></div>
+        <div class="form-item"><label class="form-label">控制方式</label><select class="form-select" id="controlMode" onchange="syncOverflowOptions()"><option>强控</option><option>弱控</option></select></div>
+        <div class="form-item"><label class="form-label">超出后处理</label><select class="form-select" id="overflowAction"><option>禁止提交</option><option>发起超编审批</option></select></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-default" onclick="closeControlModal()">取消</button><button class="btn btn-primary">确定</button></div>
+  </div>
+</div>
+<script>
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  document.querySelector(name==='control'?'.tab:nth-child(1)':'.tab:nth-child(2)').classList.add('active');
+  document.getElementById(name==='control'?'controlPanel':'occupyPanel').classList.add('active');
+}
+function openControlModal(){syncOverflowOptions();document.getElementById('controlModal').classList.add('show')}
+function closeControlModal(){document.getElementById('controlModal').classList.remove('show')}
+function syncOverflowOptions(){
+  var mode=document.getElementById('controlMode').value;
+  var action=document.getElementById('overflowAction');
+  action.innerHTML=mode==='强控'
+    ? '<option>禁止提交</option><option>发起超编审批</option>'
+    : '<option>仅提示</option>';
+}
+</script>
+</body>
+</html>

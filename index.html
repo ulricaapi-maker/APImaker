@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRMS 原型导航</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#FAFBFC;color:#1A2130}
+.page{max-width:1120px;margin:0 auto;padding:40px 24px 56px}
+.hero{margin-bottom:28px}
+.hero h1{font-size:28px;line-height:1.3;margin-bottom:8px}
+.hero p{font-size:14px;color:#666b75}
+.section{margin-top:24px}
+.section-title{font-size:16px;font-weight:600;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{display:block;background:#fff;border:1px solid #E6E6E8;border-radius:6px;padding:18px;text-decoration:none;color:inherit;transition:.15s}
+.card:hover{border-color:#0E66FB;box-shadow:0 4px 14px rgba(14,102,251,.08)}
+.card-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.card-desc{font-size:13px;color:#666b75;line-height:1.6}
+.tag{display:inline-block;margin-top:12px;padding:2px 8px;border-radius:999px;background:#E8F0FE;color:#0E66FB;font-size:12px}
+.muted{color:#999ca3}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <h1>HRMS 原型导航</h1>
+    <p>招聘需求、Offer 与编制配置相关原型入口。</p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">招聘管理</h2>
+    <div class="grid">
+      <a class="card" href="招聘需求列表.html">
+        <div class="card-title">招聘需求</div>
+        <div class="card-desc">招聘需求列表、新增需求弹窗与需求流转。</div>
+        <span class="tag">列表页</span>
+      </a>
+      <a class="card" href="offer列表.html">
+        <div class="card-title">Offer 管理</div>
+        <div class="card-desc">正式员工与实习生 Offer 新建、国内/海外流程分流。</div>
+        <span class="tag">列表页</span>
+      </a>
+      <a class="card" href="招聘需求详情.html">
+        <div class="card-title">审批详情</div>
+        <div class="card-desc">招聘需求详情页，展示详情与审批记录。</div>
+        <span class="tag">详情页</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">编制管理</h2>
+    <div class="grid">
+      <a class="card" href="编制配置_v3.html">
+        <div class="card-title">占编规则配置 V3</div>
+        <div class="card-desc">已确认版本，保留当前占编规则配置设计。</div>
+        <span class="tag">稳定版</span>
+      </a>
+      <a class="card" href="编制配置_v4.html">
+        <div class="card-title">编制配置 V4</div>
+        <div class="card-desc">新增控编规则与占编规则双页签版本。</div>
+        <span class="tag">最新方案</span>
+      </a>
+      <a class="card" href="预算核算层级配置.html">
+        <div class="card-title">预算核算层级配置</div>
+        <div class="card-desc">按子公司配置预算最细核算层级。</div>
+        <span class="tag">新增配置</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">方案说明</h2>
+    <div class="grid">
+      <a class="card" href="编制配置方案说明.html">
+        <div class="card-title">编制配置方案说明</div>
+        <div class="card-desc">含业务框架、能力分层、控编模型与组织归集逻辑。</div>
+        <span class="tag">说明文档</span>
+      </a>
+      <div class="card">
+        <div class="card-title muted">更多原型</div>
+        <div class="card-desc">后续可继续补充预算、流程与配置类原型入口。</div>
+        <span class="tag">待扩展</span>
+      </div>
+      <div class="card">
+        <div class="card-title muted">原型规范</div>
+        <div class="card-desc">字段规则、操作列、详情页等规范另行沉淀。</div>
+        <span class="tag">规范沉淀</span>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

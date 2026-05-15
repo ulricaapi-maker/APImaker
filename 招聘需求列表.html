@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>招聘需求</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}
+.sidebar-group{padding:8px 0}
+.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;cursor:pointer;text-decoration:none;display:block}
+.sidebar-item.sub{padding-left:44px;font-size:13px}
+.sidebar-item:hover{background:#e7f0ff}
+.sidebar-item.active{color:#0E66FB;background:#e7f0ff;font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}
+.user-info{font-size:13px;color:#333947}
+.welcome{padding:20px 24px 0;font-size:13px;color:#999ca3}
+.welcome b{color:#333947;font-size:15px}
+.content{flex:1;padding:24px;overflow-y:auto}
+.search-bar{background:#fff;border-radius:4px;padding:16px 24px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.search-bar label{font-size:13px;color:#666b75;white-space:nowrap}
+.search-bar input,.search-bar select{height:32px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;outline:none;width:200px}
+.search-bar input:focus,.search-bar select:focus{border-color:#0E66FB}
+.btn{height:32px;padding:0 16px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:4px;transition:all .15s}
+.btn:hover{opacity:.85}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}
+.btn-default{background:#fff;color:#333947;border-color:#ccced1}
+.btn-default:hover{border-color:#0E66FB;color:#0E66FB}
+.btn-text{background:transparent;color:#0E66FB;border:none;padding:0 6px;height:auto;font-size:13px}
+.btn-text:hover{text-decoration:underline}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.card{background:#fff;border-radius:4px}
+.card-header{padding:10px 20px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;background:#E8F0FE}
+.card-title{font-size:15px;font-weight:600;color:#1A2130}
+.toolbar{display:flex;gap:8px;align-items:center}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{background:#f5f6f7;font-size:13px;font-weight:500;color:#1A2130;padding:10px 12px;text-align:left;border-bottom:1px solid #E6E6E8;white-space:nowrap}
+td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E8}
+tr:hover td{background:#f9fafe}
+.tag{display:inline-block;padding:2px 8px;border-radius:2px;font-size:12px}
+.tag-blue{background:#e7f0ff;color:#0E66FB}
+.tag-green{background:#e6f9ef;color:#1BA854}
+.tag-orange{background:#fff7e6;color:#FF991C}
+.tag-gray{background:#f5f6f7;color:#999ca3}
+.tag-red{background:#ffe6e6;color:#FB2323}
+.pagination{padding:12px 24px;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#999ca3}
+.page-btns{display:flex;gap:4px}
+.page-btn{width:28px;height:28px;border:1px solid #E6E6E8;border-radius:4px;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+.page-btn.active{background:#0E66FB;color:#fff;border-color:#0E66FB}
+
+
+.btn-group{position:relative;display:inline-flex}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;background:#fff;border:1px solid #E6E6E8;border-radius:4px;box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100;min-width:120px;padding:4px 0}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:6px 16px;font-size:13px;color:#333947;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:#f5f6f7}
+.dropdown-item.danger{color:#F74C4C}
+
+/* ===== Modal ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:1000;justify-content:center;align-items:flex-start;padding:30px 0;overflow-y:auto}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:6px;width:960px;max-height:calc(100vh - 60px);display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+.modal-header{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-size:16px;font-weight:600;color:#000819}
+.modal-close{width:28px;height:28px;border:none;background:transparent;cursor:pointer;font-size:18px;color:#999ca3;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.modal-close:hover{background:#f5f6f7;color:#333947}
+.modal-body{padding:24px;overflow-y:auto;flex:1}
+.modal-workbench{display:block}
+.modal-footer{padding:12px 24px;border-top:1px solid #E6E6E8;display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-shrink:0}
+.form-section{margin-bottom:16px}
+.form-section-title{font-size:14px;font-weight:600;color:#1A2130;padding:4px 10px;margin-bottom:12px;background:#E8F0FE;border-radius:3px;display:inline-block;line-height:1.5}
+.form-section-body{padding:0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px}
+.form-item{display:flex;flex-direction:column}
+.form-label{font-size:13px;color:#333947;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.form-label .required{color:#F74C4C}
+.form-label .tip{font-size:12px;color:#999ca3;margin-left:6px}
+.form-input{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;color:#333947;outline:none;background:#fff}
+.form-input:focus{border-color:#0E66FB}
+.form-input.disabled{background:#f5f6f7;color:#999ca3;cursor:not-allowed}
+.form-input::placeholder{color:#b3b5ba}
+.form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;color:#333947;background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
+.form-select:focus{border-color:#0E66FB;outline:none}
+.edit-table{width:100%;border-collapse:collapse;margin-top:0}
+.edit-table th{background:#f5f6f7;font-size:12px;font-weight:500;color:#666b75;padding:8px 10px;text-align:left;border:1px solid #E6E6E8}
+.edit-table td{padding:0;border:1px solid #E6E6E8;height:34px}
+.edit-table td input,.edit-table td select{width:100%;height:100%;border:none;padding:0 8px;font-size:13px;outline:none;background:transparent}
+.edit-table td input.disabled{background:#f5f6f7;color:#999ca3}
+.add-row-btn{margin-top:8px;font-size:13px;color:#0E66FB;cursor:pointer;display:inline-flex;align-items:center;gap:4px;background:none;border:none}
+.add-row-btn:hover{text-decoration:underline}
+.rule-link{font-size:12px;color:#0E66FB;cursor:pointer;margin-left:4px}
+.rule-link:hover{text-decoration:underline}
+.rule-panel{position:fixed;top:0;right:0;width:360px;max-width:90vw;height:100vh;background:#fff;border-left:1px solid #E6E6E8;box-shadow:-8px 0 24px rgba(0,0,0,.12);z-index:1300;transform:translateX(100%);transition:transform .2s ease}
+.rule-panel.show{transform:translateX(0)}.rule-panel-head{padding:14px 16px;border-bottom:1px solid #E6E6E8;font-weight:600;color:#1A2130;display:flex;align-items:center;justify-content:space-between}
+.rule-close{border:none;background:transparent;font-size:20px;color:#999ca3;cursor:pointer;width:28px;height:28px}.rule-panel-body{padding:14px 16px;overflow-y:auto;max-height:calc(100vh - 57px)}
+.rule-empty{font-size:13px;color:#999ca3;line-height:1.7}
+.rule-block{display:none}.rule-block.show{display:block}
+.rule-section{margin-bottom:14px}.rule-title{font-size:13px;color:#666b75;margin-bottom:6px}.rule-text{font-size:13px;color:#333947;line-height:1.7}.rule-step{padding:8px 10px;background:#F7F9FC;border-radius:4px;margin-bottom:8px;font-size:13px;line-height:1.6}
+.active-rule{box-shadow:0 0 0 2px #E8F0FE;border-radius:4px}
+.error-text{display:none;margin-top:6px;font-size:12px;color:#F74C4C}.error-text.show{display:block}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">招聘管理</div>
+      <a class="sidebar-item active" href="招聘需求列表.html">招聘需求</a>
+      <a class="sidebar-item" href="offer列表.html">offer管理</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">编制管理</div>
+      <div class="sidebar-item">编制明细</div>
+      <div class="sidebar-item">编制调整</div>
+      <a class="sidebar-item sub" href="编制配置_v3.html">占编规则配置</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">组织管理</div>
+      <div class="sidebar-item">组织明细</div>
+      <div class="sidebar-item">职位库</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="header">
+      <div class="breadcrumb">招聘管理 / <span>招聘需求</span></div>
+      <div class="user-info">谭花花 (zt24701)</div>
+    </div>
+    <div class="welcome">欢迎回到招聘需求，<b>谭花花</b>(zt24701)&nbsp;&nbsp;&nbsp;今天是2025年5月27日 星期二</div>
+    <div class="content">
+      <div class="search-bar">
+        <label>编制部门</label>
+        <select><option value="">全部</option><option>纵腾集团/HRAS/技术部</option><option>纵腾集团/HRAS/产品部</option><option>纵腾集团/LBU/物流事业部</option></select>
+        <label>招聘需求编码</label>
+        <input placeholder="请输入编码">
+        <label>状态</label>
+        <select><option value="">全部</option><option>草稿</option><option>审批中</option><option>进行中</option><option>已暂停</option><option>已废弃</option><option>已完成</option></select>
+        <label>需求类型</label>
+        <select><option value="">全部</option><option>新增</option><option>离职替补</option><option>调岗替补</option></select>
+        <button class="btn btn-primary">查询</button>
+        <button class="btn btn-default">重置</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">招聘需求列表</div>
+          <div class="toolbar">
+            <button class="btn btn-primary btn-sm" onclick="openModal()"><span style="font-size:15px">＋</span> 新增</button>
+            <button class="btn btn-primary btn-sm"><span style="font-size:14px">⇄</span> 转交需求</button>
+            <button class="btn btn-primary btn-sm"><svg width="14" height="14" viewBox="0 0 1030 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M140.8 1017.6c-38.4 0-70.4-12.8-96-38.4-25.6-25.6-38.4-57.6-38.4-96v-185.6c0-12.8 6.4-25.6 12.8-32s19.2-12.8 32-12.8 25.6 6.4 32 12.8 12.8 19.2 12.8 32v185.6c0 12.8 6.4 32 12.8 38.4 6.4 6.4 19.2 12.8 38.4 12.8h742.4c12.8 0 32-6.4 38.4-12.8 6.4-6.4 12.8-19.2 12.8-38.4v-185.6c0-12.8 6.4-25.6 12.8-32 6.4-6.4 19.2-12.8 32-12.8s25.6 6.4 32 12.8c6.4 6.4 12.8 19.2 12.8 32v185.6c0 38.4-12.8 70.4-38.4 96-25.6 25.6-57.6 38.4-96 38.4H140.8z m377.6-275.2c-12.8 0-25.6-6.4-32-12.8s-12.8-19.2-12.8-32V160s0-6.4-6.4-6.4h-6.4L313.6 313.6c-6.4 6.4-25.6 12.8-25.6 12.8-12.8 0-25.6-6.4-32-12.8-12.8-12.8-19.2-19.2-19.2-25.6 0-12.8 6.4-25.6 12.8-32L480 25.6c12.8-12.8 25.6-19.2 38.4-19.2 12.8 0 25.6 6.4 32 12.8L774.4 256c6.4 6.4 12.8 19.2 12.8 32s-6.4 25.6-12.8 32-19.2 12.8-32 12.8-19.2-12.8-25.6-19.2L563.2 153.6h-6.4s-6.4 0-6.4 6.4V704c0 12.8-6.4 25.6-12.8 32s-12.8 6.4-19.2 6.4z"/></svg> 导出</button>
+            <button class="btn btn-default btn-sm"><span style="font-size:14px">⚙</span> 导出设置</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox"></th>
+                <th>序号</th>
+                <th>职位</th>
+                <th>部门</th>
+                <th>招聘需求编码</th>
+                <th>需求职级</th>
+                <th>需求人数</th>
+                <th>需求类型</th>
+                <th>状态</th>
+                <th>需求负责人</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>1</td>
+                <td>产品经理</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020001</a></td>
+                <td>P2-3</td>
+                <td>2</td>
+                <td>新增</td>
+                <td><span class="tag tag-blue">进行中</span></td>
+                <td>张三</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>2</td>
+                <td>产品设计</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020002</a></td>
+                <td>P2-1</td>
+                <td>1</td>
+                <td>新增</td>
+                <td><span class="tag tag-blue">进行中</span></td>
+                <td>张三</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>3</td>
+                <td>Java开发</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020003</a></td>
+                <td>P2-1</td>
+                <td>3</td>
+                <td>离职替补</td>
+                <td><span class="tag tag-orange">审批中</span></td>
+                <td>李四</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>4</td>
+                <td>前端开发</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020004</a></td>
+                <td>P2-2</td>
+                <td>2</td>
+                <td>新增</td>
+                <td><span class="tag tag-gray">草稿</span></td>
+                <td>王五</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>5</td>
+                <td>UI设计</td>
+                <td>纵腾集团/HRAS/产品部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020005</a></td>
+                <td>P2-1</td>
+                <td>1</td>
+                <td>新增</td>
+                <td><span class="tag tag-green">已完成</span></td>
+                <td>张三</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>数据分析师</td>
+                <td>纵腾集团/LBU/物流事业部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020006</a></td>
+                <td>P3-1</td>
+                <td>1</td>
+                <td>调岗替补</td>
+                <td><span class="tag tag-red">已废弃</span></td>
+                <td>赵六</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>7</td>
+                <td>测试工程师</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020007</a></td>
+                <td>P2-1</td>
+                <td>2</td>
+                <td>新增</td>
+                <td><span class="tag tag-orange">已暂停</span></td>
+                <td>李四</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>8</td>
+                <td>运维工程师</td>
+                <td>纵腾集团/HRAS/技术部</td>
+                <td><a class="btn-text" href="招聘需求详情.html">202601020008</a></td>
+                <td>P2-2</td>
+                <td>1</td>
+                <td>新增</td>
+                <td><span class="tag tag-blue">进行中</span></td>
+                <td>王五</td>
+                <td>
+                  <a class="btn-text" onclick="openOfferModal()">新建Offer</a>
+                  <a class="btn-text">编辑</a>
+                  <div class="btn-group">
+                    <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
+                    <div class="dropdown-menu">
+                      <div class="dropdown-item">关闭需求</div>
+                      <div class="dropdown-item">暂停需求</div>
+                      <div class="dropdown-item">减少需求人数</div>
+                      <div class="dropdown-item">复制</div>
+                      <div class="dropdown-item danger">删除</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span>共 25 条记录，第 1/4 页</span>
+          <div class="page-btns">
+            <div class="page-btn">‹</div>
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">4</div>
+            <div class="page-btn">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 新增招聘需求弹窗 ===== -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">新增招聘需求</div>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-workbench">
+      <div>
+      <!-- 需求信息 -->
+      <div class="form-section">
+        <div class="form-section-title">需求信息</div>
+        <div class="form-section-body">
+        <div class="form-grid">
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 雇佣关系</div>
+            <select class="form-select" id="empRelation" onchange="onEmpRelationChange()">
+              <option value="">请选择</option>
+              <option value="正式员工">正式员工</option>
+              <option value="实习生">实习生</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 职位</div>
+            <select class="form-select" id="positionSelect" onchange="onPositionChange()">
+              <option value="">请选择</option>
+              <option value="产品经理" data-dept="纵腾集团/HRAS/技术部" data-level="P2-1" data-abc="A类" data-code="202501016001" data-overseas="国内">产品经理</option>
+              <option value="Java开发" data-dept="纵腾集团/HRAS/技术部" data-level="P2-2" data-abc="A类" data-code="202501016004" data-overseas="国内">Java开发</option>
+              <option value="前端开发" data-dept="纵腾集团/HRAS/技术部" data-level="P2-1" data-abc="B类" data-code="202501016005" data-overseas="国内">前端开发</option>
+              <option value="UI设计" data-dept="纵腾集团/HRAS/产品部" data-level="P2-1" data-abc="A类" data-code="202501016006" data-overseas="国内">UI设计</option>
+              <option value="运营经理" data-dept="GOFO/运营部" data-level="P3-1" data-abc="B类" data-code="202501016007" data-overseas="海外">运营经理</option>
+            </select>
+          </div>
+          <div class="form-item" id="abcField">
+            <div class="form-label">编制ABC分类</div>
+            <input class="form-input disabled" id="abcValue" disabled placeholder="选择职位后自动带出">
+          </div>
+          <div class="form-item" id="deptField">
+            <div class="form-label">部门全称</div>
+            <input class="form-input disabled" id="deptValue" disabled placeholder="选择职位后自动带出">
+          </div>
+          <div class="form-item" id="overseasField">
+            <div class="form-label">是否海外编制</div>
+            <input class="form-input disabled" id="overseasValue" disabled placeholder="选择职位后自动带出">
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- 编制信息（正式员工展示） -->
+      <div class="form-section" id="staffingSection" style="display:none;">
+        <div class="form-section-title">编制信息</div>
+        <div class="form-section-body">
+          <table class="edit-table">
+            <thead>
+              <tr>
+                <th style="width:50px">序号</th>
+                <th>编制编码</th>
+                <th>编制职位</th>
+                <th>编制职级</th>
+                <th>编制ABC分类</th>
+                <th>部门全称</th>
+                <th>是否海外编制</th>
+              </tr>
+            </thead>
+            <tbody id="staffingTableBody">
+              <tr>
+                <td><input class="disabled" value="1" disabled></td>
+                <td><input class="disabled" id="sCode1" disabled></td>
+                <td><input class="disabled" id="sPos1" disabled></td>
+                <td><input class="disabled" id="sLevel1" disabled></td>
+                <td><input class="disabled" id="sAbc1" disabled></td>
+                <td><input class="disabled" id="sDept1" disabled></td>
+                <td><input class="disabled" id="sOverseas1" disabled></td>
+              </tr>
+              <tr>
+                <td><input class="disabled" value="2" disabled></td>
+                <td><input class="disabled" id="sCode2" disabled></td>
+                <td><input class="disabled" id="sPos2" disabled></td>
+                <td><input class="disabled" id="sLevel2" disabled></td>
+                <td><input class="disabled" id="sAbc2" disabled></td>
+                <td><input class="disabled" id="sDept2" disabled></td>
+                <td><input class="disabled" id="sOverseas2" disabled></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 需求明细 -->
+      <div class="form-section">
+        <div class="form-section-title">需求明细</div>
+        <div class="form-section-body">
+        <div class="form-grid">
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 需求职级</div>
+            <select class="form-select">
+              <option value="">请选择</option>
+              <option>P1-1</option><option>P1-2</option>
+              <option>P2-1</option><option>P2-2</option><option>P2-3</option>
+              <option>P3-1</option><option>P3-2</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 需求人数 <span class="tip">正式员工：需求人数≤编制数</span></div>
+            <input class="form-input" type="number" placeholder="请输入" min="1">
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 需求类型</div>
+            <select class="form-select" id="demandType" onchange="onDemandTypeChange()">
+              <option value="">请选择</option>
+              <option>新增</option>
+              <option>离职替补</option>
+              <option>调岗替补</option>
+            </select>
+          </div>
+          <div class="form-item" id="replacePersonField" style="display:none;">
+            <div class="form-label"><span class="required">*</span> 替补人员</div>
+            <select class="form-select">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 工作城市</div>
+            <select class="form-select" id="demandWorkCity" onchange="validateDemandCity()">
+              <option value="">请选择</option>
+              <option data-region="cn-city">深圳市</option><option data-region="cn-country">中国</option><option data-region="foreign-country">美国</option><option data-region="foreign-city">达拉斯</option>
+            </select>
+            <div class="error-text" id="demandWorkCityError"></div>
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 招聘启动日期</div>
+            <input class="form-input" type="date" value="2026-05-27">
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 期望到岗日期</div>
+            <input class="form-input" type="date">
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 需求负责人 <span class="tip">默认发起人</span></div>
+            <select class="form-select">
+              <option>谭花花 (zt24701)</option>
+              <option>张三 (zt00001)</option>
+              <option>李四 (zt00002)</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <div class="form-label">需求共享人</div>
+            <select class="form-select">
+              <option value="">请选择</option>
+              <option>张三 (zt00001)</option>
+              <option>李四 (zt00002)</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <div class="form-label">招聘需求编码</div>
+            <input class="form-input disabled" value="自动生成" disabled>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+      <aside class="rule-panel">
+        <div class="rule-panel-head"><span>字段规则说明</span><button class="rule-close" onclick="closeDemandRulePanel()">&times;</button></div>
+        <div class="rule-panel-body">
+          <div id="demandRuleEmpty" class="rule-empty">点击字段后的“规则说明”，这里展示对应业务规则。</div>
+          <div id="demandRuleContent" class="rule-block"></div>
+        </div>
+      </aside>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeModal()">取消</button>
+      <button class="btn btn-default" onclick="closeModal()">保持为草稿</button>
+      <button class="btn btn-primary" onclick="closeModal()">提交</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openModal(){document.getElementById('addModal').classList.add('show');document.body.style.overflow='hidden'}
+function closeModal(){document.getElementById('addModal').classList.remove('show');document.body.style.overflow=''}
+function openOfferModal(){window.location.href='offer列表.html'}
+document.getElementById('addModal').addEventListener('click',function(e){if(e.target===this)closeModal()});
+function toggleDropdown(btn){
+  var menu=btn.parentElement.querySelector('.dropdown-menu');
+  var isOpen=menu.classList.contains('show');
+  // Close all dropdowns first
+  document.querySelectorAll('.dropdown-menu.show').forEach(function(m){m.classList.remove('show')});
+  if(!isOpen)menu.classList.add('show');
+}
+// Close dropdown when clicking outside
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.btn-group')){
+    document.querySelectorAll('.dropdown-menu.show').forEach(function(m){m.classList.remove('show')});
+  }
+});
+
+var demandRules={
+  雇佣关系:'<div class="rule-section"><div class="rule-title">雇佣关系</div><div class="rule-text">字典待业务确认。单选且必填。</div></div>',
+  职位:'<div class="rule-section"><div class="rule-title">职位</div><div class="rule-text">正式员工选择生效的编制分组；实习生选择启用的职位。</div></div>',
+  编制ABC分类:'<div class="rule-section"><div class="rule-title">编制ABC分类</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
+  部门全称:'<div class="rule-section"><div class="rule-title">部门全称</div><div class="rule-text">置灰；正式员工根据编制信息自动带出，实习生根据职位选出。</div></div>',
+  编制职级:'<div class="rule-section"><div class="rule-title">编制职级</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
+  是否海外编制:'<div class="rule-section"><div class="rule-title">是否海外编制</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
+  需求职级:'<div class="rule-section"><div class="rule-title">需求职级</div><div class="rule-text">实习生根据职位最低/最高职级选择；正式员工要求职位最低职级 ≤ 需求职级 ≤ 职位最高职级。</div></div>',
+  需求人数:'<div class="rule-section"><div class="rule-title">需求人数</div><div class="rule-step">1. 正整数。</div><div class="rule-step">2. 正式员工：需求人数 ≤ 编制数。</div><div class="rule-step">3. 填写后即时校验，不通过提示：该编制下可用空余编制数为%数量%，请调整需求人数。</div></div>',
+  需求类型:'<div class="rule-section"><div class="rule-title">需求类型</div><div class="rule-text">字典：新增编制/离职替补/调岗替补。单选且必填。</div></div>',
+  替补人员:'<div class="rule-section"><div class="rule-title">替补人员</div><div class="rule-text">当需求类型=离职替补/调岗替补时展示、必填、单选；选择范围为所有在职/离职人员，数据源来自 OEHR。</div></div>',
+  工作城市:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 字典：工作城市。</div><div class="rule-step">2. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">3. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
+  招聘启动日期:'<div class="rule-section"><div class="rule-title">招聘启动日期</div><div class="rule-text">默认需求新建当天，可编辑。</div></div>',
+  需求负责人:'<div class="rule-section"><div class="rule-title">需求负责人</div><div class="rule-text">默认发起人，可编辑；选择人员状态=在职/试用的人。</div></div>',
+  需求共享人:'<div class="rule-section"><div class="rule-title">需求共享人</div><div class="rule-text">非必填，人员单选；选择人员状态=在职/试用的人。</div></div>',
+  招聘需求编码:'<div class="rule-section"><div class="rule-title">招聘需求编码</div><div class="rule-text">自动生成。</div></div>'
+};
+function getDemandLabelName(label){
+  return label.textContent.replace('*','').replace(/规则说明/g,'').trim().split(/\s+/)[0];
+}
+function enhanceDemandRules(){
+  document.querySelectorAll('#addModal .form-label').forEach(function(label){
+    var name=getDemandLabelName(label);
+    if(demandRules[name]&&!label.querySelector('.rule-link')){
+      var link=document.createElement('span');
+      link.className='rule-link';
+      link.textContent='规则说明';
+      link.onclick=function(){showDemandRule(name,label)};
+      label.appendChild(link);
+    }
+  });
+}
+function showDemandRule(name,label){
+  document.getElementById('demandRuleEmpty').style.display='none';
+  document.querySelector('#addModal .rule-panel').classList.add('show');
+  var content=document.getElementById('demandRuleContent');
+  content.innerHTML=demandRules[name]||'<div class="rule-text">暂无规则说明。</div>';
+  content.classList.add('show');
+  document.querySelectorAll('#addModal .active-rule').forEach(function(n){n.classList.remove('active-rule')});
+  var item=label.closest('.form-item');
+  if(item)item.classList.add('active-rule');
+}
+function closeDemandRulePanel(){document.querySelector('#addModal .rule-panel').classList.remove('show')}
+function validateDemandCity(){
+  var sel=document.getElementById('demandWorkCity');
+  var err=document.getElementById('demandWorkCityError');
+  var type=sel.selectedOptions[0]&&sel.selectedOptions[0].getAttribute('data-region');
+  if(type==='cn-country'){err.textContent='全国：请统一填写至【市】级';err.classList.add('show');return}
+  if(type==='foreign-city'){err.textContent='国外：请统一填写至具体国家';err.classList.add('show');return}
+  err.classList.remove('show');
+}
+
+function onEmpRelationChange(){
+  var v=document.getElementById('empRelation').value;
+  var showStaffing=(v==='正式员工');
+  document.getElementById('staffingSection').style.display=showStaffing?'':'none';
+  document.getElementById('abcField').style.display=showStaffing?'':'none';
+  document.getElementById('overseasField').style.display=showStaffing?'':'none';
+  if(!showStaffing){document.getElementById('abcValue').value='';document.getElementById('overseasValue').value=''}
+}
+
+function onPositionChange(){
+  var sel=document.getElementById('positionSelect');
+  var opt=sel.options[sel.selectedIndex];
+  var dept=opt.getAttribute('data-dept')||'';
+  var level=opt.getAttribute('data-level')||'';
+  var abc=opt.getAttribute('data-abc')||'';
+  var code=opt.getAttribute('data-code')||'';
+  var overseas=opt.getAttribute('data-overseas')||'';
+  document.getElementById('abcValue').value=abc;
+  document.getElementById('deptValue').value=dept;
+  document.getElementById('overseasValue').value=overseas;
+  // Fill staffing table
+  if(dept){
+    var suffixes=['001','002'];
+    for(var i=0;i<suffixes.length;i++){
+      var n=i+1;
+      document.getElementById('sCode'+n).value=code.replace(/\d{3}$/,suffixes[i]);
+      document.getElementById('sPos'+n).value=sel.value;
+      document.getElementById('sLevel'+n).value=level;
+      document.getElementById('sAbc'+n).value=abc;
+      document.getElementById('sDept'+n).value=dept;
+      document.getElementById('sOverseas'+n).value=overseas;
+    }
+  }
+}
+
+function onDemandTypeChange(){
+  var v=document.getElementById('demandType').value;
+  document.getElementById('replacePersonField').style.display=(v==='离职替补'||v==='调岗替补')?'':'none';
+}
+document.addEventListener('DOMContentLoaded',function(){enhanceDemandRules();validateDemandCity()});
+</script>
+</body>
+</html>

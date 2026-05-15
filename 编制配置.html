@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>编制配置 - 纵腾HRMS</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB;gap:8px}
+.sidebar-group{padding:8px 0}
+.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;cursor:pointer;display:block;text-decoration:none}
+.sidebar-item:hover{background:#e7f0ff}
+.sidebar-item.active{color:#0E66FB;background:#e7f0ff;font-weight:500}
+.sidebar-item.sub{padding-left:44px;font-size:13px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex-shrink:0}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb span{color:#333947}
+.user-info{font-size:13px;color:#333947}
+.content{flex:1;padding:24px;overflow-y:auto}
+
+/* === Card === */
+.card{background:#fff;border-radius:4px;border:1px solid #E6E6E8}
+.card-header{padding:12px 20px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between}
+.card-header.blue{background:#E8F0FE}
+.card-title{font-size:15px;font-weight:600;color:#1A2130}
+
+/* === Tabs === */
+.tabs{display:flex;border-bottom:1px solid #E6E6E8;background:#fff;padding:0 20px}
+.tab{padding:12px 20px;font-size:14px;color:#666b75;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap}
+.tab:hover{color:#0E66FB}
+.tab.active{color:#0E66FB;border-bottom-color:#0E66FB;font-weight:500}
+
+/* === Buttons === */
+.btn{display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 16px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.btn:hover{opacity:.85}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}
+.btn-primary:hover{background:#0a56d4}
+.btn-default{background:#fff;color:#333947;border-color:#ccced1}
+.btn-default:hover{border-color:#0E66FB;color:#0E66FB}
+.btn-text{background:transparent;color:#0E66FB;border:none;padding:0 6px;height:auto;font-size:13px}
+.btn-text:hover{text-decoration:underline}
+.btn-danger{background:#fff;color:#FB2323;border-color:#FB2323}
+.btn-danger:hover{background:#FB2323;color:#fff}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+.btn-icon{width:28px;height:28px;padding:0;border-radius:4px;justify-content:center}
+
+/* === Form elements === */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 32px}
+.form-item{display:flex;flex-direction:column;gap:6px}
+.form-item.full{grid-column:1/-1}
+.form-label{font-size:13px;color:#333947;display:flex;align-items:center;gap:4px}
+.form-label .required{color:#F74C4C}
+.form-tip{font-size:12px;color:#999ca3;margin-left:4px}
+.form-input{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;color:#333947;outline:none;background:#fff;width:100%;transition:border-color .15s}
+.form-input:focus{border-color:#0E66FB}
+.form-input.disabled,.form-input:disabled{background:#f5f6f7;color:#999ca3;cursor:not-allowed}
+.form-input::placeholder{color:#b3b5ba}
+.form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 28px 0 10px;font-size:13px;color:#333947;background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;cursor:pointer;width:100%;transition:border-color .15s}
+.form-select:focus{border-color:#0E66FB;outline:none}
+.form-select:disabled{background:#f5f6f7;color:#999ca3;cursor:not-allowed}
+textarea.form-input{height:auto;padding:8px 10px;resize:vertical;min-height:80px}
+
+/* === Toggle Switch === */
+.toggle-wrap{display:flex;align-items:center;gap:12px}
+.toggle{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;top:0;left:0;right:0;bottom:0;background:#ccced1;border-radius:11px;transition:background .2s}
+.toggle input:checked + .toggle-track{background:#0E66FB}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle input:checked ~ .toggle-thumb{transform:translateX(18px)}
+.toggle-label{font-size:14px;color:#333947}
+
+/* === Info box === */
+.info-box{background:#E8F0FE;border:1px solid #c2d9fd;border-radius:4px;padding:12px 16px;display:flex;align-items:flex-start;gap:8px}
+.info-box-icon{color:#0E66FB;font-size:16px;flex-shrink:0;margin-top:1px}
+.info-box-text{font-size:13px;color:#333947;line-height:1.6}
+.info-box-text strong{color:#0E66FB}
+.info-box.warning{background:#FFF7E6;border-color:#FFD980}
+.info-box.warning .info-box-icon{color:#FF991C}
+.info-box.danger{background:#FFE6E6;border-color:#FFB3B3}
+.info-box.danger .info-box-icon{color:#FB2323}
+
+/* === Table === */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{background:#f5f6f7;font-size:12px;font-weight:500;color:#666b75;padding:10px 12px;text-align:left;border-bottom:1px solid #E6E6E8;white-space:nowrap}
+td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E8;line-height:1.5}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f9fafe}
+.tr-highlight td{background:#FFF7E6}
+
+/* === Tags/Badges === */
+.tag{display:inline-block;padding:2px 8px;border-radius:2px;font-size:12px;font-weight:500}
+.tag-blue{background:#e7f0ff;color:#0E66FB}
+.tag-green{background:#e6f9ef;color:#1BA854}
+.tag-orange{background:#fff7e6;color:#FF991C}
+.tag-red{background:#ffe6e6;color:#FB2323}
+.tag-gray{background:#f5f6f7;color:#666b75}
+
+/* === Modal === */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:1000;justify-content:center;align-items:center}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.18);display:flex;flex-direction:column;max-height:90vh}
+.modal-sm{width:520px}
+.modal-md{width:680px}
+.modal-lg{width:880px}
+.modal-header{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-title{font-size:16px;font-weight:600;color:#000819}
+.modal-close{width:32px;height:32px;border:none;background:transparent;cursor:pointer;font-size:18px;color:#999ca3;display:flex;align-items:center;justify-content:center;border-radius:4px;flex-shrink:0}
+.modal-close:hover{background:#f5f6f7;color:#333947}
+.modal-body{padding:24px;overflow-y:auto;flex:1}
+.modal-footer{padding:14px 24px;border-top:1px solid #E6E6E8;display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-shrink:0}
+
+/* === Condition Row === */
+.condition-group{border:1px solid #E6E6E8;border-radius:4px;overflow:hidden}
+.condition-row{display:flex;align-items:center;gap:0;border-bottom:1px solid #E6E6E8;background:#fff}
+.condition-row:last-child{border-bottom:none}
+.condition-index{width:40px;min-width:40px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#999ca3;border-right:1px solid #E6E6E8;background:#f5f6f7;height:38px;flex-shrink:0}
+.condition-fields{flex:1;display:flex;align-items:stretch}
+.condition-field-row{display:flex;align-items:center;flex:1;border-right:1px solid #E6E6E8;min-height:38px}
+.condition-field-row:last-child{border-right:none}
+.field-select{height:38px;border:none;padding:0 10px;font-size:13px;color:#333947;background:transparent;cursor:pointer;min-width:100px;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 3l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:24px}
+.field-select:focus{border:none;outline:none}
+.cond-op{height:38px;border:none;border-left:1px solid #E6E6E8;padding:0 10px;font-size:13px;color:#333947;background:transparent;cursor:pointer;min-width:80px;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 3l4 4 4-4'/%E3C80%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:20px}
+.cond-op:focus,.field-select:focus{background-color:#e7f0ff}
+.cond-value-wrap{flex:1;position:relative;min-width:120px}
+.cond-value{display:none;position:absolute;top:38px;left:0;right:0;background:#fff;border:1px solid #0E66FB;border-top:none;border-radius:0 0 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,.12);z-index:10;max-height:200px;overflow-y:auto}
+.cond-value.show{display:block}
+.cond-value-item{padding:8px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.cond-value-item:hover{background:#e7f0ff}
+.cond-value-item input[type=checkbox]{cursor:pointer;accent-color:#0E66FB}
+.cond-value-item label{cursor:pointer;font-size:13px}
+.cond-text{height:38px;border:none;padding:0 10px;font-size:13px;color:#333947;background:transparent;width:100%;outline:none}
+.cond-text:focus ~ .cond-value,.cond-value:hover{display:block}
+.cond-text-input{position:relative}
+.cond-remove{width:38px;min-width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;color:#999ca3;font-size:18px;flex-shrink:0}
+.cond-remove:hover{color:#FB2323;background:#fff0f0}
+.and-badge{background:#E8F0FE;color:#0E66FB;font-size:12px;padding:2px 8px;border-radius:10px;white-space:nowrap}
+
+/* === Rule actions === */
+.rule-actions{display:flex;gap:4px;align-items:center}
+.rule-actions .btn-text{font-size:12px;padding:0 4px}
+
+/* === Sortable handle === */
+.sort-handle{color:#ccced1;cursor:grab;padding:0 4px;font-size:16px}
+.sort-handle:active{cursor:grabbing}
+
+/* === Empty state === */
+.empty-state{padding:60px 20px;text-align:center}
+.empty-icon{font-size:48px;margin-bottom:16px}
+.empty-text{font-size:14px;color:#999ca3;margin-bottom:16px}
+
+/* === Toast === */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1A2130;color:#fff;padding:10px 20px;border-radius:4px;font-size:14px;z-index:9999;display:none;white-space:nowrap}
+.toast.show{display:block}
+.toast.success{background:#1BA854}
+.toast.error{background:#FB2323}
+
+/* === Tooltip === */
+.tooltip-wrap{position:relative;display:inline-flex;align-items:center}
+.tooltip-wrap .tooltip-text{visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1A2130;color:#fff;font-size:12px;padding:4px 10px;border-radius:4px;white-space:nowrap;z-index:10;transition:opacity .2s}
+.tooltip-wrap:hover .tooltip-text{visibility:visible;opacity:1}
+
+/* === Radio group === */
+.radio-group{display:flex;gap:20px;align-items:center}
+.radio-item{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;color:#333947}
+.radio-item input[type=radio]{accent-color:#0E66FB;width:16px;height:16px;cursor:pointer}
+
+/* === Divider === */
+.divider{height:1px;background:#E6E6E8;margin:16px 0}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ===== 左侧导航 ===== -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" fill="#0E66FB"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#0E66FB" opacity=".5"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#0E66FB" opacity=".5"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#0E66FB"/></svg>
+      纵腾 HRMS
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">工作台</div>
+      <div class="sidebar-item">工作台</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">组织管理</div>
+      <div class="sidebar-item">组织明细</div>
+      <div class="sidebar-item">组织架构</div>
+      <div class="sidebar-item">职位库</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">编制管理</div>
+      <div class="sidebar-item">编制明细</div>
+      <div class="sidebar-item">编制调整</div>
+      <div class="sidebar-item">历史编制</div>
+      <div class="sidebar-item">编制预算</div>
+      <div class="sidebar-item active" style="padding-left:44px;font-size:13px;color:#0E66FB;font-weight:500">编制配置</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">招聘管理</div>
+      <div class="sidebar-item">招聘需求</div>
+      <div class="sidebar-item">offer管理</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">系统设置</div>
+      <div class="sidebar-item">通用配置</div>
+    </div>
+  </div>
+
+  <!-- ===== 主内容 ===== -->
+  <div class="main">
+    <div class="header">
+      <div class="breadcrumb">编制管理 / <span>编制配置</span></div>
+      <div class="user-info">林雅文 (zt00001)</div>
+    </div>
+
+    <div class="content">
+
+      <!-- Tabs -->
+      <div class="tabs" style="margin-bottom:0;border-radius:4px 4px 0 0">
+        <div class="tab active" onclick="switchTab(this,'tab-enable')">编制启用配置</div>
+        <div class="tab" onclick="switchTab(this,'tab-rules')">人员类型占编规则</div>
+      </div>
+
+      <!-- ===== Tab1: 编制启用配置 ===== -->
+      <div id="tab-enable" class="tab-content">
+
+        <div class="card" style="margin-top:16px">
+          <div class="card-header blue">
+            <div class="card-title">编制管理总开关</div>
+          </div>
+          <div class="card-body" style="padding:24px">
+
+            <div class="form-item" style="margin-bottom:16px">
+              <label class="form-label">是否启用编制管理</label>
+              <div class="toggle-wrap" style="margin-top:4px">
+                <label class="toggle">
+                  <input type="checkbox" id="enableToggle" checked onchange="onToggleChange()">
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </label>
+                <span class="toggle-label" id="toggleLabel">已启用</span>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="info-box" id="infoEnabled">
+              <div class="info-box-icon">💡</div>
+              <div class="info-box-text">
+                启用后，系统将根据<b>「人员类型占编规则」</b>自动判断招聘需求和Offer是否需要关联编制。<br>
+                发起招聘需求时，将根据员工类型自动匹配规则，未命中规则的候选人将<strong>默认视为占编</strong>。
+              </div>
+            </div>
+
+            <div class="info-box warning" id="infoDisabled" style="display:none">
+              <div class="info-box-icon">⚠️</div>
+              <div class="info-box-text">
+                停用后，所有招聘需求和Offer均<strong>不占用编制</strong>，编制管理相关功能将不可见。
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 关联显示：当启用时展示 -->
+        <div id="relatedSection">
+          <div class="card" style="margin-top:16px">
+            <div class="card-header blue">
+              <div class="card-title">关联配置</div>
+            </div>
+            <div style="padding:24px">
+              <div class="form-grid">
+                <div class="form-item">
+                  <label class="form-label">默认兜底策略 <span class="form-tip tooltip-wrap">?<span class="tooltip-text">未命中规则时的默认处理方式</span></span></label>
+                  <select class="form-select" id="fallbackSelect">
+                    <option value="yes">默认占编</option>
+                    <option value="no">默认不占编</option>
+                  </select>
+                </div>
+                <div class="form-item">
+                  <label class="form-label">生效时间</label>
+                  <select class="form-select">
+                    <option>立即生效</option>
+                    <option>下月1日生效</option>
+                  </select>
+                </div>
+              </div>
+              <div style="margin-top:16px">
+                <div class="info-box" style="background:#fff7e6;border-color:#FFD980">
+                  <div class="info-box-icon">💡</div>
+                  <div class="info-box-text">
+                    修改配置后，新的招聘需求和Offer将立即应用新规则。已提交的申请不受影响。
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 已启用状态指示 -->
+          <div class="card" style="margin-top:16px">
+            <div class="card-header">
+              <div class="card-title">当前状态概览</div>
+            </div>
+            <div style="padding:20px 24px;display:flex;gap:32px;align-items:center">
+              <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:#0E66FB;line-height:1">6</div>
+                <div style="font-size:13px;color:#999ca3;margin-top:6px">占编规则数</div>
+              </div>
+              <div style="width:1px;height:40px;background:#E6E6E8"></div>
+              <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:#1BA854;line-height:1">4</div>
+                <div style="font-size:13px;color:#999ca3;margin-top:6px">占编规则</div>
+              </div>
+              <div style="width:1px;height:40px;background:#E6E6E8"></div>
+              <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:#FB2323;line-height:1">2</div>
+                <div style="font-size:13px;color:#999ca3;margin-top:6px">不占编规则</div>
+              </div>
+              <div style="width:1px;height:40px;background:#E6E6E8"></div>
+              <div style="text-align:center">
+                <div style="font-size:28px;font-weight:700;color:#FF991C;line-height:1">1</div>
+                <div style="font-size:13px;color:#999ca3;margin-top:6px">默认兜底</div>
+              </div>
+              <div style="margin-left:auto">
+                <button class="btn btn-default" onclick="switchTab(document.querySelectorAll('.tab')[1],'tab-rules')">→ 查看占编规则</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
+          <button class="btn btn-default" onclick="showToast('已重置')">重置</button>
+          <button class="btn btn-primary" onclick="showToast('保存成功','success')">保存</button>
+        </div>
+      </div>
+
+      <!-- ===== Tab2: 占编规则配置 ===== -->
+      <div id="tab-rules" class="tab-content" style="display:none">
+
+        <div class="card" style="margin-top:16px">
+          <div class="card-header blue">
+            <div class="card-title">人员类型占编规则</div>
+            <button class="btn btn-primary btn-sm" onclick="openAddRuleModal()">
+              <span style="font-size:16px">＋</span> 添加规则
+            </button>
+          </div>
+
+          <!-- 规则说明 -->
+          <div style="padding:12px 20px;border-bottom:1px solid #E6E6E8;background:#fafafa">
+            <div style="font-size:12px;color:#999ca3;display:flex;align-items:center;gap:6px">
+              <span>ℹ️</span>
+              规则按优先级从<strong style="color:#333947">上到下</strong>匹配，第一个命中的规则生效。支持拖拽调整优先级。
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:40px"></th>
+                  <th style="width:60px">序号</th>
+                  <th>条件</th>
+                  <th style="width:100px">匹配结果</th>
+                  <th style="width:120px">操作</th>
+                </tr>
+              </thead>
+              <tbody id="rulesTable">
+
+                <!-- 规则1: 内部+职能/营销 → 占编 -->
+                <tr data-rule="1">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>1</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 = 内部</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型一级 ∈ {职能, 营销}</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-green">占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(1)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(1)">↑ 上移</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(1)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 规则2: 内部+仓长等 → 占编 -->
+                <tr data-rule="2">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>2</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 = 内部</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型二级 ∈ {仓长, 副仓长, 副组长, 组长, 仓库文员, 管培生, 卡派负责人}</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-green">占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(2)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(2)">↑ 上移</button>
+                      <button class="btn btn-text" onclick="openMoveDown(2)">下移 ↓</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(2)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 规则3: 学徒/兼职工+职能/营销 → 占编 -->
+                <tr data-rule="3">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>3</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 ∈ {学徒, 兼职工}</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型一级 = 职能</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型一级 = 营销</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-green">占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(3)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(3)">↑ 上移</button>
+                      <button class="btn btn-text" onclick="openMoveDown(3)">下移 ↓</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(3)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 规则4: 外部/实习/临时 → 不占 -->
+                <tr data-rule="4">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>4</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 ∈ {外部员工, 实习生, 临时工}</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-red">不占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(4)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(4)">↑ 上移</button>
+                      <button class="btn btn-text" onclick="openMoveDown(4)">下移 ↓</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(4)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 规则5: 学徒/兼职工+操作 → 不占 -->
+                <tr data-rule="5">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>5</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 ∈ {学徒, 兼职工}</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型一级 = 操作</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-red">不占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(5)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(5)">↑ 上移</button>
+                      <button class="btn btn-text" onclick="openMoveDown(5)">下移 ↓</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(5)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- 规则6: 内部+操作工/司机/保安 → 不占 -->
+                <tr data-rule="6">
+                  <td style="text-align:center;color:#ccced1;cursor:grab">⋮⋮</td>
+                  <td>6</td>
+                  <td>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+                      <span class="tag tag-blue">人员类型 = 内部</span>
+                      <span class="and-badge">且</span>
+                      <span class="tag tag-blue">员工类型二级 ∈ {操作工, 卡派司机, 保安}</span>
+                    </div>
+                  </td>
+                  <td><span class="tag tag-red">不占编</span></td>
+                  <td>
+                    <div class="rule-actions">
+                      <button class="btn btn-text" onclick="openEditRuleModal(6)">编辑</button>
+                      <button class="btn btn-text" onclick="openMoveUp(6)">下移 ↓</button>
+                      <button class="btn btn-text" onclick="openDeleteConfirm(6)">删除</button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 兜底策略 -->
+          <div style="padding:16px 20px;border-top:1px solid #E6E6E8;background:#fffbf0">
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <span style="font-size:13px;color:#333947;font-weight:500">兜底策略：</span>
+              <span style="font-size:13px;color:#666b75">未命中任何规则时，默认</span>
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="fallback" value="yes" checked>
+                  占编
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="fallback" value="no">
+                  不占编
+                </label>
+              </div>
+              <button class="btn btn-text btn-sm" onclick="showToast('兜底策略已保存','success')">保存兜底策略</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 测试工具 -->
+        <div class="card" style="margin-top:16px">
+          <div class="card-header blue">
+            <div class="card-title">规则测试</div>
+          </div>
+          <div style="padding:20px 24px">
+            <div class="form-grid">
+              <div class="form-item">
+                <label class="form-label">人员类型</label>
+                <select class="form-select" id="testType">
+                  <option value="">请选择</option>
+                  <option value="内部">内部</option>
+                  <option value="外部员工">外部员工</option>
+                  <option value="实习生">实习生</option>
+                  <option value="临时工">临时工</option>
+                  <option value="学徒">学徒</option>
+                  <option value="兼职工">兼职工</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-label">员工类型一级</label>
+                <select class="form-select" id="testLevel1">
+                  <option value="">请选择</option>
+                  <option>职能</option>
+                  <option>营销</option>
+                  <option>操作</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-label">员工类型二级</label>
+                <select class="form-select" id="testLevel2">
+                  <option value="">请选择</option>
+                  <option>仓长</option><option>副仓长</option><option>副组长</option>
+                  <option>组长</option><option>仓库文员</option><option>管培生</option>
+                  <option>卡派负责人</option><option>操作工</option><option>卡派司机</option><option>保安</option>
+                </select>
+              </div>
+              <div class="form-item" style="justify-content:flex-end">
+                <button class="btn btn-primary" onclick="runTest()">测试匹配</button>
+              </div>
+            </div>
+            <div id="testResult" style="display:none;margin-top:16px;padding:16px;border-radius:4px;background:#f5f6f7;border:1px solid #E6E6E8">
+              <div style="font-size:13px;color:#666b75">测试结果：</div>
+              <div id="testResultText" style="margin-top:8px;font-size:14px;font-weight:500"></div>
+              <div id="testResultRule" style="margin-top:4px;font-size:12px;color:#999ca3"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;display:flex;justify-content:flex-end;gap:10px">
+          <button class="btn btn-default">重置规则顺序</button>
+          <button class="btn btn-primary" onclick="showToast('规则配置已保存','success')">保存配置</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== 编辑规则弹窗 ===== -->
+<div class="modal-overlay" id="ruleModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div class="modal-title" id="ruleModalTitle">添加占编规则</div>
+      <button class="modal-close" onclick="closeRuleModal()">×</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- 匹配结果 -->
+      <div style="margin-bottom:20px">
+        <label class="form-label" style="margin-bottom:8px;display:block">匹配结果 <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="ruleResult" value="yes" id="resultYes" checked>
+            <span>✅ 占编</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="ruleResult" value="no" id="resultNo">
+            <span>❌ 不占编</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 条件组 -->
+      <div style="margin-bottom:16px">
+        <label class="form-label" style="margin-bottom:8px;display:block">
+          条件组 <span style="color:#999ca3;font-weight:400;font-size:12px">（组内字段之间为 AND 关系）</span>
+        </label>
+        <div class="condition-group" id="condGroup">
+          <!-- 条件行由JS动态生成 -->
+        </div>
+        <button class="btn btn-text" style="margin-top:8px;font-size:13px" onclick="addCondition()">
+          <span style="font-size:14px">＋</span> 添加条件
+        </button>
+      </div>
+
+      <!-- 可选字段 -->
+      <div style="margin-bottom:16px">
+        <label class="form-label" style="margin-bottom:8px;display:block">可选条件字段</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span class="tag tag-blue" style="cursor:pointer" onclick="addConditionField('人员类型')">人员类型</span>
+          <span class="tag tag-blue" style="cursor:pointer" onclick="addConditionField('员工类型一级')">员工类型一级</span>
+          <span class="tag tag-blue" style="cursor:pointer" onclick="addConditionField('员工类型二级')">员工类型二级</span>
+          <span class="tag tag-gray" style="cursor:not-allowed">职位（待扩展）</span>
+          <span class="tag tag-gray" style="cursor:not-allowed">职级（待扩展）</span>
+          <span class="tag tag-gray" style="cursor:not-allowed">职族（待扩展）</span>
+        </div>
+      </div>
+
+      <!-- 冲突提示 -->
+      <div class="info-box warning" id="conflictHint" style="display:none">
+        <div class="info-box-icon">⚠️</div>
+        <div class="info-box-text" id="conflictText"></div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeRuleModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveRule()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 删除确认弹窗 ===== -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <div class="modal-title">确认删除</div>
+      <button class="modal-close" onclick="closeDeleteModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:#333947;line-height:1.6">
+        确定要删除该规则吗？删除后不可恢复。
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeDeleteModal()">取消</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== Tab切换 =====
+function switchTab(el, tabId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+  document.getElementById(tabId).style.display = 'block';
+}
+
+// ===== Toggle开关 =====
+function onToggleChange() {
+  const checked = document.getElementById('enableToggle').checked;
+  document.getElementById('toggleLabel').textContent = checked ? '已启用' : '未启用';
+  document.getElementById('infoEnabled').style.display = checked ? 'flex' : 'none';
+  document.getElementById('infoDisabled').style.display = checked ? 'none' : 'flex';
+  document.getElementById('relatedSection').style.display = checked ? 'block' : 'none';
+}
+
+// ===== 规则编辑弹窗 =====
+let currentEditRule = null;
+let conditions = [];
+
+// 预置字段选项
+const fieldOptions = {
+  '人员类型': {
+    operators: [
+      {v:'eq',l:'等于'},{v:'neq',l:'不等于'},
+      {v:'in',l:'属于'},{v:'nin',l:'不属于'}
+    ],
+    values: ['内部','外部员工','实习生','临时工','学徒','兼职工'],
+    defaultOp: 'eq',
+    multiSelect: false
+  },
+  '员工类型一级': {
+    operators: [
+      {v:'eq',l:'等于'},{v:'neq',l:'不等于'},
+      {v:'in',l:'属于'},{v:'nin',l:'不属于'}
+    ],
+    values: ['职能','营销','操作'],
+    defaultOp: 'eq',
+    multiSelect: true
+  },
+  '员工类型二级': {
+    operators: [
+      {v:'eq',l:'等于'},{v:'neq',l:'不等于'},
+      {v:'in',l:'属于'},{v:'nin',l:'不属于'}
+    ],
+    values: ['仓长','副仓长','副组长','组长','仓库文员','管培生','卡派负责人','操作工','卡派司机','保安'],
+    defaultOp: 'eq',
+    multiSelect: true
+  }
+};
+
+function openAddRuleModal() {
+  currentEditRule = null;
+  conditions = [{field:'人员类型',op:'eq',values:[]}];
+  document.getElementById('ruleModalTitle').textContent = '添加占编规则';
+  document.getElementById('resultYes').checked = true;
+  renderConditions();
+  document.getElementById('ruleModal').classList.add('show');
+}
+
+function openEditRuleModal(ruleId) {
+  currentEditRule = ruleId;
+  document.getElementById('ruleModalTitle').textContent = '编辑占编规则';
+  // 根据规则ID恢复状态
+  const ruleData = getRuleData(ruleId);
+  if (ruleData) {
+    document.getElementById(ruleData.result === 'yes' ? 'resultYes' : 'resultNo').checked = true;
+    conditions = JSON.parse(JSON.stringify(ruleData.conditions));
+  }
+  renderConditions();
+  document.getElementById('ruleModal').classList.add('show');
+}
+
+function getRuleData(ruleId) {
+  const map = {
+    1: {result:'yes',conditions:[{field:'人员类型',op:'eq',values:['内部']},{field:'员工类型一级',op:'in',values:['职能','营销']}]},
+    2: {result:'yes',conditions:[{field:'人员类型',op:'eq',values:['内部']},{field:'员工类型二级',op:'in',values:['仓长','副仓长','副组长','组长','仓库文员','管培生','卡派负责人']}]},
+    3: {result:'yes',conditions:[{field:'人员类型',op:'in',values:['学徒','兼职工']},{field:'员工类型一级',op:'eq',values:['职能']},{field:'员工类型一级',op:'eq',values:['营销']}]},
+    4: {result:'no',conditions:[{field:'人员类型',op:'in',values:['外部员工','实习生','临时工']}]},
+    5: {result:'no',conditions:[{field:'人员类型',op:'in',values:['学徒','兼职工']},{field:'员工类型一级',op:'eq',values:['操作']}]},
+    6: {result:'no',conditions:[{field:'人员类型',op:'eq',values:['内部']},{field:'员工类型二级',op:'in',values:['操作工','卡派司机','保安']}]},
+  };
+  return map[ruleId];
+}
+
+function addCondition() {
+  const usedFields = conditions.map(c=>c.field);
+  const unused = Object.keys(fieldOptions).filter(f=>!usedFields.includes(f));
+  if (unused.length === 0) {
+    showToast('已添加全部可用字段','');
+    return;
+  }
+  conditions.push({field:unused[0],op:fieldOptions[unused[0]].defaultOp,values:[]});
+  renderConditions();
+}
+
+function addConditionField(fieldName) {
+  if (conditions.map(c=>c.field).includes(fieldName)) return;
+  conditions.push({field:fieldName,op:fieldOptions[fieldName].defaultOp,values:[]});
+  renderConditions();
+}
+
+function removeCondition(index) {
+  if (conditions.length <= 1) {
+    showToast('至少保留一个条件','');
+    return;
+  }
+  conditions.splice(index,1);
+  renderConditions();
+}
+
+function updateCondField(index, field) {
+  conditions[index] = {field,op:fieldOptions[field].defaultOp,values:[]};
+  renderConditions();
+}
+
+function updateCondOp(index, op) {
+  conditions[index].op = op;
+}
+
+function toggleValueDropdown(index, el) {
+  const cfg = fieldOptions[conditions[index].field];
+  if (cfg.multiSelect) {
+    // 多选下拉
+    const panel = el.parentElement.querySelector('.cond-value');
+    document.querySelectorAll('.cond-value').forEach(p=>p.classList.remove('show'));
+    if (panel) panel.classList.toggle('show');
+  } else {
+    // 单选直接更新
+    el.parentElement.querySelector('.cond-value').classList.toggle('show');
+  }
+}
+
+function toggleValueDropdown2(index, el) {
+  const panel = el.parentElement.querySelector('.cond-value');
+  document.querySelectorAll('.cond-value').forEach(p=>p.classList.remove('show'));
+  if (panel) panel.classList.toggle('show');
+}
+
+function toggleValueDropdown3(el) {
+  document.querySelectorAll('.cond-value').forEach(p=>p.classList.remove('show'));
+  if (el) el.classList.toggle('show');
+}
+
+function selectSingleValue(index, val, el) {
+  conditions[index].values = [val];
+  const textEl = el.closest('.cond-value-wrap').querySelector('.cond-text');
+  textEl.value = val;
+  el.closest('.cond-value').classList.remove('show');
+}
+
+function selectMultiValue(index, val, el) {
+  const vals = conditions[index].values;
+  const idx = vals.indexOf(val);
+  if (idx >= 0) vals.splice(idx,1);
+  else vals.push(val);
+  renderConditions();
+}
+
+function renderConditions() {
+  const group = document.getElementById('condGroup');
+  group.innerHTML = conditions.map((cond, i) => {
+    const cfg = fieldOptions[cond.field] || {operators:[],values:[],multiSelect:false};
+    const fields = Object.keys(fieldOptions);
+    const opHtml = cfg.operators.map(op=>`<option value="${op.v}" ${cond.op===op.v?'selected':''}>${op.l}</option>`).join('');
+    const selectedLabel = cfg.multiSelect
+      ? (cond.values.length ? cond.values.join('、') : '请选择')
+      : (cond.values[0] || '请选择');
+
+    let valueHtml;
+    if (cond.op==='eq'||cond.op==='neq') {
+      valueHtml = `
+        <div class="cond-value-wrap" style="flex:1;position:relative">
+          <div class="cond-text" onclick="toggleValueDropdown3(this)" style="height:38px;border:none;padding:0 10px;font-size:13px;color:${cond.values[0]?'#333':'#b3b5ba'};background:transparent;cursor:pointer;display:flex;align-items:center">${cond.values[0]||'请选择'}</div>
+          <div class="cond-value" style="display:none;z-index:10">
+            ${cfg.values.map(v=>`<div class="cond-value-item" onclick="selectSingleValue(${i},'${v}',this)">${v}</div>`).join('')}
+          </div>
+        </div>`;
+    } else {
+      // 多选
+      valueHtml = `
+        <div class="cond-value-wrap" style="flex:1;position:relative">
+          <div class="cond-text" onclick="toggleValueDropdown3(this)" style="height:38px;border:none;padding:0 10px;font-size:13px;color:${cond.values.length?'#333':'#b3b5ba'};background:transparent;cursor:pointer;display:flex;align-items:center;flex-wrap:wrap;gap:4px">
+            ${cond.values.length ? cond.values.map(v=>`<span style="background:#e7f0ff;color:#0E66FB;padding:1px 6px;border-radius:2px;font-size:12px">${v}</span>`).join('') : '请选择（可多选）'}
+          </div>
+          <div class="cond-value" style="display:none;z-index:10">
+            ${cfg.values.map(v=>`
+              <label class="cond-value-item" onclick="event.stopPropagation()">
+                <input type="checkbox" ${cond.values.includes(v)?'checked':''} onchange="selectMultiValue(${i},'${v}',this.parentElement)">
+                <span>${v}</span>
+              </label>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    return `
+      <div class="condition-row">
+        <div class="condition-index">${i+1}</div>
+        <div class="condition-fields">
+          <select class="field-select" style="width:120px" onchange="updateCondField(${i},this.value)">
+            ${fields.map(f=>`<option value="${f}" ${cond.field===f?'selected':''}>${f}</option>`).join('')}
+          </select>
+          <select class="cond-op" style="min-width:90px" onchange="updateCondOp(${i},this.value)">
+            ${opHtml}
+          </select>
+          ${valueHtml}
+        </div>
+        <button class="cond-remove" onclick="removeCondition(${i})" title="删除条件">×</button>
+      </div>`;
+  }).join('');
+
+  // 点击空白关闭下拉
+  document.onclick = () => document.querySelectorAll('.cond-value').forEach(p=>p.classList.remove('show'));
+}
+
+function closeRuleModal() {
+  document.getElementById('ruleModal').classList.remove('show');
+  currentEditRule = null;
+}
+
+function saveRule() {
+  const result = document.querySelector('input[name=ruleResult]:checked').value;
+  const label = result === 'yes' ? '占编' : '不占编';
+  const tagClass = result === 'yes' ? 'tag-green' : 'tag-red';
+  const tagText = result === 'yes' ? '占编' : '不占编';
+
+  // 校验
+  if (conditions.some(c=>c.values.length===0)) {
+    showToast('请完善条件值','');
+    return;
+  }
+
+  closeRuleModal();
+  showToast('规则已保存','success');
+  // 实际这里刷新表格
+}
+
+// ===== 删除弹窗 =====
+let pendingDelete = null;
+function openDeleteConfirm(ruleId) {
+  pendingDelete = ruleId;
+  document.getElementById('deleteModal').classList.add('show');
+}
+function closeDeleteModal() {
+  document.getElementById('deleteModal').classList.remove('show');
+  pendingDelete = null;
+}
+function confirmDelete() {
+  closeDeleteModal();
+  // 实际这里删除行
+  showToast('规则已删除','success');
+}
+
+// ===== 规则移动 =====
+function openMoveUp(ruleId) { showToast('上移成功','success'); }
+function openMoveDown(ruleId) { showToast('下移成功','success'); }
+
+// ===== 规则测试 =====
+function runTest() {
+  const type = document.getElementById('testType').value;
+  const lv1 = document.getElementById('testLevel1').value;
+  const lv2 = document.getElementById('testLevel2').value;
+  if (!type) { showToast('请至少选择人员类型',''); return; }
+
+  const result = document.getElementById('testResult');
+  const text = document.getElementById('testResultText');
+  const rule = document.getElementById('testResultRule');
+
+  // 简单模拟测试逻辑
+  let matched = '未匹配任何规则';
+  let matchedRule = '';
+  if (type==='内部' && lv1==='职能') { matched='✅ 占编'; matchedRule='命中规则1：人员类型=内部 且 员工类型一级∈{职能,营销} → 占编'; }
+  else if (type==='实习生') { matched='❌ 不占编'; matchedRule='命中规则4：人员类型∈{外部员工,实习生,临时工} → 不占编'; }
+  else if (type==='临时工') { matched='❌ 不占编'; matchedRule='命中规则4：人员类型∈{外部员工,实习生,临时工} → 不占编'; }
+  else if (type==='学徒' && lv1==='操作') { matched='❌ 不占编'; matchedRule='命中规则5：人员类型∈{学徒,兼职工} 且 员工类型一级=操作 → 不占编'; }
+  else { matched='✅ 占编（兜底）'; matchedRule='未命中预设规则，应用兜底策略：默认占编'; }
+
+  text.textContent = matched;
+  text.style.color = matched.includes('占编') ? '#1BA854' : matched.includes('不占') ? '#FB2323' : '#FF991C';
+  rule.textContent = matchedRule;
+  result.style.display = 'block';
+}
+
+// ===== Toast =====
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (type ? ' '+type : '');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// 初始化
+renderConditions();
+
+// 点击空白关闭下拉
+document.addEventListener('click', function(e){
+  if (!e.target.closest('.cond-value-wrap')) {
+    document.querySelectorAll('.cond-value').forEach(p=>p.classList.remove('show'));
+  }
+});
+</script>
+</body>
+</html>

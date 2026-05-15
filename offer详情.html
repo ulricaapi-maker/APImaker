@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Offer详情</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color:#333947;background:#FAFBFC}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:200px;background:#fff;border-right:1px solid #E6E6E8;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column}
+.sidebar-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid #E6E6E8;font-size:16px;font-weight:600;color:#0E66FB}
+.sidebar-group{padding:8px 0}
+.sidebar-group-title{padding:8px 16px;font-size:12px;color:#999ca3}
+.sidebar-item{padding:8px 16px 8px 28px;font-size:14px;color:#333947;cursor:pointer;text-decoration:none;display:block}
+.sidebar-item:hover{background:#e7f0ff}
+.sidebar-item.active{color:#0E66FB;background:#e7f0ff;font-weight:500}
+.header{height:56px;background:#fff;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
+.breadcrumb{font-size:13px;color:#999ca3}.breadcrumb a{color:#999ca3;text-decoration:none}.breadcrumb a:hover{color:#0E66FB}.breadcrumb span{color:#333947}
+.user-info{font-size:13px;color:#333947}
+.content{flex:1;padding:20px 24px 24px;overflow-y:auto}
+.page-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;background:#fff;border-radius:5px;padding:20px 24px}
+.page-title{font-size:18px;font-weight:600;color:#000819}
+.card{background:#fff;border-radius:5px;margin-bottom:16px}
+.card-header{padding:20px 24px 0;border-bottom:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+.card-title{font-size:14px;font-weight:600;color:#1A2130;padding:4px 10px;background:#E8F0FE;border-radius:3px;display:inline-block}
+.card-body{padding:16px 24px 20px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 32px}
+.info-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px}
+.info-item{display:flex;flex-direction:column}
+.info-label{font-size:12px;color:#999ca3;margin-bottom:4px}
+.info-value{font-size:14px;color:#333947;min-height:22px}
+.tag{display:inline-block;padding:2px 8px;border-radius:2px;font-size:12px}
+.tag-blue{background:#e7f0ff;color:#0E66FB}
+.tag-green{background:#e6f9ef;color:#1BA854}
+.tag-orange{background:#fff7e6;color:#FF991C}
+.tag-gray{background:#f5f6f7;color:#999ca3}
+.tag-red{background:#ffe6e6;color:#FB2323}
+.tag-purple{background:#f0e6ff;color:#7B3ED6}
+.btn{height:32px;padding:0 16px;border-radius:4px;font-size:13px;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:4px}
+.btn:hover{opacity:.85}
+.btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}
+.btn-default{background:#fff;color:#333947;border-color:#ccced1}
+.btn-default:hover{border-color:#0E66FB;color:#0E66FB}
+.btn-text{background:transparent;color:#0E66FB;border:none;padding:0 6px;height:auto;font-size:13px;cursor:pointer}
+.btn-text:hover{text-decoration:underline}
+.btn-danger{background:#fff;color:#F74C4C;border-color:#F74C4C}
+.btn-sm{height:28px;padding:0 10px;font-size:12px}
+table{width:100%;border-collapse:collapse}
+th{background:#f5f6f7;font-size:13px;font-weight:500;color:#1A2130;padding:10px 12px;text-align:left;border-bottom:1px solid #E6E6E8;white-space:nowrap}
+td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E8}
+.detail-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.detail-main{min-width:0}
+.flow-panel{background:#fff;border-radius:5px;position:sticky;top:16px;padding:20px 20px 24px}
+.approval-record-title{font-size:14px;font-weight:600;color:#1A2130;margin-bottom:16px}
+.timeline{padding:0 0 0 24px;position:relative}
+.timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:#E6E6E8}
+.timeline-item{position:relative;padding:0 0 20px 24px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{position:absolute;left:-20px;top:6px;width:12px;height:12px;border-radius:50%;border:2px solid #0E66FB;background:#fff}
+.timeline-dot.done{background:#0E66FB}
+.timeline-dot.active{background:#0E66FB;box-shadow:0 0 0 4px rgba(14,102,251,0.15)}
+.timeline-content{font-size:13px;color:#333947}
+.timeline-meta{font-size:12px;color:#999ca3;margin-top:4px}
+.timeline-operator{font-size:13px;color:#666b75}
+.file-list{display:flex;flex-direction:column;gap:8px}
+.file-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#f9fafe;border-radius:4px;border:1px solid #E6E6E8}
+.file-icon{font-size:18px}
+.file-name{font-size:13px;color:#0E66FB;cursor:pointer}
+.file-size{font-size:12px;color:#999ca3;margin-left:auto}
+.section-divider{height:1px;background:#E6E6E8;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">招聘管理</div>
+      <a class="sidebar-item" href="招聘需求列表.html">招聘需求</a>
+      <a class="sidebar-item active" href="offer列表.html">offer管理</a>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">编制管理</div>
+      <div class="sidebar-item">编制明细</div>
+      <div class="sidebar-item">编制调整</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-group-title">组织管理</div>
+      <div class="sidebar-item">组织明细</div>
+      <div class="sidebar-item">职位库</div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="header">
+      <div class="breadcrumb">招聘管理 / <a href="offer列表.html">offer管理</a> / <span>详情</span></div>
+      <div class="user-info">谭花花 (zt24701)</div>
+    </div>
+    <div class="content">
+      <div class="page-header">
+        <div class="page-title">Offer - 王小明</div>
+        <span class="tag tag-orange">审批中</span>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="btn btn-default btn-sm">催办</button>
+          <button class="btn btn-default btn-sm">转交</button>
+          <button class="btn btn-default btn-sm">撤回</button>
+          <button class="btn btn-danger btn-sm">作废</button>
+        </div>
+      </div>
+
+      <div class="detail-layout">
+        <div class="detail-main">
+
+      <!-- 基本信息 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">基本信息</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">姓名</div><div class="info-value">王小明</div></div>
+            <div class="info-item"><div class="info-label">工作地区</div><div class="info-value">中国大陆</div></div>
+            <div class="info-item"><div class="info-label">个人邮箱</div><div class="info-value">wangxm@example.com</div></div>
+            <div class="info-item"><div class="info-label">手机号码</div><div class="info-value">138****8888</div></div>
+            <div class="info-item"><div class="info-label">证件类型</div><div class="info-value">身份证</div></div>
+            <div class="info-item"><div class="info-label">证件号码</div><div class="info-value">440***********1234</div></div>
+            <div class="info-item"><div class="info-label">是否重聘入职</div><div class="info-value">否</div></div>
+            <div class="info-item"><div class="info-label">原工号</div><div class="info-value">-</div></div>
+            <div class="info-item"><div class="info-label">最高学历</div><div class="info-value">本科</div></div>
+            <div class="info-item"><div class="info-label">籍贯</div><div class="info-value">广东省深圳市</div></div>
+            <div class="info-item"><div class="info-label">性别</div><div class="info-value">男</div></div>
+            <div class="info-item"><div class="info-label">年龄</div><div class="info-value">28</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 需求信息 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">需求信息</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">招聘需求</div><div class="info-value"><a class="btn-text" href="招聘需求详情.html" style="padding:0">202601020001</a> 产品经理</div></div>
+            <div class="info-item"><div class="info-label">需求类型</div><div class="info-value">新增</div></div>
+            <div class="info-item"><div class="info-label">招聘负责人</div><div class="info-value">张三 (zt00001)</div></div>
+            <div class="info-item"><div class="info-label">是否有协助招聘负责人</div><div class="info-value">否</div></div>
+            <div class="info-item"><div class="info-label">编制部门</div><div class="info-value">纵腾集团/HRAS/技术部</div></div>
+            <div class="info-item"><div class="info-label">编制职位</div><div class="info-value">产品经理</div></div>
+            <div class="info-item"><div class="info-label">编制职级</div><div class="info-value">P2-1</div></div>
+            <div class="info-item"><div class="info-label">需求职级</div><div class="info-value">P2-3</div></div>
+            <div class="info-item"><div class="info-label">编制ABC分类</div><div class="info-value">A类</div></div>
+            <div class="info-item"><div class="info-label">编制编码</div><div class="info-value">202501016001</div></div>
+            <div class="info-item"><div class="info-label">招聘渠道</div><div class="info-value">猎头</div></div>
+            <div class="info-item"><div class="info-label">招聘启动日期</div><div class="info-value">2026/01/02</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 任职信息 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">任职信息</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">录用部门</div><div class="info-value">纵腾集团/HRAS/技术部</div></div>
+            <div class="info-item"><div class="info-label">录用职位</div><div class="info-value">产品经理</div></div>
+            <div class="info-item"><div class="info-label">录用职级</div><div class="info-value">P2-1</div></div>
+            <div class="info-item"><div class="info-label">职族</div><div class="info-value">专业族</div></div>
+            <div class="info-item"><div class="info-label">职类</div><div class="info-value">产品类</div></div>
+            <div class="info-item"><div class="info-label">领色</div><div class="info-value">白领</div></div>
+            <div class="info-item"><div class="info-label">计划入职日期</div><div class="info-value">2026/04/01</div></div>
+            <div class="info-item"><div class="info-label">用工形式</div><div class="info-value">正式工</div></div>
+            <div class="info-item"><div class="info-label">合同类型</div><div class="info-value">固定期限</div></div>
+            <div class="info-item"><div class="info-label">合同主体</div><div class="info-value">纵腾集团</div></div>
+            <div class="info-item"><div class="info-label">划分区域</div><div class="info-value">LBU</div></div>
+            <div class="info-item"><div class="info-label">工作城市</div><div class="info-value">深圳市</div></div>
+            <div class="info-item"><div class="info-label">办公地点</div><div class="info-value">深圳总部</div></div>
+            <div class="info-item"><div class="info-label">报到地点</div><div class="info-value">深圳总部</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 定薪结果 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">定薪结果</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">基本工资</div><div class="info-value">15,000</div></div>
+            <div class="info-item"><div class="info-label">岗位工资</div><div class="info-value">5,000</div></div>
+            <div class="info-item"><div class="info-label">绩效工资</div><div class="info-value">3,000</div></div>
+            <div class="info-item"><div class="info-label">月薪标准</div><div class="info-value">23,000</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 附件 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">附件信息</div></div>
+        <div class="card-body">
+          <div class="file-list">
+            <div class="file-item"><span class="file-icon">📄</span><span class="file-name">学信网认证_王小明.pdf</span><span class="file-size">245 KB</span></div>
+            <div class="file-item"><span class="file-icon">📄</span><span class="file-name">薪酬建议表_王小明.png</span><span class="file-size">1.2 MB</span></div>
+            <div class="file-item"><span class="file-icon">📄</span><span class="file-name">Offer_Letter_王小明.pdf</span><span class="file-size">380 KB</span></div>
+            <div class="file-item"><span class="file-icon">📄</span><span class="file-name">候选人简历_王小明.pdf</span><span class="file-size">520 KB</span></div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="info-label">备注</div>
+            <div class="info-value" style="margin-top:4px">候选人要求尽快入职，已与部门沟通确认4月1日报到。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 背调信息 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">背调信息</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">是否背调</div><div class="info-value">是</div></div>
+            <div class="info-item"><div class="info-label">期望调查结束时间</div><div class="info-value">2026/03/20</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 特批信息 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">特批信息</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">是否薪酬特批</div><div class="info-value">否</div></div>
+            <div class="info-item"><div class="info-label">年龄特批人</div><div class="info-value">-</div></div>
+            <div class="info-item"><div class="info-label">年龄特批附件</div><div class="info-value">-</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 关联招聘需求 -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">关联招聘需求</div></div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">招聘需求编码</div><div class="info-value"><a class="btn-text" href="招聘需求详情.html" style="padding:0">202601020001</a></div></div>
+            <div class="info-item"><div class="info-label">职位</div><div class="info-value">产品经理</div></div>
+            <div class="info-item"><div class="info-label">需求状态</div><div class="info-value"><span class="tag tag-blue">进行中</span></div></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <aside class="flow-panel">
+          <div class="approval-record-title">审批记录</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot done"></div>
+              <div class="timeline-content">
+                <div class="timeline-operator"><b>师夏青</b> zt24701 提交</div>
+                <div class="timeline-meta">2026/03/06 10:00</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot done"></div>
+              <div class="timeline-content">
+                <div class="timeline-operator"><b>张三</b> zt00001 同意</div>
+                <div class="timeline-meta">2026/03/06 10:30 ~ 10:45 · 耗时 15分钟</div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot done"></div>
+              <div class="timeline-content">
+                <div class="timeline-operator"><b>朱雨儿</b> zt23432 同意</div>
+                <div class="timeline-meta">2026/03/06 11:00 ~ 11:20 · 耗时 20分钟</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
