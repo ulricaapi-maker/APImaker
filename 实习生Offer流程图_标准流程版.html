@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实习生 Offer 审批流程图 - 标准流程版</title>
+<style>
+body{margin:0;background:#f6f8fb;font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;color:#1f2937}
+.page{width:1280px;margin:28px auto;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:26px;letter-spacing:0}
+p{margin:0;color:#667085;font-size:14px;line-height:1.7}
+.legend{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{padding:6px 10px;border:1px solid #d0d5dd;border-radius:4px;background:#fff;color:#344054;font-size:12px}
+svg{display:block;width:100%;height:auto;background:#fbfcfe;border:1px solid #e5e7eb;border-radius:8px}
+.zone{fill:#f8fafc;stroke:#d8e0eb;stroke-width:1.5}
+.zone-title{fill:#667085;font-size:15px;font-weight:700}
+.approval{fill:#2f80ed;stroke:#1f64c8;stroke-width:1.5}
+.decision{fill:#fff7e6;stroke:#d09220;stroke-width:2}
+.start{fill:#2563eb;stroke:#1d4ed8}
+.end{fill:#111827;stroke:#111827}
+.label{fill:#fff;font-size:16px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.role-label{fill:#eaf2ff;font-size:12px;text-anchor:middle;dominant-baseline:middle}
+.dark-label{fill:#1f2937;font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.note{fill:#475467;font-size:12px;text-anchor:middle}
+.edge{fill:none;stroke:#1f2937;stroke-width:2.2;marker-end:url(#arrow)}
+.txt{fill:#344054;font-size:13px}
+.small{fill:#475467;font-size:12px}
+.callout{fill:#fff7d6;stroke:#f0c96b;stroke-width:1}
+.callout-text{fill:#344054;font-size:13px}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="head">
+    <div>
+      <h1>实习生 Offer 审批流程图 - 标准流程版</h1>
+      <p>按独立实习生 Offer 流程绘制：保留重聘复核、国内 / 海外分流、HRBP_TA 与 HSSC_薪酬对接人，不展开 GF 特殊分支。</p>
+    </div>
+    <div class="legend">
+      <span class="tag">蓝色：审批节点</span>
+      <span class="tag">黄色：判断条件</span>
+      <span class="tag">黑色：开始 / 结束</span>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 1228 1540" role="img" aria-label="实习生 Offer 标准流程图">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path>
+      </marker>
+    </defs>
+
+    <rect class="zone" x="38" y="30" width="1152" height="640" rx="10"></rect>
+    <text class="zone-title" x="58" y="58">A. 前置分流</text>
+    <rect class="zone" x="38" y="700" width="1152" height="540" rx="10"></rect>
+    <text class="zone-title" x="58" y="728">B. 实习生审批主线</text>
+    <rect class="zone" x="38" y="1270" width="1152" height="210" rx="10"></rect>
+    <text class="zone-title" x="58" y="1298">C. 流程结束</text>
+
+    <rect class="start" x="554" y="72" width="120" height="48" rx="8"></rect>
+    <text class="label" x="614" y="96">开始</text>
+
+    <polygon class="decision" points="614,152 714,212 614,272 514,212"></polygon>
+    <text class="dark-label" x="614" y="204">招聘渠道</text>
+    <text class="dark-label" x="614" y="226">是否为重聘</text>
+
+    <rect class="approval" x="802" y="180" width="196" height="66" rx="8"></rect>
+    <text class="label" x="900" y="204">HSSC_人事专员复核</text>
+    <text class="role-label" x="900" y="226">组织角色：HSSC_人事专员</text>
+
+    <polygon class="decision" points="614,330 714,390 614,450 514,390"></polygon>
+    <text class="dark-label" x="614" y="390">工作地区</text>
+
+    <rect class="approval" x="802" y="362" width="214" height="66" rx="8"></rect>
+    <text class="label" x="909" y="386">海外各区指定HRBP审批</text>
+    <text class="role-label" x="909" y="408">组织角色：HRBP</text>
+
+    <rect class="approval" x="504" y="514" width="220" height="66" rx="8"></rect>
+    <text class="label" x="614" y="538">HRBP_TA对接人</text>
+    <text class="role-label" x="614" y="560">组织角色：HRBP_TA对接人</text>
+    <text class="note" x="614" y="606">国内与海外均进入该节点；审批人按角色维护</text>
+
+    <rect class="approval" x="504" y="724" width="220" height="66" rx="8"></rect>
+    <text class="label" x="614" y="748">HSSC_薪酬对接人</text>
+    <text class="role-label" x="614" y="770">专业角色</text>
+
+    <rect class="approval" x="504" y="892" width="220" height="66" rx="8"></rect>
+    <text class="label" x="614" y="916">四级部门负责人</text>
+    <text class="role-label" x="614" y="938">汇报关系角色</text>
+
+    <rect class="approval" x="504" y="1060" width="220" height="66" rx="8"></rect>
+    <text class="label" x="614" y="1084">任职部门负责人</text>
+    <text class="role-label" x="614" y="1106">汇报关系角色</text>
+
+    <rect class="end" x="554" y="1348" width="120" height="58" rx="8"></rect>
+    <text class="label" x="614" y="1377">结束</text>
+
+    <path class="edge" d="M614 120 L614 150"></path>
+    <path class="edge" d="M714 212 L800 212"></path>
+    <text class="txt" x="750" y="198">是</text>
+    <path class="edge" d="M900 246 L900 300 L614 300 L614 328"></path>
+    <path class="edge" d="M614 272 L614 328"></path>
+    <text class="txt" x="628" y="302">否</text>
+
+    <path class="edge" d="M714 390 L800 390"></path>
+    <text class="txt" x="746" y="374">海外</text>
+    <path class="edge" d="M909 428 L909 547 L726 547"></path>
+    <path class="edge" d="M614 450 L614 512"></path>
+    <text class="txt" x="628" y="482">国内</text>
+    <path class="edge" d="M614 580 L614 722"></path>
+    <path class="edge" d="M614 790 L614 890"></path>
+    <path class="edge" d="M614 958 L614 1058"></path>
+    <path class="edge" d="M614 1126 L614 1346"></path>
+
+    <rect class="callout" x="76" y="782" width="290" height="96" rx="4"></rect>
+    <text class="callout-text" x="96" y="812">本版不展开 GF 特殊分支。</text>
+    <text class="callout-text" x="96" y="842">如后续业务确认 GF 国内 / 海外实习生</text>
+    <text class="callout-text" x="96" y="868">有专属节点，再作为条件分支补充。</text>
+  </svg>
+</main>
+</body>
+</html>

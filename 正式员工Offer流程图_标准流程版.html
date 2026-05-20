@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正式员工 Offer 审批流程图 - 标准流程版</title>
+<style>
+body{margin:0;background:#f6f8fb;font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;color:#1f2937}
+.page{width:1480px;margin:28px auto;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:26px;letter-spacing:0}
+p{margin:0;color:#667085;font-size:14px;line-height:1.7}
+.legend{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{padding:6px 10px;border:1px solid #d0d5dd;border-radius:4px;background:#fff;color:#344054;font-size:12px}
+svg{display:block;width:100%;height:auto;background:#fbfcfe;border:1px solid #e5e7eb;border-radius:8px}
+.zone{fill:#f8fafc;stroke:#d8e0eb;stroke-width:1.5}
+.zone-title{fill:#667085;font-size:15px;font-weight:700}
+.node{fill:#3f70d7;stroke:#2f5eb8;stroke-width:1.5}
+.node2{fill:#fff;stroke:#3f70d7;stroke-width:1.8}
+.special{fill:#7054d6;stroke:#5b42b8;stroke-width:1.5}
+.approval{fill:#2f80ed;stroke:#1f64c8;stroke-width:1.5}
+.decision{fill:#fff7e6;stroke:#d09220;stroke-width:2}
+.start{fill:#2563eb;stroke:#1d4ed8}
+.end{fill:#111827;stroke:#111827}
+.label{fill:#fff;font-size:16px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.role-label{fill:#eaf2ff;font-size:12px;text-anchor:middle;dominant-baseline:middle}
+.dark-label{fill:#1f2937;font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.note{fill:#475467;font-size:12px;text-anchor:middle}
+.edge{fill:none;stroke:#1f2937;stroke-width:2.2;marker-end:url(#arrow)}
+.edge-thin{fill:none;stroke:#64748b;stroke-width:1.8;marker-end:url(#arrow-gray)}
+.txt{fill:#344054;font-size:13px}
+.small{fill:#475467;font-size:12px}
+.callout{fill:#fff7d6;stroke:#f0c96b;stroke-width:1}
+.callout-text{fill:#344054;font-size:13px}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="head">
+    <div>
+      <h1>正式员工 Offer 审批流程图 - 标准流程版</h1>
+      <p>这版按正常流程图呈现完整流转，保留源图里的判断条件和审批节点；另一份“正式版”用于研发配置阅读。</p>
+    </div>
+    <div class="legend">
+      <span class="tag">蓝色：审批节点</span>
+      <span class="tag">黄色：判断条件</span>
+      <span class="tag">紫色：HCOE / 特批</span>
+      <span class="tag">黑色：开始 / 结束</span>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 1428 2920" role="img" aria-label="正式员工 Offer 标准流程图">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path>
+      </marker>
+      <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#64748b"></path>
+      </marker>
+    </defs>
+
+    <rect class="zone" x="38" y="30" width="1352" height="640" rx="10"></rect>
+    <text class="zone-title" x="58" y="58">A. 前置分流</text>
+    <rect class="zone" x="38" y="700" width="1352" height="660" rx="10"></rect>
+    <text class="zone-title" x="58" y="728">B. HCOE 与薪酬特批</text>
+    <rect class="zone" x="38" y="1390" width="1352" height="780" rx="10"></rect>
+    <text class="zone-title" x="58" y="1418">C. 部门审批</text>
+    <rect class="zone" x="38" y="2200" width="1352" height="680" rx="10"></rect>
+    <text class="zone-title" x="58" y="2228">D. 年龄与高层审批</text>
+
+    <!-- A. 前置分流 -->
+    <rect class="start" x="654" y="72" width="120" height="48" rx="8"></rect>
+    <text class="label" x="714" y="96">开始</text>
+
+    <polygon class="decision" points="714,152 814,212 714,272 614,212"></polygon>
+    <text class="dark-label" x="714" y="204">招聘渠道</text>
+    <text class="dark-label" x="714" y="226">是否为重聘</text>
+
+    <rect class="approval" x="902" y="180" width="196" height="66" rx="8"></rect>
+    <text class="label" x="1000" y="204">HSSC_人事专员复核</text>
+    <text class="role-label" x="1000" y="226">组织角色：HSSC_人事专员</text>
+
+    <polygon class="decision" points="714,330 814,390 714,450 614,390"></polygon>
+    <text class="dark-label" x="714" y="390">工作地区</text>
+
+    <rect class="approval" x="902" y="362" width="214" height="66" rx="8"></rect>
+    <text class="label" x="1009" y="386">海外各区指定HRBP审批</text>
+    <text class="role-label" x="1009" y="408">组织角色：HRBP</text>
+
+    <rect class="approval" x="604" y="514" width="220" height="66" rx="8"></rect>
+    <text class="label" x="714" y="538">HRBP_TA对接人</text>
+    <text class="role-label" x="714" y="560">组织角色：HRBP_TA对接人</text>
+    <text class="note" x="714" y="590">同一角色，国内与海外维护不同审批人</text>
+
+    <rect class="approval" x="604" y="624" width="220" height="66" rx="8"></rect>
+    <text class="label" x="714" y="648">HSSC_薪酬对接人</text>
+    <text class="role-label" x="714" y="670">专业角色</text>
+
+    <path class="edge" d="M714 120 L714 150"></path>
+    <path class="edge" d="M814 212 L900 212"></path>
+    <text class="txt" x="850" y="198">是</text>
+    <path class="edge" d="M1000 246 L1000 300 L714 300 L714 328"></path>
+    <path class="edge" d="M714 272 L714 328"></path>
+    <text class="txt" x="728" y="302">否</text>
+    <path class="edge" d="M814 390 L900 390"></path>
+    <text class="txt" x="846" y="374">海外</text>
+    <path class="edge" d="M1009 428 L1009 547 L826 547"></path>
+    <path class="edge" d="M714 450 L714 512"></path>
+    <text class="txt" x="728" y="482">国内</text>
+    <path class="edge" d="M714 580 L714 622"></path>
+
+    <!-- B. HCOE 与薪酬特批 -->
+    <polygon class="decision" points="714,734 836,812 714,890 592,812"></polygon>
+    <text class="dark-label" x="714" y="790">是否进入 HCOE</text>
+    <text class="dark-label" x="714" y="814">任一条件命中</text>
+    <text class="small" x="714" y="838" text-anchor="middle">薪酬特批 / 高职级 / 管培生</text>
+
+    <rect class="special" x="220" y="785" width="238" height="78" rx="8"></rect>
+    <text class="label" x="339" y="807">HCOE-高级薪酬主管</text>
+    <text class="role-label" x="339" y="829">专业角色</text>
+    <text class="role-label" x="339" y="849">审批人：黎梦</text>
+
+    <rect class="special" x="300" y="960" width="180" height="66" rx="8"></rect>
+    <text class="label" x="390" y="984">HCOE负责人</text>
+    <text class="role-label" x="390" y="1006">专业角色</text>
+
+    <polygon class="decision" points="390,1060 482,1122 390,1184 298,1122"></polygon>
+    <text class="dark-label" x="390" y="1104">是否进入</text>
+    <text class="dark-label" x="390" y="1126">薪酬特批</text>
+    <text class="small" x="390" y="1148" text-anchor="middle">是否薪酬特批=是</text>
+
+    <rect class="special" x="180" y="1242" width="180" height="66" rx="8"></rect>
+    <text class="label" x="270" y="1266">薪酬特批人</text>
+    <text class="role-label" x="270" y="1288">表单字段取人</text>
+
+    <circle cx="714" cy="1328" r="10" fill="#fff" stroke="#64748b" stroke-width="2"></circle>
+
+    <path class="edge" d="M714 682 L714 732"></path>
+    <path class="edge" d="M592 812 L460 812"></path>
+    <text class="txt" x="468" y="782">条件1：人员类型=管培生</text>
+    <text class="small" x="468" y="804">先到高级薪酬主管，再到 HCOE负责人</text>
+    <path class="edge" d="M339 863 L339 930 L390 930 L390 958"></path>
+    <path class="edge" d="M836 812 L1190 812 L1190 1328 L724 1328"></path>
+    <text class="txt" x="940" y="792">其他：未命中以上条件，直接进入部门层级判断</text>
+    <path class="edge" d="M714 890 L714 918 L390 918 L390 958"></path>
+    <text class="txt" x="456" y="890">条件2：是否薪酬特批=是</text>
+    <text class="txt" x="456" y="912">或 职级=P/M3-3及以上</text>
+    <path class="edge" d="M390 1026 L390 1058"></path>
+    <path class="edge" d="M298 1122 L270 1122 L270 1240"></path>
+    <text class="txt" x="246" y="1105">是：进入薪酬特批人</text>
+    <path class="edge" d="M482 1122 L714 1122 L714 1316"></path>
+    <text class="txt" x="548" y="1105">否：进入部门层级判断</text>
+    <path class="edge" d="M270 1308 L270 1328 L704 1328"></path>
+
+    <!-- C. 部门审批 -->
+    <polygon class="decision" points="714,1440 822,1510 714,1580 606,1510"></polygon>
+    <text class="dark-label" x="714" y="1500">部门层级</text>
+    <text class="dark-label" x="714" y="1522">判断</text>
+
+    <polygon class="decision" points="414,1646 512,1710 414,1774 316,1710"></polygon>
+    <text class="dark-label" x="414" y="1710">职级判断</text>
+
+    <rect class="approval" x="135" y="1854" width="180" height="66" rx="8"></rect>
+    <text class="label" x="225" y="1878">四级部门负责人</text>
+    <text class="role-label" x="225" y="1900">汇报关系角色</text>
+    <rect class="approval" x="340" y="1970" width="180" height="66" rx="8"></rect>
+    <text class="label" x="430" y="1994">三级部门负责人</text>
+    <text class="role-label" x="430" y="2016">汇报关系角色</text>
+    <rect class="approval" x="565" y="1854" width="180" height="66" rx="8"></rect>
+    <text class="label" x="655" y="1878">三级部门负责人</text>
+    <text class="role-label" x="655" y="1900">汇报关系角色</text>
+    <rect class="approval" x="565" y="1970" width="180" height="66" rx="8"></rect>
+    <text class="label" x="655" y="1994">二级部门负责人</text>
+    <text class="role-label" x="655" y="2016">汇报关系角色</text>
+
+    <rect class="approval" x="944" y="1642" width="190" height="66" rx="8"></rect>
+    <text class="label" x="1039" y="1666">任职部门负责人</text>
+    <text class="role-label" x="1039" y="1688">汇报关系角色</text>
+    <rect class="approval" x="944" y="1812" width="190" height="66" rx="8"></rect>
+    <text class="label" x="1039" y="1836">三级部门负责人</text>
+    <text class="role-label" x="1039" y="1858">汇报关系角色</text>
+    <rect class="approval" x="944" y="1940" width="190" height="66" rx="8"></rect>
+    <text class="label" x="1039" y="1964">二级部门负责人</text>
+    <text class="role-label" x="1039" y="1986">汇报关系角色</text>
+
+    <circle cx="714" cy="2130" r="10" fill="#fff" stroke="#64748b" stroke-width="2"></circle>
+
+    <path class="edge" d="M714 1338 L714 1438"></path>
+    <path class="edge" d="M606 1510 L414 1510 L414 1644"></path>
+    <text class="txt" x="458" y="1490">部门层级 = 4 / 5 / 6 / 7 / 8</text>
+    <path class="edge" d="M822 1510 L1039 1510 L1039 1640"></path>
+    <text class="txt" x="946" y="1490">部门层级 = 2 / 3</text>
+
+    <path class="edge" d="M316 1710 L225 1710 L225 1852"></path>
+    <text class="txt" x="150" y="1693">职级 ≤ P/M2-3</text>
+    <path class="edge" d="M414 1774 L414 1968"></path>
+    <text class="txt" x="428" y="1832">职级 = P/M3-1 或 P/M3-2</text>
+    <path class="edge" d="M512 1710 L655 1710 L655 1852"></path>
+    <text class="txt" x="546" y="1693">职级 ≥ P/M3-3</text>
+    <path class="edge" d="M225 1920 L225 1942 L430 1942 L430 1968"></path>
+    <text class="txt" x="244" y="1932">薪酬特批</text>
+    <path class="edge" d="M225 1920 L225 2130 L704 2130"></path>
+    <text class="txt" x="76" y="2068">非薪酬特批</text>
+    <path class="edge" d="M430 2036 L430 2130 L704 2130"></path>
+    <path class="edge" d="M655 1920 L655 1968"></path>
+    <path class="edge" d="M655 2036 L655 2130 L704 2130"></path>
+
+    <path class="edge" d="M1039 1708 L1039 1810"></path>
+    <text class="txt" x="1054" y="1762">职级 = P/M3-1 或 P/M3-2</text>
+    <path class="edge" d="M1039 1878 L1039 1938"></path>
+    <text class="txt" x="1054" y="1912">职级 ≥ P/M3-3</text>
+    <path class="edge" d="M944 1671 L880 1671 L880 2130 L724 2130"></path>
+    <text class="txt" x="898" y="1738">其他</text>
+    <path class="edge" d="M1039 2006 L1039 2130 L724 2130"></path>
+
+    <!-- D. 年龄与高层审批 -->
+    <polygon class="decision" points="714,2248 804,2310 714,2372 624,2310"></polygon>
+    <text class="dark-label" x="714" y="2310">年龄 ≥ 38</text>
+    <rect class="special" x="390" y="2281" width="190" height="66" rx="8"></rect>
+    <text class="label" x="485" y="2305">年龄特批申请人</text>
+    <text class="role-label" x="485" y="2327">表单字段取人</text>
+    <rect class="approval" x="624" y="2436" width="180" height="66" rx="8"></rect>
+    <text class="label" x="714" y="2460">HRBP负责人</text>
+    <text class="role-label" x="714" y="2482">组织角色：HRBP负责人</text>
+
+    <polygon class="decision" points="714,2532 828,2598 714,2664 600,2598"></polygon>
+    <text class="dark-label" x="714" y="2574">职级=P/M2-3及以上</text>
+    <text class="dark-label" x="714" y="2598">或 部门=HRAS</text>
+    <text class="dark-label" x="714" y="2622">且 年龄 ≥ 34</text>
+
+    <rect class="approval" x="960" y="2569" width="110" height="66" rx="8"></rect>
+    <text class="label" x="1015" y="2593">CHO</text>
+    <text class="role-label" x="1015" y="2615">专业角色</text>
+    <polygon class="decision" points="1015,2662 1098,2718 1015,2774 932,2718"></polygon>
+    <text class="dark-label" x="1015" y="2710">职级=P3/M3</text>
+    <text class="dark-label" x="1015" y="2730">及以上</text>
+    <rect class="approval" x="960" y="2822" width="110" height="66" rx="8"></rect>
+    <text class="label" x="1015" y="2846">CEO</text>
+    <text class="role-label" x="1015" y="2868">专业角色</text>
+    <rect class="end" x="654" y="2822" width="120" height="58" rx="8"></rect>
+    <text class="label" x="714" y="2851">结束</text>
+
+    <path class="edge" d="M714 2140 L714 2246"></path>
+    <path class="edge" d="M624 2310 L582 2310"></path>
+    <text class="txt" x="600" y="2294">是</text>
+    <path class="edge" d="M485 2347 L485 2410 L714 2410 L714 2434"></path>
+    <path class="edge" d="M714 2372 L714 2434"></path>
+    <text class="txt" x="730" y="2408">否</text>
+    <path class="edge" d="M714 2502 L714 2530"></path>
+    <path class="edge" d="M828 2598 L958 2598"></path>
+    <text class="txt" x="880" y="2582">是</text>
+    <path class="edge" d="M714 2664 L714 2820"></path>
+    <text class="txt" x="730" y="2734">否</text>
+    <path class="edge" d="M1015 2635 L1015 2660"></path>
+    <path class="edge" d="M1015 2774 L1015 2820"></path>
+    <text class="txt" x="1030" y="2800">是</text>
+    <path class="edge" d="M932 2718 L850 2718 L850 2851 L776 2851"></path>
+    <text class="txt" x="882" y="2702">否</text>
+    <path class="edge" d="M960 2851 L776 2851"></path>
+
+    <rect class="callout" x="70" y="1010" width="250" height="110" rx="4"></rect>
+    <text class="callout-text" x="90" y="1040">各节点薪酬可见规则：</text>
+    <text class="callout-text" x="90" y="1070">转正流程节点是否可见</text>
+    <text class="callout-text" x="90" y="1100">需由薪酬可见规则控制</text>
+  </svg>
+</main>
+</body>
+</html>

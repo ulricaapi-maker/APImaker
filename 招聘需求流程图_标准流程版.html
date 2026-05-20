@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>招聘需求审批流程图 - 标准流程版</title>
+<style>
+body{margin:0;background:#f6f8fb;font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;color:#1f2937}
+.page{width:1380px;margin:28px auto;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:24px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}
+h1{margin:0 0 8px;font-size:26px;letter-spacing:0}
+p{margin:0;color:#667085;font-size:14px;line-height:1.7}
+.legend{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tag{padding:6px 10px;border:1px solid #d0d5dd;border-radius:4px;background:#fff;color:#344054;font-size:12px}
+svg{display:block;width:100%;height:auto;background:#fbfcfe;border:1px solid #e5e7eb;border-radius:8px}
+.zone{fill:#f8fafc;stroke:#d8e0eb;stroke-width:1.5}
+.zone-title{fill:#667085;font-size:15px;font-weight:700}
+.approval{fill:#2f80ed;stroke:#1f64c8;stroke-width:1.5}
+.decision{fill:#fff7e6;stroke:#d09220;stroke-width:2}
+.start{fill:#2563eb;stroke:#1d4ed8}
+.end{fill:#111827;stroke:#111827}
+.label{fill:#fff;font-size:16px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.role-label{fill:#eaf2ff;font-size:12px;text-anchor:middle;dominant-baseline:middle}
+.dark-label{fill:#1f2937;font-size:15px;font-weight:700;text-anchor:middle;dominant-baseline:middle}
+.edge{fill:none;stroke:#1f2937;stroke-width:2.2;marker-end:url(#arrow)}
+.txt{fill:#344054;font-size:13px}
+.small{fill:#475467;font-size:12px}
+.callout{fill:#fff7d6;stroke:#f0c96b;stroke-width:1}
+.callout-title{fill:#344054;font-size:14px;font-weight:700}
+.callout-text{fill:#344054;font-size:13px}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="head">
+    <div>
+      <h1>招聘需求审批流程图 - 标准流程版</h1>
+      <p>根据《招聘需求流程图.docx》重绘，按正常流程图展示完整流转，并补充审批节点取值类型。</p>
+    </div>
+    <div class="legend">
+      <span class="tag">蓝色：审批节点</span>
+      <span class="tag">黄色：判断条件</span>
+      <span class="tag">黑色：开始 / 结束</span>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 1328 2500" role="img" aria-label="招聘需求审批标准流程图">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+        <path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path>
+      </marker>
+    </defs>
+
+    <rect class="zone" x="38" y="30" width="1252" height="530" rx="10"></rect>
+    <text class="zone-title" x="58" y="58">A. 前置分流</text>
+    <rect class="zone" x="38" y="590" width="1252" height="930" rx="10"></rect>
+    <text class="zone-title" x="58" y="618">B. 部门审批</text>
+    <rect class="zone" x="38" y="1550" width="1252" height="730" rx="10"></rect>
+    <text class="zone-title" x="58" y="1578">C. HR 与高层审批</text>
+    <rect class="zone" x="38" y="2310" width="1252" height="150" rx="10"></rect>
+    <text class="zone-title" x="58" y="2338">D. 流程结束</text>
+
+    <!-- A. 前置分流 -->
+    <rect class="start" x="604" y="82" width="120" height="54" rx="28"></rect>
+    <text class="label" x="664" y="109">开始</text>
+
+    <rect class="approval" x="224" y="210" width="170" height="66" rx="8"></rect>
+    <text class="label" x="309" y="234">HRBP</text>
+    <text class="role-label" x="309" y="256">组织角色：HRBP</text>
+
+    <rect class="approval" x="554" y="330" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="354">HRBP_TA对接人</text>
+    <text class="role-label" x="664" y="378">组织角色：HRBP_TA对接人</text>
+
+    <path class="edge" d="M604 109 L310 109 L310 208"></path>
+    <text class="txt" x="430" y="94">海外</text>
+    <path class="edge" d="M664 136 L664 328"></path>
+    <text class="txt" x="678" y="202">国内</text>
+    <path class="edge" d="M309 276 L309 365 L552 365"></path>
+
+    <rect class="callout" x="890" y="186" width="330" height="150" rx="4"></rect>
+    <text class="callout-title" x="910" y="218">部门负责人跳过规则</text>
+    <text class="callout-text" x="910" y="250">当需求职位 = 部门负责人时，跳过需求</text>
+    <text class="callout-text" x="910" y="278">部门负责人审批，由上一级部门负责人审批。</text>
+    <text class="callout-text" x="910" y="314">例：招聘职位为四级部门负责人，</text>
+    <text class="callout-text" x="910" y="342">则跳过四级部门负责人审批。</text>
+
+    <!-- B. 部门审批 -->
+    <polygon class="decision" points="664,620 780,690 664,760 548,690"></polygon>
+    <text class="dark-label" x="664" y="682">部门层级</text>
+    <text class="dark-label" x="664" y="704">判断</text>
+
+    <rect class="approval" x="250" y="800" width="190" height="70" rx="8"></rect>
+    <text class="label" x="345" y="824">四级部门负责人</text>
+    <text class="role-label" x="345" y="848">汇报关系角色</text>
+
+    <rect class="approval" x="840" y="800" width="210" height="70" rx="8"></rect>
+    <text class="label" x="945" y="824">需求部门负责人</text>
+    <text class="role-label" x="945" y="848">汇报关系角色</text>
+
+    <polygon class="decision" points="664,1010 770,1080 664,1150 558,1080"></polygon>
+    <text class="dark-label" x="664" y="1080">判断职级</text>
+
+    <rect class="approval" x="554" y="1240" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="1264">三级部门负责人</text>
+    <text class="role-label" x="664" y="1288">汇报关系角色</text>
+
+    <rect class="approval" x="554" y="1390" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="1414">二级部门负责人</text>
+    <text class="role-label" x="664" y="1438">汇报关系角色</text>
+
+    <circle cx="664" cy="1492" r="10" fill="#fff" stroke="#64748b" stroke-width="2"></circle>
+
+    <path class="edge" d="M664 400 L664 618"></path>
+    <path class="edge" d="M548 690 L345 690 L345 798"></path>
+    <text class="txt" x="390" y="670">部门层级 = 4 / 5 / 6 / 7 / 8</text>
+    <path class="edge" d="M780 690 L945 690 L945 798"></path>
+    <text class="txt" x="848" y="670">部门层级 = 2 / 3</text>
+    <path class="edge" d="M345 870 L345 960 L664 960 L664 1008"></path>
+    <path class="edge" d="M945 870 L945 960 L664 960 L664 1008"></path>
+
+    <path class="edge" d="M664 1150 L664 1238"></path>
+    <text class="txt" x="690" y="1198">职级 = P/M3-1 或 P/M3-2</text>
+    <path class="edge" d="M664 1310 L664 1388"></path>
+    <text class="txt" x="690" y="1358">职级 = P/M3-3 及以上</text>
+    <path class="edge" d="M558 1080 L450 1080 L450 1492 L654 1492"></path>
+    <text class="txt" x="326" y="1070">职级 = P/M2-3 及以下</text>
+    <path class="edge" d="M770 1080 L1040 1080 L1040 1492 L674 1492"></path>
+    <text class="txt" x="900" y="1065">职级 = P2-1 以下 或 实习生</text>
+    <path class="edge" d="M664 1460 L664 1480"></path>
+
+    <!-- C. HR 与高层审批 -->
+    <rect class="approval" x="554" y="1590" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="1614">HRBP经理</text>
+    <text class="role-label" x="664" y="1638">组织角色：HRBP经理</text>
+
+    <rect class="approval" x="554" y="1768" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="1792">HRBP负责人</text>
+    <text class="role-label" x="664" y="1816">组织角色：HRBP负责人</text>
+
+    <rect class="approval" x="554" y="1948" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="1972">CHO</text>
+    <text class="role-label" x="664" y="1996">专业角色</text>
+
+    <rect class="approval" x="554" y="2128" width="220" height="70" rx="8"></rect>
+    <text class="label" x="664" y="2152">CEO</text>
+    <text class="role-label" x="664" y="2176">专业角色</text>
+
+    <path class="edge" d="M664 1502 L664 1588"></path>
+    <path class="edge" d="M664 1660 L664 1766"></path>
+    <text class="txt" x="690" y="1718">职级 = P/M2-3 以上</text>
+    <path class="edge" d="M664 1838 L664 1946"></path>
+    <path class="edge" d="M664 2018 L664 2126"></path>
+    <text class="txt" x="690" y="2074">职级 = P/M3-3 及以上</text>
+    <path class="edge" d="M774 1625 L1050 1625 L1050 2385 L734 2385"></path>
+    <text class="txt" x="850" y="1598">职级 = P/M2-3 以下 或 实习生</text>
+    <path class="edge" d="M554 1983 L410 1983 L410 2385 L594 2385"></path>
+
+    <!-- D. 结束 -->
+    <rect class="end" x="604" y="2356" width="120" height="58" rx="29"></rect>
+    <text class="label" x="664" y="2385">结束</text>
+    <path class="edge" d="M664 2198 L664 2354"></path>
+  </svg>
+</main>
+</body>
+</html>

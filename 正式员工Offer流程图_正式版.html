@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正式员工 Offer 审批流程图</title>
+<style>
+:root{
+  --bg:#f5f7fb;
+  --page:#fff;
+  --line:#cfd8e6;
+  --text:#1f2937;
+  --muted:#667085;
+  --blue:#2563eb;
+  --blue-weak:#eef4ff;
+  --green:#0f766e;
+  --green-weak:#ecfdf5;
+  --orange:#b45309;
+  --orange-weak:#fff7ed;
+  --purple:#6d28d9;
+  --purple-weak:#f5f3ff;
+  --red:#b42318;
+  --red-weak:#fff1f3;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"PingFang SC","Microsoft YaHei",Arial,sans-serif;
+}
+.page{
+  width:1440px;
+  margin:28px auto;
+  padding:28px;
+  background:var(--page);
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  box-shadow:0 8px 24px rgba(15,23,42,.06);
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  align-items:flex-start;
+  padding-bottom:18px;
+  border-bottom:1px solid #e5e7eb;
+}
+h1{
+  margin:0 0 8px;
+  font-size:26px;
+  line-height:1.35;
+  letter-spacing:0;
+}
+.desc{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.8;
+}
+.legend{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  max-width:540px;
+}
+.tag{
+  display:inline-flex;
+  align-items:center;
+  height:28px;
+  padding:0 10px;
+  border-radius:4px;
+  border:1px solid #d0d5dd;
+  color:#344054;
+  background:#fff;
+  font-size:12px;
+  white-space:nowrap;
+}
+.tag.blue{border-color:#bfdbfe;background:var(--blue-weak);color:#1d4ed8}
+.tag.green{border-color:#99f6e4;background:var(--green-weak);color:var(--green)}
+.tag.orange{border-color:#fed7aa;background:var(--orange-weak);color:var(--orange)}
+.tag.purple{border-color:#ddd6fe;background:var(--purple-weak);color:var(--purple)}
+.content{
+  display:grid;
+  grid-template-columns:1fr 330px;
+  gap:22px;
+  margin-top:22px;
+}
+.flow{
+  min-width:0;
+}
+.section{
+  position:relative;
+  margin-bottom:18px;
+  padding:18px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  background:#fbfcfe;
+}
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0 0 16px;
+  font-size:17px;
+  font-weight:700;
+}
+.section-title::before{
+  content:"";
+  width:4px;
+  height:18px;
+  border-radius:2px;
+  background:var(--blue);
+}
+.mainline{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.row{
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  align-items:stretch;
+}
+.row.two{
+  grid-template-columns:repeat(2,1fr);
+  max-width:720px;
+}
+.row.one{
+  grid-template-columns:1fr;
+  max-width:420px;
+}
+.node{
+  min-height:78px;
+  padding:13px 14px;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:center;
+}
+.node .name{
+  font-size:15px;
+  font-weight:700;
+  line-height:1.5;
+}
+.node .meta{
+  margin-top:5px;
+  color:#475467;
+  font-size:12px;
+  line-height:1.45;
+}
+.node.start,.node.end{
+  min-height:50px;
+  width:150px;
+  color:#fff;
+  background:#2563eb;
+  border-color:#2563eb;
+}
+.node.action{border-color:#bfdbfe;background:#eff6ff}
+.node.role{border-color:#99f6e4;background:#f0fdfa}
+.node.decision{border-color:#fdba74;background:var(--orange-weak)}
+.node.special{border-color:#ddd6fe;background:var(--purple-weak)}
+.node.alert{border-color:#fecdd3;background:var(--red-weak)}
+.arrow{
+  width:2px;
+  height:30px;
+  background:var(--line);
+  position:relative;
+  margin:0 auto;
+}
+.arrow::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+  width:8px;
+  height:8px;
+  border-right:2px solid var(--line);
+  border-bottom:2px solid var(--line);
+  transform:translateX(-50%) rotate(45deg);
+}
+.join-note{
+  width:100%;
+  margin:12px 0 0;
+  padding:10px 12px;
+  border:1px dashed #cbd5e1;
+  border-radius:6px;
+  color:#475467;
+  background:#fff;
+  font-size:13px;
+  line-height:1.7;
+}
+.branch-card{
+  position:relative;
+  padding:14px;
+  border:1px solid #dbe3ef;
+  border-radius:8px;
+  background:#fff;
+}
+.branch-title{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+  font-weight:700;
+  color:#344054;
+}
+.condition{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:26px;
+  padding:3px 8px;
+  border-radius:4px;
+  color:#9a3412;
+  background:#ffedd5;
+  font-size:12px;
+  line-height:1.4;
+  text-align:center;
+}
+.condition.green{color:#0f766e;background:#ccfbf1}
+.condition.blue{color:#1d4ed8;background:#dbeafe}
+.condition.purple{color:#6d28d9;background:#ede9fe}
+.mini-flow{
+  display:grid;
+  gap:8px;
+}
+.mini-flow .mini{
+  padding:9px 10px;
+  border:1px solid #e5e7eb;
+  border-radius:5px;
+  background:#f8fafc;
+  font-size:13px;
+  line-height:1.55;
+}
+.approval-matrix{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  background:#fff;
+}
+.approval-matrix th,.approval-matrix td{
+  padding:12px;
+  border-right:1px solid #e5e7eb;
+  border-bottom:1px solid #e5e7eb;
+  font-size:13px;
+  line-height:1.7;
+  vertical-align:top;
+}
+.approval-matrix th{
+  background:#f8fafc;
+  color:#344054;
+  font-weight:700;
+  text-align:left;
+}
+.approval-matrix tr:last-child td{border-bottom:0}
+.approval-matrix th:last-child,.approval-matrix td:last-child{border-right:0}
+.cell-title{
+  display:block;
+  margin-bottom:4px;
+  color:#111827;
+  font-weight:700;
+}
+.side{
+  position:sticky;
+  top:24px;
+  align-self:start;
+}
+.panel{
+  margin-bottom:14px;
+  padding:16px;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  background:#fff;
+}
+.panel h2{
+  margin:0 0 12px;
+  font-size:16px;
+}
+.panel ul{
+  margin:0;
+  padding-left:18px;
+  color:#475467;
+  font-size:13px;
+  line-height:1.8;
+}
+.panel li+li{margin-top:4px}
+.field-map{
+  display:grid;
+  gap:8px;
+}
+.map-item{
+  padding:9px 10px;
+  border:1px solid #e5e7eb;
+  border-radius:6px;
+  background:#f9fafb;
+  font-size:13px;
+  line-height:1.65;
+}
+.map-item strong{
+  display:block;
+  color:#111827;
+}
+.footer-note{
+  margin-top:8px;
+  color:#667085;
+  font-size:12px;
+  line-height:1.7;
+}
+@media print{
+  body{background:#fff}
+  .page{width:auto;margin:0;border:0;box-shadow:none}
+  .content{grid-template-columns:1fr}
+  .side{position:static}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="header">
+    <div>
+      <h1>正式员工 Offer 审批流程图</h1>
+      <p class="desc">根据最新流程图整理为研发可配置版本：主流程展示系统流转顺序，复杂部门审批按“部门层级 + 职级”矩阵表达。</p>
+    </div>
+    <div class="legend" aria-label="图例">
+      <span class="tag blue">流程节点</span>
+      <span class="tag green">组织角色 / 专业角色</span>
+      <span class="tag orange">判断条件</span>
+      <span class="tag purple">特批节点</span>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="flow">
+      <section class="section">
+        <h2 class="section-title">A. 前置分流</h2>
+        <div class="mainline">
+          <div class="node start"><div class="name">开始</div></div>
+          <div class="arrow"></div>
+          <div class="row one">
+            <div class="node decision">
+              <div class="name">招聘渠道是否为重聘</div>
+              <div class="meta">是：先进入 HSSC_人事专员复核；否：继续判断国内 / 海外</div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="row two">
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>重聘复核</span>
+                <span class="condition">招聘渠道 = 重聘</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>HSSC_人事专员复核</strong><br>取值：组织角色 HSSC_人事专员</div>
+                <div class="mini"><strong>复核后继续分流</strong><br>进入国内 / 海外判断，不单独结束流程</div>
+              </div>
+            </div>
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>非重聘</span>
+                <span class="condition green">招聘渠道 ≠ 重聘</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>直接继续分流</strong><br>进入国内 / 海外判断</div>
+              </div>
+            </div>
+          </div>
+          <div class="join-note">重聘判断是前置复核，不替代后续国内 / 海外路径；复核完成后仍继续进入 HRBP_TA 对接主线。</div>
+          <div class="arrow"></div>
+          <div class="row two">
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>海外 Offer</span>
+                <span class="condition blue">工作地区 = 海外</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>海外各区指定 HRBP 审批</strong><br>取值：组织角色 HRBP</div>
+                <div class="mini"><strong>流入 HRBP_TA对接人</strong><br>与国内共用后续节点</div>
+              </div>
+            </div>
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>国内 Offer</span>
+                <span class="condition green">工作地区 = 国内</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>HRBP_TA对接人</strong><br>取值：组织角色 HRBP_TA对接人</div>
+                <div class="mini"><strong>继续薪酬对接</strong><br>进入 HSSC_薪酬对接人</div>
+              </div>
+            </div>
+          </div>
+          <div class="join-note">TA 对接人：同一个角色，国内与海外维护不同审批人。</div>
+          <div class="arrow"></div>
+          <div class="row one">
+            <div class="node action">
+              <div class="name">HSSC_薪酬对接人</div>
+              <div class="meta">取值：专业角色 HSSC_薪酬对接人</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">B. HCOE 与薪酬特批</h2>
+        <div class="mainline">
+          <div class="row one">
+            <div class="node decision">
+              <div class="name">是否进入 HCOE 审批</div>
+              <div class="meta">满足任一条件：是否薪酬特批 = 是；或职级 = P/M3-3 及以上；或人员类型 = 管培生</div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="row two">
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>进入 HCOE</span>
+                <span class="condition purple">条件命中</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>HCOE-高级薪酬主管</strong><br>条件：人员类型 = 管培生；审批人：黎梦</div>
+                <div class="mini"><strong>HCOE 负责人</strong><br>取值：专业角色 HCOE负责人</div>
+                <div class="mini"><strong>是否薪酬特批 = 是</strong><br>是：流入薪酬特批人；否：流入任职部门负责人</div>
+                <div class="mini"><strong>薪酬特批人</strong><br>取值：表单字段取人，审批后流入任职部门负责人</div>
+              </div>
+            </div>
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>不进入 HCOE</span>
+                <span class="condition green">条件未命中</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>直接进入部门层级判断</strong><br>后续按部门层级与职级判断审批链路</div>
+                <div class="mini"><strong>后续按部门层级与职级判断</strong><br>见下方部门审批矩阵</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">C. 部门审批矩阵</h2>
+        <table class="approval-matrix" aria-label="部门审批矩阵">
+          <thead>
+            <tr>
+              <th style="width:18%">部门层级</th>
+              <th style="width:28%">职级条件</th>
+              <th style="width:32%">审批节点</th>
+              <th>流转说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="cell-title">4 / 5 / 6 / 7 / 8 级部门</span>部门层级 = 4 / 5 / 6 / 7 / 8</td>
+              <td>职级 ≤ P/M2-3</td>
+              <td>四级部门负责人</td>
+              <td>取汇报关系角色“四级部门负责人”；如为薪酬特批，四级后继续到三级部门负责人。</td>
+            </tr>
+            <tr>
+              <td>4 / 5 / 6 / 7 / 8 级部门</td>
+              <td>职级 = P/M3-1 或 P/M3-2</td>
+              <td>三级部门负责人</td>
+              <td>取汇报关系角色“三级部门负责人”。</td>
+            </tr>
+            <tr>
+              <td>4 / 5 / 6 / 7 / 8 级部门</td>
+              <td>职级 ≥ P/M3-3</td>
+              <td>二级部门负责人</td>
+              <td>取汇报关系角色“二级部门负责人”。</td>
+            </tr>
+            <tr>
+              <td><span class="cell-title">2 / 3 级部门</span>部门层级 = 2 / 3</td>
+              <td>进入该分支后</td>
+              <td>任职部门负责人</td>
+              <td>源图中部门层级 2 / 3 先进入任职部门负责人，再按职级判断是否追加上级负责人。</td>
+            </tr>
+            <tr>
+              <td>2 / 3 级部门</td>
+              <td>职级 = P/M3-1 或 P/M3-2</td>
+              <td>三级部门负责人</td>
+              <td>取汇报关系角色“三级部门负责人”。</td>
+            </tr>
+            <tr>
+              <td>2 / 3 级部门</td>
+              <td>职级 ≥ P/M3-3</td>
+              <td>二级部门负责人</td>
+              <td>取汇报关系角色“二级部门负责人”。</td>
+            </tr>
+            <tr>
+              <td>2 / 3 级部门</td>
+              <td>其他职级</td>
+              <td>跳过追加部门审批</td>
+              <td>任职部门负责人后直接进入年龄特批判断。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">D. 年龄特批与高层审批</h2>
+        <div class="mainline">
+          <div class="row one">
+            <div class="node decision">
+              <div class="name">年龄是否 ≥ 38</div>
+              <div class="meta">判断字段：候选人年龄</div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="row two">
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>年龄特批</span>
+                <span class="condition">年龄 ≥ 38</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>年龄特批申请人</strong><br>取值：表单字段取人</div>
+                <div class="mini"><strong>审批后进入 HRBP 负责人</strong><br>取值：组织角色 HRBP负责人</div>
+              </div>
+            </div>
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>常规路径</span>
+                <span class="condition green">年龄 &lt; 38</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>直接进入 HRBP 负责人</strong><br>取值：组织角色 HRBP负责人</div>
+              </div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="row one">
+            <div class="node decision">
+              <div class="name">是否进入 CHO 审批</div>
+              <div class="meta">满足任一条件：职级 = P/M2-3 及以上；或部门 = HRAS 且年龄 ≥ 34</div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="row two">
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>进入 CHO</span>
+                <span class="condition purple">条件命中</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>CHO</strong><br>取值：专业角色 CHO</div>
+                <div class="mini"><strong>是否进入 CEO</strong><br>条件：职级 = P3 / M3 及以上</div>
+                <div class="mini"><strong>CEO</strong><br>取值：专业角色 CEO；审批后结束</div>
+              </div>
+            </div>
+            <div class="branch-card">
+              <div class="branch-title">
+                <span>不进入 CHO</span>
+                <span class="condition green">条件未命中</span>
+              </div>
+              <div class="mini-flow">
+                <div class="mini"><strong>流程结束</strong><br>HRBP 负责人审批后结束</div>
+              </div>
+            </div>
+          </div>
+          <div class="arrow"></div>
+          <div class="node end"><div class="name">结束</div></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section class="panel">
+        <h2>字段口径</h2>
+        <div class="field-map">
+          <div class="map-item"><strong>招聘渠道</strong>先判断是否为“重聘”；是则进入 HSSC_人事专员复核。</div>
+          <div class="map-item"><strong>工作地区</strong>重聘复核后，再用于区分国内 / 海外前置审批路径。</div>
+          <div class="map-item"><strong>是否薪酬特批</strong>当取值为“是”时，进入 HCOE，并在 HCOE 后进入薪酬特批人。</div>
+          <div class="map-item"><strong>职级</strong>用于 HCOE、部门审批、CHO、CEO 多处判断。</div>
+          <div class="map-item"><strong>人员类型</strong>当取值为“管培生”时，进入 HCOE-高级薪酬主管。</div>
+          <div class="map-item"><strong>部门层级</strong>用于部门审批矩阵判断。</div>
+          <div class="map-item"><strong>年龄</strong>用于年龄特批、HRAS 进入 CHO 的判断。</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>角色取值</h2>
+        <ul>
+          <li>HRBP、HRBP_TA对接人、HSSC_人事专员复核、HRBP负责人：按组织角色取值。</li>
+          <li>HSSC_薪酬对接人、HCOE-高级薪酬主管、HCOE负责人、CHO、CEO：按专业角色取值。</li>
+          <li>任职部门负责人、二级部门负责人、三级部门负责人、四级部门负责人：按汇报关系角色取值。</li>
+          <li>薪酬特批人、年龄特批申请人：按 Offer 表单字段取人。</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>配置提醒</h2>
+        <ul>
+          <li>同一节点命中多条条件时，只生成一次审批节点。</li>
+          <li>矩阵中“跳过追加部门审批”不代表跳过任职部门负责人，只是不再追加三级 / 二级等上级节点。</li>
+          <li>海外与国内最终均进入同一条薪酬及后续审批主线。</li>
+        </ul>
+        <p class="footer-note">本页用于研发配置审批流，不展示实习生 Offer 分支。</p>
+      </section>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
