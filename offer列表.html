@@ -29,6 +29,7 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color
 .btn-primary{background:#0E66FB;color:#fff;border-color:#0E66FB}
 .btn-default{background:#fff;color:#333947;border-color:#ccced1}
 .btn-default:hover{border-color:#0E66FB;color:#0E66FB}
+.btn:disabled{background:#f5f6f7;border-color:#E6E6E8;color:#999ca3;cursor:not-allowed;opacity:1}
 .btn-text{background:transparent;color:#0E66FB;border:none;padding:0 6px;height:auto;font-size:13px;text-decoration:none;cursor:pointer}
 .btn-text:hover{text-decoration:underline}
 .btn-sm{height:28px;padding:0 10px;font-size:12px}
@@ -69,6 +70,7 @@ tr:hover td{background:#f9fafe}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:1000;justify-content:center;align-items:flex-start;padding:30px 0;overflow-y:auto}
 .modal-overlay.show{display:flex}
 .modal{background:#fff;border-radius:6px;width:960px;max-height:calc(100vh - 60px);display:flex;flex-direction:column;box-shadow:0 8px 32px rgba(0,0,0,0.15)}
+.modal-small{width:720px}
 .modal-header{padding:16px 24px;border-bottom:1px solid #E6E6E8;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .modal-title{font-size:16px;font-weight:600;color:#000819}
 .modal-close{width:28px;height:28px;border:none;background:transparent;cursor:pointer;font-size:18px;color:#999ca3;display:flex;align-items:center;justify-content:center;border-radius:4px}
@@ -90,6 +92,9 @@ tr:hover td{background:#f9fafe}
 .form-textarea{border:1px solid #E6E6E8;border-radius:4px;padding:8px 10px;font-size:13px;color:#333947;outline:none;resize:vertical;min-height:70px;font-family:inherit}
 .form-select{height:34px;border:1px solid #E6E6E8;border-radius:4px;padding:0 10px;font-size:13px;color:#333947;background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999ca3' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
 .form-select:focus{border-color:#0E66FB;outline:none}
+.readonly-box{min-height:34px;border:1px solid #E6E6E8;border-radius:4px;background:#f8f9fb;padding:8px 10px;font-size:13px;color:#333947;line-height:1.5}
+.transfer-notice{border:1px solid #B9CDFD;background:#F4F7FF;border-radius:4px;padding:10px 12px;font-size:13px;color:#1A2130;line-height:1.7}
+.transfer-notice.warning{border-color:#FFD591;background:#FFF7E6;color:#8A5A00}
 .upload-area{border:1px dashed #ccced1;border-radius:4px;padding:12px;text-align:center;cursor:pointer}
 .upload-area:hover{border-color:#0E66FB}
 .upload-icon{font-size:20px;color:#999ca3}
@@ -113,6 +118,8 @@ tr:hover td{background:#f9fafe}
 .rule-step{padding:8px 10px;background:#F7F9FC;border-radius:4px;margin-bottom:8px;font-size:13px;line-height:1.6}
 .active-rule{box-shadow:0 0 0 2px #E8F0FE;border-radius:4px}
 .btn-mini{height:28px;padding:0 10px;margin-top:6px;font-size:12px;align-self:flex-start}
+.phone-control{display:grid;grid-template-columns:120px 1fr;gap:8px}
+.phone-control .form-select,.phone-control .form-input{width:100%}
 .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1400;align-items:center;justify-content:center}
 .confirm-overlay.show{display:flex}
 .confirm-modal{width:440px;background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.18)}
@@ -128,7 +135,7 @@ tr:hover td{background:#f9fafe}
 <body>
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-logo">HR One</div>
     <div class="sidebar-group">
       <div class="sidebar-group-title">招聘管理</div>
       <a class="sidebar-item" href="招聘需求列表.html">招聘需求</a>
@@ -149,7 +156,7 @@ tr:hover td{background:#f9fafe}
   <div class="main">
     <div class="header">
       <div class="breadcrumb">招聘管理 / <span>offer管理</span></div>
-      <div class="user-info">谭花花 (zt24701)</div>
+      <div class="user-info">谭花花 (ZT24701)</div>
     </div>
     <div class="content">
       <div class="search-bar">
@@ -158,7 +165,7 @@ tr:hover td{background:#f9fafe}
         <label>状态</label>
         <select><option value="">全部</option><option>草稿</option><option>审批中</option><option>待发offer</option><option>已发offer</option><option>已接受offer</option><option>已拒绝offer</option><option>已入职</option><option>放弃入职</option><option>已废弃</option></select>
         <label>编制部门</label>
-        <select><option value="">全部</option><option>纵腾集团/HRAS/技术部</option><option>纵腾集团/HRAS/产品部</option><option>纵腾集团/LBU/物流事业部</option></select>
+        <select><option value="">全部</option><option>ZT/HRAS/技术部</option><option>ZT/HRAS/产品部</option><option>ZT/LBU/物流事业部</option></select>
         <label>是否海外</label>
         <select><option value="">全部</option><option>国内</option><option>海外</option></select>
         <button class="btn btn-primary">查询</button>
@@ -206,7 +213,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301001</a></td>
                 <td>王小明</td>
                 <td>正式员工</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td>产品经理</td>
                 <td>P2-1</td>
                 <td>A类</td>
@@ -216,10 +223,11 @@ tr:hover td{background:#f9fafe}
                 <td>2026/04/01</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item danger">删除</div>
                     </div>
                   </div>
@@ -231,7 +239,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301002</a></td>
                 <td>李小红</td>
                 <td>正式员工</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td>产品经理</td>
                 <td>P2-1</td>
                 <td>A类</td>
@@ -241,10 +249,11 @@ tr:hover td{background:#f9fafe}
                 <td>2026/04/15</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item">重发offer</div>
                       <div class="dropdown-item">放弃入职</div>
                       <div class="dropdown-item danger">删除</div>
@@ -258,7 +267,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301003</a></td>
                 <td>John Smith</td>
                 <td>正式员工</td>
-                <td>GOFO/运营部</td>
+                <td>ZT/运营部</td>
                 <td>运营经理</td>
                 <td>P3-1</td>
                 <td>B类</td>
@@ -268,10 +277,11 @@ tr:hover td{background:#f9fafe}
                 <td>2026/05/01</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item">重发offer</div>
                       <div class="dropdown-item danger">删除</div>
                     </div>
@@ -284,7 +294,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301004</a></td>
                 <td>赵七</td>
                 <td>正式员工</td>
-                <td>纵腾集团/HRAS/产品部</td>
+                <td>ZT/HRAS/产品部</td>
                 <td>UI设计师</td>
                 <td>P2-2</td>
                 <td>A类</td>
@@ -294,10 +304,11 @@ tr:hover td{background:#f9fafe}
                 <td>2026/04/20</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item">重发offer</div>
                       <div class="dropdown-item">放弃入职</div>
                       <div class="dropdown-item danger">删除</div>
@@ -311,7 +322,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301005</a></td>
                 <td>钱八</td>
                 <td>正式员工</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td>Java开发</td>
                 <td>P2-1</td>
                 <td>A类</td>
@@ -321,10 +332,11 @@ tr:hover td{background:#f9fafe}
                 <td>2026/03/15</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item">重发offer</div>
                       <div class="dropdown-item">放弃入职</div>
                       <div class="dropdown-item danger">删除</div>
@@ -338,7 +350,7 @@ tr:hover td{background:#f9fafe}
                 <td><a class="btn-text" href="offer详情.html">OF20260301006</a></td>
                 <td>孙九</td>
                 <td>正式员工</td>
-                <td>纵腾集团/LBU/物流事业部</td>
+                <td>ZT/LBU/物流事业部</td>
                 <td>数据分析师</td>
                 <td>P2-2</td>
                 <td>B类</td>
@@ -348,10 +360,11 @@ tr:hover td{background:#f9fafe}
                 <td>-</td>
                 <td>
                   <a class="btn-text">编辑</a>
-                  <a class="btn-text" style="color:#F74C4C">作废</a>
+                  <a class="btn-text" onclick="openTransferStatusModal(this)">转移状态</a>
                   <div class="btn-group">
                     <a class="btn-text" onclick="toggleDropdown(this)">更多</a>
                     <div class="dropdown-menu">
+                      <div class="dropdown-item danger">作废</div>
                       <div class="dropdown-item">重发offer</div>
                       <div class="dropdown-item">放弃入职</div>
                       <div class="dropdown-item danger">删除</div>
@@ -397,9 +410,16 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label"><span class="required">*</span> 姓名</div><input class="form-input" placeholder="请输入姓名"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 工作地区</div><select class="form-select" id="offerWorkRegion" onchange="toggleOfferOverseasFields()"><option>中国大陆</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 个人邮箱</div><input class="form-input" placeholder="请输入个人邮箱"></div>
-          <div class="form-item"><div class="form-label" id="offerPhoneLabel"><span class="required">*</span> 手机号码 <span class="tip">海外人员，请填写：+区号xxxx</span></div><input class="form-input" placeholder="请输入手机号码"></div>
+          <div class="form-item">
+            <div class="form-label" id="offerPhoneLabel"><span class="required">*</span> 手机号码 <span class="tip">海外人员，请填写：+区号xxxx</span></div>
+            <div class="phone-control">
+              <select class="form-select"><option>+86</option><option>+852</option><option>+853</option><option>+886</option><option>+1</option><option>+60</option><option>+65</option></select>
+              <input class="form-input" placeholder="请输入手机号码">
+            </div>
+          </div>
           <div class="form-item"><div class="form-label" id="offerCertTypeLabel"><span class="required">*</span> 证件类型</div><select class="form-select"><option value="">请选择</option><option>身份证</option><option>护照</option><option>港澳通行证</option></select></div>
           <div class="form-item"><div class="form-label" id="offerCertNoLabel"><span class="required">*</span> 证件号码</div><input class="form-input" placeholder="请输入证件号码"></div>
+          <div class="form-item"><div class="form-label" id="offerCertExpiryLabel"><span class="required">*</span> 证件到期日</div><input class="form-input" type="date"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否重聘入职</div><select class="form-select" id="offerRehireFlag"><option value="">请选择</option><option>是</option><option>否</option></select></div>
           <div class="form-item"><div class="form-label">原工号</div><input class="form-input disabled" id="offerOldEmpNo" placeholder="重聘时自动带出" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 最高学历</div><select class="form-select"><option value="">请选择</option><option>博士</option><option>硕士</option><option>本科</option><option>大专</option></select></div>
@@ -414,14 +434,15 @@ tr:hover td{background:#f9fafe}
         <div class="form-grid">
           <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘需求</div><select class="form-select"><option value="">请选择进行中的招聘需求</option><option>202601020001 - 产品经理</option><option>202601020002 - 产品设计</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 需求类型</div><select class="form-select" id="offerDemandType" onchange="toggleOfferReplacement()"><option value="">请选择</option><option>新增</option><option>离职替补</option><option>调岗替补</option></select></div>
-          <div class="form-item" id="offerReplacementField" style="display:none;"><div class="form-label"><span class="required">*</span> 替补人员</div><select class="form-select"><option value="">请选择替补人员</option><option>李明 (zt10012)</option><option>王芳 (zt10036)</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘负责人</div><select class="form-select"><option value="">请选择</option><option>张三 (zt00001)</option></select></div>
+          <div class="form-item" id="offerReplacementField" style="display:none;"><div class="form-label"><span class="required">*</span> 替补人员</div><select class="form-select"><option value="">请选择替补人员</option><option>李明 (ZT10012)</option><option>王芳 (ZT10036)</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘负责人 <span class="tip">招聘HR/HRBP，可享有招聘奖金</span></div><select class="form-select"><option value="">请选择</option><option>张三 (ZT00001)</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否有协助招聘负责人</div><select class="form-select" id="offerAssistFlag" onchange="toggleOfferAssistRecruiter()"><option value="">请选择</option><option>是</option><option>否</option></select></div>
-          <div class="form-item" id="offerAssistRecruiterField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人</div><select class="form-select"><option value="">请选择协助招聘负责人</option><option>李四 (zt00002)</option><option>王五 (zt00003)</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘渠道</div><select class="form-select" id="offerChannelSelect" onchange="toggleOfferChannelFields()"><option value="">请选择</option><option>猎头</option><option>招聘网站</option><option>内部推荐</option><option>校园招聘</option><option>其他渠道</option></select></div>
-          <div class="form-item" id="offerReferrerField" style="display:none;"><div class="form-label"><span class="required">*</span> 内推人</div><select class="form-select"><option value="">请选择内推人</option><option>陈丽 (zt10025)</option><option>赵强 (zt10031)</option></select></div>
+          <div class="form-item" id="offerAssistRecruiterNameField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人姓名</div><input class="form-input" placeholder="请输入姓名"></div>
+          <div class="form-item" id="offerAssistRecruiterNoField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人工号</div><input class="form-input" placeholder="请输入工号"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘渠道</div><select class="form-select" id="offerChannelSelect" onchange="toggleOfferChannelFields()"><option value="">请选择</option><option>猎头</option><option>招聘网站</option><option>内部推荐</option><option>校园招聘</option><option>其他渠道</option><option>重聘入职</option></select></div>
+          <div class="form-item" id="offerReferrerField" style="display:none;"><div class="form-label"><span class="required">*</span> 内推人</div><select class="form-select"><option value="">请选择内推人</option><option>陈丽 (ZT10025)</option><option>赵强 (ZT10031)</option></select></div>
           <div class="form-item" id="offerOtherChannelField" style="display:none;"><div class="form-label"><span class="required">*</span> 其他渠道</div><input class="form-input" placeholder="请输入其他渠道"></div>
-          <div class="form-item"><div class="form-label">编制部门</div><input class="form-input disabled" value="纵腾集团/HRAS/技术部" disabled></div>
+          <div class="form-item"><div class="form-label">编制部门</div><input class="form-input disabled" value="ZT/HRAS/技术部" disabled></div>
           <div class="form-item"><div class="form-label">编制职位</div><input class="form-input disabled" value="产品经理" disabled></div>
           <div class="form-item"><div class="form-label">编制职级</div><input class="form-input disabled" value="P2-1" disabled></div>
           <div class="form-item"><div class="form-label">需求职级</div><input class="form-input disabled" value="P2-1" disabled></div>
@@ -434,27 +455,47 @@ tr:hover td{background:#f9fafe}
       <div class="form-section">
         <div class="form-section-title">任职信息</div>
         <div class="form-grid">
-          <div class="form-item"><div class="form-label">录用部门</div><input class="form-input disabled" value="纵腾集团/HRAS/技术部" disabled></div>
+          <div class="form-item"><div class="form-label">录用部门</div><input class="form-input disabled" value="ZT/HRAS/技术部" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 录用职位</div><select class="form-select"><option value="">请选择</option><option>产品经理</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 录用职级</div><select class="form-select"><option value="">请选择</option><option>P2-1</option><option>P2-2</option></select></div>
           <div class="form-item"><div class="form-label">职族</div><input class="form-input disabled" value="专业族" disabled></div>
           <div class="form-item"><div class="form-label">职类</div><input class="form-input disabled" value="产品类" disabled></div>
-          <div class="form-item"><div class="form-label">领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
-          <div class="form-item"><div class="form-label">计划入职日期</div><input class="form-input" type="date"></div>
-          <div class="form-item"><div class="form-label">用工形式</div><select class="form-select" id="offerEmpFormSelect" onchange="toggleOfferTraineeSection()"><option value="">请选择</option><option>正式工</option><option>外包工</option><option>实习生</option><option>管培生</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" type="date"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 用工形式</div><select class="form-select" id="offerEmpFormSelect" onchange="toggleOfferTraineeSection()"><option value="">请选择</option><option>正式工</option><option>外包工</option><option>实习生</option><option>管培生</option></select></div>
           <div class="form-item" id="offerEmpType1Field" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型一级</div><select class="form-select"><option value="">请选择</option><option>职能</option><option>营销</option><option>操作</option></select></div>
           <div class="form-item" id="offerEmpType2Field" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型二级</div><select class="form-select"><option value="">请选择</option><option>管培生</option><option>组长</option><option>操作工</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 合同类型</div><select class="form-select"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>无</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 合同主体</div><select class="form-select"><option value="">请选择</option><option>纵腾集团</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 划分区域</div><select class="form-select"><option value="">请选择</option><option>LBU</option><option>FBU</option><option>DBU</option><option>HQU</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 工作城市</div><select class="form-select"><option value="">请选择</option><option>深圳市</option><option>上海市</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 办公地点</div><select class="form-select"><option value="">请选择</option><option>深圳总部</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 报到地点 <span class="tip">发送Offer附件时引用</span></div><select class="form-select"><option value="">请选择</option><option>深圳总部</option></select></div>
         </div>
       </div>
+      <!-- 试用期信息 -->
+      <div class="form-section">
+        <div class="form-section-title">试用期信息</div>
+        <div class="form-grid">
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 是否有试用期</div><select class="form-select" id="offerProbationFlag" onchange="toggleOfferProbationFields()"><option value="">请选择</option><option>是</option><option>否</option></select></div>
+          <div class="form-item offer-probation-field" style="display:none;"><div class="form-label"><span class="required">*</span> 开始日期</div><input class="form-input" id="offerProbationStart" type="date" onchange="calcOfferProbationEnd()"></div>
+          <div class="form-item offer-probation-field" style="display:none;"><div class="form-label"><span class="required">*</span> 试用期（月）</div><input class="form-input" id="offerProbationMonths" type="number" min="0.1" step="1" placeholder="请输入正整数" onchange="calcOfferProbationEnd()"></div>
+          <div class="form-item offer-probation-field" style="display:none;"><div class="form-label"><span class="required">*</span> 试用期结束日期</div><input class="form-input" id="offerProbationEnd" type="date" onchange="calcOfferProbationMonths()"></div>
+        </div>
+      </div>
+      <!-- 合同协议 -->
+      <div class="form-section">
+        <div class="form-section-title">合同协议</div>
+        <div class="form-grid">
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 合同类型</div><select class="form-select" id="offerContractType" onchange="toggleOfferContractFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option><option>无</option></select></div>
+          <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同主体</div><select class="form-select"><option value="">请选择</option><option>ZT</option></select></div>
+          <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 期限类型</div><select class="form-select" id="offerTermType" onchange="toggleOfferTermFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option></select></div>
+          <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同开始日期</div><input class="form-input" id="offerContractStart" type="date" onchange="calcOfferContractEnd()"></div>
+          <div class="form-item offer-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="offerContractMonths" type="number" min="1" placeholder="请输入正整数" onchange="calcOfferContractEnd()"></div>
+          <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="offerContractEnd" type="date"></div>
+        </div>
+      </div>
       <!-- 管培生信息 -->
       <div class="form-section" id="offerTraineeSection" style="display:none;">
-        <div class="form-section-title">校招生/管培生信息</div>
+        <div class="form-section-title">管培生信息</div>
         <div class="form-grid">
           <div class="form-item"><div class="form-label"><span class="required">*</span> 毕业年限</div><select class="form-select"><option value="">请选择</option><option>应届</option><option>往届</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 生源性质</div><select class="form-select"><option value="">请选择</option><option>国内</option><option>留学</option></select></div>
@@ -465,11 +506,15 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label"><span class="required">*</span> 总分</div><input class="form-input" placeholder="请输入总分"></div>
         </div>
       </div>
-      <!-- 定薪信息 -->
+      <!-- 定薪结果 -->
       <div class="form-section">
-        <div class="form-section-title">定薪信息</div>
+        <div class="form-section-title">定薪结果</div>
         <div class="form-grid">
-          <div class="form-item"><div class="form-label">定薪结果</div><input class="form-input disabled" value="审批通过后展示定薪结果" disabled></div>
+          <div class="form-item offer-overseas-salary-field" style="display:none;"><div class="form-label"><span class="required">*</span> 成本归属</div><input class="form-input" placeholder="请输入"></div>
+          <div class="form-item offer-overseas-salary-field" style="display:none;"><div class="form-label"><span class="required">*</span> 调薪类型</div><input class="form-input" placeholder="请输入"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 币种</div><select class="form-select"><option value="">请选择</option><option>CNY</option><option>USD</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计薪制度</div><select class="form-select" id="offerPaySystem"><option>月薪制</option><option>时薪制</option></select></div>
+          <div class="form-item full"><div class="form-label">固薪项目</div><table class="edit-table"><thead><tr><th>序号</th><th>固薪项目名称</th><th>标准*</th><th>备注</th></tr></thead><tbody><tr><td>1</td><td>基本工资</td><td></td><td></td></tr><tr><td>2</td><td>岗位工资</td><td></td><td></td></tr></tbody></table></div>
         </div>
       </div>
       <!-- 附件 -->
@@ -478,19 +523,11 @@ tr:hover td{background:#f9fafe}
         <div class="form-grid">
           <div class="form-item"><div class="form-label"><span class="required">*</span> 毕业证书学信网查询认证</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 薪酬建议表（请上传图片）</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> Offer Letter</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> offer letter</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">候选人简历</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">面试评估表</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">其他附件</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item full"><div class="form-label">备注</div><textarea class="form-textarea" placeholder="请输入备注信息"></textarea></div>
-        </div>
-      </div>
-      <!-- 背调信息 -->
-      <div class="form-section">
-        <div class="form-section-title">背调信息</div>
-        <div class="form-grid">
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 是否背调</div><select class="form-select"><option value="">请选择</option><option>是</option><option>否</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 期望调查结束时间</div><input class="form-input" type="date"></div>
         </div>
       </div>
       <!-- 特批信息 -->
@@ -523,7 +560,7 @@ tr:hover td{background:#f9fafe}
 <div class="confirm-overlay" id="offerModalRehireConfirm">
   <div class="confirm-modal">
     <div class="confirm-head">确认重聘识别结果</div>
-    <div class="confirm-body">识别到该员工有历史任职，请确认是否要识别为重聘员工。确认后，“是否重聘入职”将置为“是”且不可编辑，并带出原工号、最高学历、籍贯、性别。</div>
+    <div class="confirm-body">识别到该员工有历史任职，请确认是否要识别为重聘员工。</div>
     <div class="confirm-foot">
       <button class="btn btn-default" onclick="rejectOfferModalRehire()">取消</button>
       <button class="btn btn-primary" onclick="confirmOfferModalRehire()">确认重聘</button>
@@ -549,7 +586,13 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label"><span class="required">*</span> 姓名</div><input class="form-input" placeholder="请输入姓名"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 工作地区</div><select class="form-select" id="internWorkRegion" onchange="toggleInternOverseasFields()"><option>中国大陆</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 个人邮箱</div><input class="form-input" placeholder="请输入个人邮箱"></div>
-          <div class="form-item"><div class="form-label" id="internPhoneLabel"><span class="required">*</span> 手机号码</div><input class="form-input" placeholder="请输入手机号码"></div>
+          <div class="form-item">
+            <div class="form-label" id="internPhoneLabel"><span class="required">*</span> 手机号码 <span class="tip">海外人员，请填写：+区号xxxx</span></div>
+            <div class="phone-control">
+              <select class="form-select"><option>+86</option><option>+852</option><option>+853</option><option>+886</option><option>+1</option><option>+60</option><option>+65</option></select>
+              <input class="form-input" placeholder="请输入手机号码">
+            </div>
+          </div>
           <div class="form-item"><div class="form-label" id="internCertTypeLabel"><span class="required">*</span> 证件类型</div><select class="form-select"><option>身份证</option><option>护照</option><option>港澳居民来往内地通行证</option><option>台湾居民来往大陆通行证</option></select></div>
           <div class="form-item"><div class="form-label" id="internCertNoLabel"><span class="required">*</span> 证件号码</div><input class="form-input" placeholder="请输入证件号码"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否重聘入职</div><div class="inline-actions"><select class="form-select" id="internRehireFlag"><option>否</option><option>是</option></select><button type="button" class="btn btn-default btn-mini" id="internRehireDetectBtn" onclick="simulateInternRehireHit()">识别重聘</button></div></div>
@@ -567,10 +610,11 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘需求</div><select class="form-select"><option>请选择进行中的招聘需求</option><option selected>RD202605001 - 实习生 - 人力资源部</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 需求类型</div><select class="form-select" id="internDemandType" onchange="toggleInternReplacement()"><option>新增</option><option>离职替补</option><option>调岗替补</option></select></div>
           <div class="form-item" id="internReplacementField" style="display:none;"><div class="form-label"><span class="required">*</span> 替补人员</div><select class="form-select"><option>请选择替补人员</option><option>王小明（离职）</option><option>赵小兰（调岗）</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘负责人</div><select class="form-select"><option>张三 (zt00001)</option><option>李四 (zt00002)</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘负责人 <span class="tip">招聘HR/HRBP，可享有招聘奖金</span></div><select class="form-select"><option>张三 (ZT00001)</option><option>李四 (ZT00002)</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否有协助招聘负责人</div><select class="form-select" id="internAssistFlag" onchange="toggleInternAssistRecruiter()"><option>否</option><option>是</option></select></div>
-          <div class="form-item" id="internAssistRecruiterField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人</div><select class="form-select"><option>请选择在职/试用人员</option><option>周五 (zt00005)</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘渠道</div><select class="form-select" id="internChannelSelect" onchange="toggleInternChannelFields()"><option>招聘网站</option><option>校园招聘</option><option>内部推荐</option><option>其他渠道</option></select></div>
+          <div class="form-item" id="internAssistRecruiterNameField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人姓名</div><input class="form-input" placeholder="请输入姓名"></div>
+          <div class="form-item" id="internAssistRecruiterNoField" style="display:none;"><div class="form-label"><span class="required">*</span> 协助招聘负责人工号</div><input class="form-input" placeholder="请输入工号"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 招聘渠道</div><select class="form-select" id="internChannelSelect" onchange="toggleInternChannelFields()"><option>招聘网站</option><option>校园招聘</option><option>内部推荐</option><option>其他渠道</option><option>重聘入职</option></select></div>
           <div class="form-item" id="internReferrerField" style="display:none;"><div class="form-label"><span class="required">*</span> 内推人</div><select class="form-select"><option>请选择内推人，含离职人员</option><option>陈小华（在职）</option><option>刘小敏（离职）</option></select></div>
           <div class="form-item" id="internOtherChannelField" style="display:none;"><div class="form-label"><span class="required">*</span> 其他渠道</div><input class="form-input" placeholder="请输入其他渠道"></div>
           <div class="form-item"><div class="form-label">招聘启动日期</div><input class="form-input disabled" value="2026-05-14" disabled></div>
@@ -580,18 +624,16 @@ tr:hover td{background:#f9fafe}
       <div class="form-section">
         <div class="form-section-title">任职信息</div>
         <div class="form-grid">
-          <div class="form-item"><div class="form-label">录用部门</div><input class="form-input disabled" value="纵腾集团/人力资源中心/招聘部" disabled></div>
+          <div class="form-item"><div class="form-label">录用部门</div><input class="form-input disabled" value="ZT/人力资源中心/招聘部" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 录用职位</div><select class="form-select"><option>HR实习生</option><option>招聘实习生</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 录用职级</div><select class="form-select"><option>I1</option><option>I2</option></select></div>
           <div class="form-item"><div class="form-label">职族</div><input class="form-input disabled" value="职能族" disabled></div>
           <div class="form-item"><div class="form-label">职类</div><input class="form-input disabled" value="人力资源类" disabled></div>
-          <div class="form-item"><div class="form-label">领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
-          <div class="form-item"><div class="form-label">计划入职日期</div><input class="form-input" type="date"></div>
-          <div class="form-item"><div class="form-label">用工形式</div><input class="form-input disabled" value="实习生" disabled></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" type="date"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 用工形式</div><input class="form-input disabled" value="实习生" disabled></div>
           <div class="form-item intern-overseas-only" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型一级</div><select class="form-select"><option>职能</option><option>营销</option><option>操作</option></select></div>
           <div class="form-item intern-overseas-only" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型二级</div><select class="form-select"><option>人力资源</option><option>销售</option><option>仓储操作</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 合同类型</div><select class="form-select" id="internContractType" onchange="toggleInternContractSubject()"><option>实习协议</option><option>无</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required" id="internContractSubjectRequired">*</span> 合同主体</div><select class="form-select" id="internContractSubject"><option>纵腾集团</option><option>纵腾物流</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 划分区域</div><select class="form-select"><option>HQU</option><option>LBU</option><option>FBU</option><option>DBU</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 工作城市</div><select class="form-select"><option>深圳市</option><option>中国</option><option>美国</option><option>达拉斯</option></select></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 办公地点</div><select class="form-select"><option>深圳总部</option><option>上海办公室</option></select></div>
@@ -600,9 +642,25 @@ tr:hover td{background:#f9fafe}
       </div>
 
       <div class="form-section">
-        <div class="form-section-title">定薪信息</div>
+        <div class="form-section-title">合同协议</div>
         <div class="form-grid">
-          <div class="form-item"><div class="form-label">定薪结果</div><input class="form-input disabled" value="审批通过后展示定薪结果" disabled></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 合同类型</div><select class="form-select" id="internContractType" onchange="toggleInternContractFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option><option>无</option></select></div>
+          <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同主体</div><select class="form-select"><option value="">请选择</option><option>ZT</option><option>ZT Logistics</option></select></div>
+          <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 期限类型</div><select class="form-select" id="internTermType" onchange="toggleInternTermFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option></select></div>
+          <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同开始日期</div><input class="form-input" id="internContractStart" type="date" onchange="calcInternContractEnd()"></div>
+          <div class="form-item intern-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="internContractMonths" type="number" min="1" placeholder="请输入正整数" onchange="calcInternContractEnd()"></div>
+          <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="internContractEnd" type="date"></div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">定薪结果</div>
+        <div class="form-grid">
+          <div class="form-item intern-overseas-salary-field" style="display:none;"><div class="form-label"><span class="required">*</span> 成本归属</div><input class="form-input" placeholder="请输入"></div>
+          <div class="form-item intern-overseas-salary-field" style="display:none;"><div class="form-label"><span class="required">*</span> 调薪类型</div><input class="form-input" placeholder="请输入"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 币种</div><select class="form-select"><option value="">请选择</option><option>CNY</option><option>USD</option></select></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计薪制度</div><select class="form-select" id="internPaySystem"><option>月薪制</option><option>时薪制</option></select></div>
+          <div class="form-item full"><div class="form-label">固薪项目</div><table class="edit-table"><thead><tr><th>序号</th><th>固薪项目名称</th><th>标准*</th><th>备注</th></tr></thead><tbody><tr><td>1</td><td>基本工资</td><td></td><td></td></tr><tr><td>2</td><td>岗位工资</td><td></td><td></td></tr></tbody></table></div>
         </div>
       </div>
 
@@ -611,7 +669,7 @@ tr:hover td{background:#f9fafe}
         <div class="form-grid">
           <div class="form-item"><div class="form-label"><span class="required">*</span> 毕业证书学信网查询认证</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 薪酬建议表（请上传图片）</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> Offer Letter</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> offer letter</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">候选人简历</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">面试评估表</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
           <div class="form-item"><div class="form-label">其他附件</div><div class="upload-area"><div class="upload-icon">📎</div><div class="upload-text">点击上传，支持多文件</div></div></div>
@@ -637,10 +695,51 @@ tr:hover td{background:#f9fafe}
 <div class="confirm-overlay" id="internOfferRehireConfirm">
   <div class="confirm-modal">
     <div class="confirm-head">确认重聘识别结果</div>
-    <div class="confirm-body">识别到该员工有历史任职，请确认是否要识别为重聘员工。确认后，“是否重聘入职”将置为“是”且不可编辑，并带出原工号、最高学历、籍贯、性别。</div>
+    <div class="confirm-body">识别到该员工有历史任职，请确认是否要识别为重聘员工。</div>
     <div class="confirm-foot">
       <button class="btn btn-default" onclick="rejectInternRehire()">取消</button>
       <button class="btn btn-primary" onclick="confirmInternRehire()">确认重聘</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="transferStatusModal">
+  <div class="modal modal-small">
+    <div class="modal-header">
+      <div class="modal-title">转移状态</div>
+      <button class="modal-close" onclick="closeTransferStatusModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">
+        <div class="form-grid">
+          <div class="form-item">
+            <div class="form-label">Offer 编码</div>
+            <div class="readonly-box" id="transferOfferCode">-</div>
+          </div>
+          <div class="form-item">
+            <div class="form-label">姓名</div>
+            <div class="readonly-box" id="transferOfferName">-</div>
+          </div>
+          <div class="form-item">
+            <div class="form-label">当前状态</div>
+            <div class="readonly-box" id="transferCurrentStatus">-</div>
+          </div>
+          <div class="form-item">
+            <div class="form-label"><span class="required">*</span> 转移后状态</div>
+            <select class="form-select" id="transferTargetStatus">
+              <option value="">请选择</option>
+            </select>
+          </div>
+          <div class="form-item full">
+            <div class="form-label">转移原因</div>
+            <textarea class="form-textarea" id="transferReason" placeholder="请输入"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default" onclick="closeTransferStatusModal()">取消</button>
+      <button class="btn btn-primary" id="transferSubmitBtn" onclick="submitTransferStatus()">确认转移</button>
     </div>
   </div>
 </div>
@@ -649,9 +748,10 @@ tr:hover td{background:#f9fafe}
 var offerModalRules={
   工作地区:'<div class="rule-section"><div class="rule-title">工作地区</div><div class="rule-text">取 DW 工作地区。</div></div>',
   个人邮箱:'<div class="rule-section"><div class="rule-title">个人邮箱</div><div class="rule-text">需要进行邮箱格式校验。</div></div>',
-  手机号码:'<div class="rule-section"><div class="rule-title">手机号码</div><div class="rule-step">1. 工作地区=中国大陆时必填。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时非必填。</div></div>',
-  证件类型:'<div class="rule-section"><div class="rule-title">证件类型</div><div class="rule-text">取 DW 证件类型；国内必填，海外非必填。</div></div>',
+  手机号码:'<div class="rule-section"><div class="rule-title">手机号码</div><div class="rule-step">1. 工作地区=中国大陆时必填。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时非必填。</div><div class="rule-step">3. 使用手机号码控件，支持填写区号。</div></div>',
+  证件类型:'<div class="rule-section"><div class="rule-title">证件类型</div><div class="rule-text">国内必填，海外非必填。</div></div>',
   证件号码:'<div class="rule-section"><div class="rule-title">证件号码</div><div class="rule-step">1. 选择证件类型后处于可填写状态。</div><div class="rule-step">2. 国内必填，并按证件类型校验证件号码格式。</div></div>',
+  证件到期日:'<div class="rule-section"><div class="rule-title">证件到期日</div><div class="rule-text">国内必填，海外非必填。</div></div>',
   是否重聘入职:'<div class="rule-section"><div class="rule-title">是否重聘入职</div><div class="rule-step">1. 国内根据姓名 + 证件/手机/邮箱识别离职人员记录，优先级为证件、手机号码、邮箱。</div><div class="rule-step">2. 命中后弹窗二次确认。</div><div class="rule-step">3. 确认为重聘后字段置为“是”且不可编辑，并带出原工号、最高学历、籍贯、性别。</div><div class="rule-step">4. 海外由用户手动填写。</div></div>',
   原工号:'<div class="rule-section"><div class="rule-title">原工号</div><div class="rule-text">当是否重聘入职=是时必填；国内确认重聘后带出最近一段任职工号且不可编辑，海外手动填写。</div></div>',
   最高学历:'<div class="rule-section"><div class="rule-title">最高学历</div><div class="rule-text">重聘自动带出且可编辑。</div></div>',
@@ -662,8 +762,9 @@ var offerModalRules={
   需求类型:'<div class="rule-section"><div class="rule-title">需求类型</div><div class="rule-text">选择招聘需求后默认带出，可编辑。</div></div>',
   替补人员:'<div class="rule-section"><div class="rule-title">替补人员</div><div class="rule-text">当需求类型=离职替补/调岗替补时展示并必填；选择招聘需求后可默认带出，可编辑。</div></div>',
   招聘负责人:'<div class="rule-section"><div class="rule-title">招聘负责人</div><div class="rule-text">选择人员状态=在职/试用的人。</div></div>',
-  协助招聘负责人:'<div class="rule-section"><div class="rule-title">协助招聘负责人</div><div class="rule-text">当是否有协助招聘负责人=是时展示并必填；否则隐藏。仅可选择人员状态=在职/试用的人。</div></div>',
-  招聘渠道:'<div class="rule-section"><div class="rule-title">招聘渠道</div><div class="rule-text">选择候选人来源渠道；当选择内部推荐或其他渠道时展示对应补充字段。</div></div>',
+  协助招聘负责人姓名:'<div class="rule-section"><div class="rule-title">协助招聘负责人姓名</div><div class="rule-text">当是否有协助招聘负责人=是时展示并必填；否则隐藏。填写文本。</div></div>',
+  协助招聘负责人工号:'<div class="rule-section"><div class="rule-title">协助招聘负责人工号</div><div class="rule-text">当是否有协助招聘负责人=是时展示并必填；否则隐藏。填写文本。</div></div>',
+  招聘渠道:'<div class="rule-section"><div class="rule-title">招聘渠道</div><div class="rule-step">1. 选择候选人来源渠道；当选择内部推荐或其他渠道时展示对应补充字段。</div><div class="rule-step">2. 当是否重聘入职=是时，招聘渠道=重聘入职，且不可调整。</div></div>',
   内推人:'<div class="rule-section"><div class="rule-title">内推人</div><div class="rule-text">当招聘渠道=内部推荐时展示并必填，可选择所有人，包括离职人员。</div></div>',
   其他渠道:'<div class="rule-section"><div class="rule-title">其他渠道</div><div class="rule-text">当招聘渠道=其他渠道时展示并必填。</div></div>',
   编制部门:'<div class="rule-section"><div class="rule-title">编制部门</div><div class="rule-text">不可编辑，根据招聘需求自动带出，展示长名称。</div></div>',
@@ -675,13 +776,22 @@ var offerModalRules={
   招聘启动日期:'<div class="rule-section"><div class="rule-title">招聘启动日期</div><div class="rule-text">根据招聘需求自动带出。</div></div>',
   录用部门:'<div class="rule-section"><div class="rule-title">录用部门</div><div class="rule-text">不可编辑，根据招聘需求自动带出，展示长名称。</div></div>',
   录用职位:'<div class="rule-section"><div class="rule-title">录用职位</div><div class="rule-text">选择部门下启用的职位。</div></div>',
-  录用职级:'<div class="rule-section"><div class="rule-title">录用职级</div><div class="rule-step">1. 根据职位上的职序获取关联职级。</div><div class="rule-step">2. 根据职位上的最低/最高职级获取范围。</div><div class="rule-step">3. 两者取交集。</div></div>',
+  录用职级:'<div class="rule-section"><div class="rule-title">录用职级</div><div class="rule-text">职位最低职级 ≤ 录用职级 ≤ 编制职级 ≤ 职位最高职级。</div></div>',
   职族:'<div class="rule-section"><div class="rule-title">职族</div><div class="rule-text">根据录用职位带出。</div></div>',
   职类:'<div class="rule-section"><div class="rule-title">职类</div><div class="rule-text">根据录用职位带出。</div></div>',
   领色:'<div class="rule-section"><div class="rule-title">领色</div><div class="rule-text">根据录用职位带出默认值，可编辑。</div></div>',
   员工类型一级:'<div class="rule-section"><div class="rule-title">员工类型一级</div><div class="rule-text">海外员工展示且必填，根据职位上的成本分类带出默认值，可编辑。</div></div>',
   员工类型二级:'<div class="rule-section"><div class="rule-title">员工类型二级</div><div class="rule-text">海外员工展示且必填，根据员工类型一级过滤。</div></div>',
-  合同主体:'<div class="rule-section"><div class="rule-title">合同主体</div><div class="rule-text">当合同类型不等于“无”时需要选择。</div></div>',
+  是否有试用期:'<div class="rule-section"><div class="rule-title">是否有试用期</div><div class="rule-text">单选且必填。</div></div>',
+  开始日期:'<div class="rule-section"><div class="rule-title">开始日期</div><div class="rule-text">当是否有试用期=是时展示且必填；默认值=计划入职日期，可编辑。</div></div>',
+  '试用期（月）':'<div class="rule-section"><div class="rule-title">试用期（月）</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 国内：填写正整数。</div><div class="rule-step">3. 海外：支持填写 1 位小数。</div></div>',
+  试用期结束日期:'<div class="rule-section"><div class="rule-title">试用期结束日期</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 国内默认值=开始日期 + 试用期月数 - 1天。</div><div class="rule-step">3. 海外若试用期月数为小数，按照 30 天/月换算。</div><div class="rule-step">4. 国内只读，海外可编辑；海外先填写结束日期时，反算试用期（月）。</div></div>',
+  合同类型:'<div class="rule-section"><div class="rule-title">合同类型</div><div class="rule-text">单选且必填。</div></div>',
+  合同主体:'<div class="rule-section"><div class="rule-title">合同主体</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
+  期限类型:'<div class="rule-section"><div class="rule-title">期限类型</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
+  合同开始日期:'<div class="rule-section"><div class="rule-title">合同开始日期</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
+  '合同期限（月）':'<div class="rule-section"><div class="rule-title">合同期限（月）</div><div class="rule-text">当期限类型=固定期限或以完成一定任务为期限时展示且必填，填写正整数。</div></div>',
+  合同结束日期:'<div class="rule-section"><div class="rule-title">合同结束日期</div><div class="rule-step">1. 当合同类型不等于“无”时展示且必填。</div><div class="rule-step">2. 当期限类型=无固定期限时，默认值=9999-12-31。</div><div class="rule-step">3. 当期限类型=固定期限或以完成一定任务为期限时，默认值=合同开始日期 + 合同期限（月） - 1天，可编辑。</div></div>',
   工作城市:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">2. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
   办公地点:'<div class="rule-section"><div class="rule-title">办公地点</div><div class="rule-text">字典：办公地址；单选且必填。</div></div>',
   报到地点:'<div class="rule-section"><div class="rule-title">报到地点</div><div class="rule-text">字典：办公地址。</div></div>',
@@ -692,7 +802,9 @@ var offerModalRules={
   语言等级:'<div class="rule-section"><div class="rule-title">语言等级</div><div class="rule-text">DW 字典：语言等级，单选且必填。</div></div>',
   面试加分:'<div class="rule-section"><div class="rule-title">面试加分</div><div class="rule-text">选择 0、1、2、3、4。</div></div>',
   总分:'<div class="rule-section"><div class="rule-title">总分</div><div class="rule-text">文本。</div></div>',
-  期望调查结束时间:'<div class="rule-section"><div class="rule-title">期望调查结束时间</div><div class="rule-text">当是否背调=是时展示并必填。</div></div>',
+  成本归属:'<div class="rule-section"><div class="rule-title">成本归属</div><div class="rule-text">国内不显示，海外显示且必填。</div></div>',
+  调薪类型:'<div class="rule-section"><div class="rule-title">调薪类型</div><div class="rule-text">国内不显示，海外显示且必填。</div></div>',
+  计薪制度:'<div class="rule-section"><div class="rule-title">计薪制度</div><div class="rule-text">国内默认为月薪制，可编辑；海外无默认值。</div></div>',
   薪酬特批人:'<div class="rule-section"><div class="rule-title">薪酬特批人</div><div class="rule-text">当是否薪酬特批=是时展示并必填，选择人员状态=在职/试用的员工。</div></div>',
   薪酬特批附件:'<div class="rule-section"><div class="rule-title">薪酬特批附件</div><div class="rule-text">当是否薪酬特批=是时展示并必填。</div></div>',
   年龄特批人:'<div class="rule-section"><div class="rule-title">年龄特批人</div><div class="rule-text">当年龄≥38 或录用部门=HRAS（包含下级）且年龄≥34 时展示并必填，选择人员状态=在职/试用的员工。</div></div>',
@@ -701,9 +813,13 @@ var offerModalRules={
 var offerModalHints={
   手机号码:'海外人员，请填写：+区号xxxx',
   是否有协助招聘负责人:'寻源HR可享有招聘寻源部分奖金。若寻源与后续招聘动作为同一人，该字段填“否”。',
+  招聘负责人:'招聘HR/HRBP，可享有招聘奖金。',
   报到地点:'发送Offer附件【报到地点】会引用此地点，用于告知员工入职日报到地点。',
   年龄特批人:'年龄≥38或录用部门=HRAS且年龄≥34时必填。'
 };
+var internOfferModalRules=Object.assign({},offerModalRules,{
+  录用职级:'<div class="rule-section"><div class="rule-title">录用职级</div><div class="rule-text">职位最低职级 ≤ 录用职级 ≤ 职位最高职级。</div></div>'
+});
 function openOfferModal(){
   enhanceOfferModalRules();
   switchOfferScope('domestic');
@@ -731,6 +847,54 @@ function toggleDropdown(btn){
   var isOpen=menu.classList.contains('show');
   document.querySelectorAll('.dropdown-menu.show').forEach(function(m){m.classList.remove('show')});
   if(!isOpen)menu.classList.add('show');
+}
+var transferStatusOptions=['待发offer','已发offer','已接受offer','已拒绝offer'];
+var transferCurrentStatus='';
+function normalizeOfferStatus(statusText){
+  var text=(statusText||'').trim();
+  if(text==='已接受')return '已接受offer';
+  if(text==='已拒绝')return '已拒绝offer';
+  return text;
+}
+function openTransferStatusModal(btn){
+  var row=btn.closest('tr');
+  var cells=row.querySelectorAll('td');
+  var code=cells[2]&&cells[2].innerText.trim();
+  var name=cells[3]&&cells[3].innerText.trim();
+  transferCurrentStatus='待接受offer';
+  document.getElementById('transferOfferCode').innerText=code||'-';
+  document.getElementById('transferOfferName').innerText=name||'-';
+  document.getElementById('transferCurrentStatus').innerText='待接受offer';
+  document.getElementById('transferReason').value='';
+
+  var target=document.getElementById('transferTargetStatus');
+  target.innerHTML='<option value="">请选择</option>';
+  transferStatusOptions.forEach(function(status){
+    if(status!==transferCurrentStatus){
+      var opt=document.createElement('option');
+      opt.value=status;
+      opt.textContent=status;
+      target.appendChild(opt);
+    }
+  });
+  target.disabled=false;
+  document.getElementById('transferReason').disabled=false;
+  document.getElementById('transferSubmitBtn').disabled=false;
+  document.getElementById('transferStatusModal').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeTransferStatusModal(){
+  document.getElementById('transferStatusModal').classList.remove('show');
+  document.body.style.overflow='';
+}
+function submitTransferStatus(){
+  var target=document.getElementById('transferTargetStatus').value;
+  var reason=document.getElementById('transferReason').value.trim();
+  if(!target){
+    alert('请选择转移后状态');
+    return;
+  }
+  closeTransferStatusModal();
 }
 document.addEventListener('click',function(e){
   if(!e.target.closest('.btn-group')&&!e.target.closest('.combo-btn')){
@@ -821,6 +985,8 @@ function confirmOfferModalRehire(){
     if(name==='性别'){input.value='女'}
     if(name==='年龄'){input.value='32'}
   });
+  var channel=document.getElementById('offerChannelSelect');
+  if(channel){channel.value='重聘入职';channel.disabled=true}
 }
 function rejectOfferModalRehire(){document.getElementById('offerModalRehireConfirm').classList.remove('show')}
 function enhanceInternOfferModalRules(){
@@ -832,7 +998,7 @@ function enhanceInternOfferModalRules(){
       hint.innerHTML='?<span class="hint-pop">'+offerModalHints[name]+'</span>';
       label.appendChild(hint);
     }
-    if(offerModalRules[name]&&!label.querySelector('.rule-link')){
+    if(internOfferModalRules[name]&&!label.querySelector('.rule-link')){
       var link=document.createElement('span');
       link.className='rule-link';
       link.textContent='规则说明';
@@ -847,7 +1013,7 @@ function enhanceInternOfferModalRules(){
 function showInternOfferRule(name,label){
   document.getElementById('internOfferRuleEmpty').style.display='none';
   var content=document.getElementById('internOfferRuleContent');
-  content.innerHTML=offerModalRules[name]||'<div class="rule-text">暂无规则说明。</div>';
+  content.innerHTML=internOfferModalRules[name]||'<div class="rule-text">暂无规则说明。</div>';
   content.classList.add('show');
   document.getElementById('internOfferRulePanel').classList.add('show');
   document.querySelectorAll('#internOfferModal .active-rule').forEach(function(n){n.classList.remove('active-rule')});
@@ -869,11 +1035,13 @@ function confirmInternRehire(){
   document.getElementById('internOfferRehireConfirm').classList.remove('show');
   document.getElementById('internRehireFlag').value='是';
   document.getElementById('internRehireFlag').disabled=true;
-  document.getElementById('internOldEmpNo').value='zt13888';
+  document.getElementById('internOldEmpNo').value='ZT13888';
   document.getElementById('internEducation').value='本科';
   document.getElementById('internNativePlace').value='广东省深圳市南山区';
   document.getElementById('internGender').value='女';
   document.getElementById('internAge').value='23';
+  var channel=document.getElementById('internChannelSelect');
+  if(channel){channel.value='重聘入职';channel.disabled=true}
 }
 function rejectInternRehire(){document.getElementById('internOfferRehireConfirm').classList.remove('show')}
 function toggleInternReplacement(){
@@ -883,8 +1051,10 @@ function toggleInternReplacement(){
 }
 function toggleInternAssistRecruiter(){
   var v=document.getElementById('internAssistFlag').value;
-  var field=document.getElementById('internAssistRecruiterField');
-  if(field)field.style.display=v==='是'?'':'none';
+  ['internAssistRecruiterNameField','internAssistRecruiterNoField'].forEach(function(id){
+    var field=document.getElementById(id);
+    if(field)field.style.display=v==='是'?'':'none';
+  });
 }
 function toggleInternChannelFields(){
   var v=document.getElementById('internChannelSelect').value;
@@ -897,13 +1067,24 @@ function toggleInternOverseasFields(){
   var v=document.getElementById('internWorkRegion').value;
   var show=v==='中国港澳台'||v==='其他国家和地区';
   document.querySelectorAll('#internOfferModal .intern-overseas-only').forEach(function(el){el.style.display=show?'':'none'});
+  document.querySelectorAll('#internOfferModal .intern-overseas-salary-field').forEach(function(el){el.style.display=show?'':'none'});
+  var pay=document.getElementById('internPaySystem');
+  if(pay)pay.value=show?'':'月薪制';
 }
-function toggleInternContractSubject(){
-  var isNone=document.getElementById('internContractType').value==='无';
-  var subject=document.getElementById('internContractSubject');
-  var required=document.getElementById('internContractSubjectRequired');
-  subject.disabled=isNone;
-  if(required)required.style.display=isNone?'none':'inline';
+function toggleInternContractFields(){
+  var show=document.getElementById('internContractType').value!=='无'&&document.getElementById('internContractType').value!=='';
+  document.querySelectorAll('#internOfferModal .intern-contract-field').forEach(function(el){el.style.display=show?'':'none'});
+  if(!show)document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display='none'});
+  toggleInternTermFields();
+}
+function toggleInternTermFields(){
+  var v=document.getElementById('internTermType')&&document.getElementById('internTermType').value;
+  var show=v==='固定期限'||v==='以完成一定任务为期限';
+  document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display=show?'':'none'});
+  calcInternContractEnd();
+}
+function calcInternContractEnd(){
+  calcEndDate('internContractStart','internContractMonths','internContractEnd','internTermType');
 }
 function toggleOfferReplacement(){
   var v=document.getElementById('offerDemandType').value;
@@ -919,8 +1100,10 @@ function toggleOfferChannelFields(){
 }
 function toggleOfferAssistRecruiter(){
   var v=document.getElementById('offerAssistFlag').value;
-  var field=document.getElementById('offerAssistRecruiterField');
-  if(field)field.style.display=v==='是'?'':'none';
+  ['offerAssistRecruiterNameField','offerAssistRecruiterNoField'].forEach(function(id){
+    var field=document.getElementById(id);
+    if(field)field.style.display=v==='是'?'':'none';
+  });
 }
 function toggleOfferTraineeSection(){
   var v=document.getElementById('offerEmpFormSelect').value;
@@ -935,6 +1118,73 @@ function toggleOfferOverseasFields(){
   var f2=document.getElementById('offerEmpType2Field');
   if(f1)f1.style.display=show?'':'none';
   if(f2)f2.style.display=show?'':'none';
+  document.querySelectorAll('#offerModal .offer-overseas-salary-field').forEach(function(el){el.style.display=show?'':'none'});
+  var pay=document.getElementById('offerPaySystem');
+  if(pay)pay.value=show?'':'月薪制';
+}
+function toggleOfferProbationFields(){
+  var show=document.getElementById('offerProbationFlag').value==='是';
+  document.querySelectorAll('#offerModal .offer-probation-field').forEach(function(el){el.style.display=show?'':'none'});
+}
+function calcOfferProbationEnd(){
+  var start=document.getElementById('offerProbationStart');
+  var months=document.getElementById('offerProbationMonths');
+  var end=document.getElementById('offerProbationEnd');
+  if(!start||!months||!end||!start.value||!months.value)return;
+  var value=Number(months.value);
+  var d=new Date(start.value+'T00:00:00');
+  if(months.value.indexOf('.')>-1){
+    d.setDate(d.getDate()+Math.round(value*30)-1);
+  }else{
+    d.setMonth(d.getMonth()+value);
+    d.setDate(d.getDate()-1);
+  }
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,'0');
+  var day=String(d.getDate()).padStart(2,'0');
+  end.value=y+'-'+m+'-'+day;
+}
+function calcOfferProbationMonths(){
+  var start=document.getElementById('offerProbationStart');
+  var months=document.getElementById('offerProbationMonths');
+  var end=document.getElementById('offerProbationEnd');
+  var isOverseas=document.getElementById('offerOverseasTab')&&document.getElementById('offerOverseasTab').classList.contains('active');
+  if(!isOverseas||!start||!months||!end||!start.value||!end.value)return;
+  var s=new Date(start.value+'T00:00:00');
+  var e=new Date(end.value+'T00:00:00');
+  var days=Math.round((e-s)/86400000)+1;
+  if(days>0)months.value=(days/30).toFixed(1);
+}
+function toggleOfferContractFields(){
+  var show=document.getElementById('offerContractType').value!=='无'&&document.getElementById('offerContractType').value!=='';
+  document.querySelectorAll('#offerModal .offer-contract-field').forEach(function(el){el.style.display=show?'':'none'});
+  if(!show)document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display='none'});
+  toggleOfferTermFields();
+}
+function toggleOfferTermFields(){
+  var v=document.getElementById('offerTermType')&&document.getElementById('offerTermType').value;
+  var show=v==='固定期限'||v==='以完成一定任务为期限';
+  document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display=show?'':'none'});
+  calcOfferContractEnd();
+}
+function calcOfferContractEnd(){
+  calcEndDate('offerContractStart','offerContractMonths','offerContractEnd','offerTermType');
+}
+function calcEndDate(startId,monthsId,endId,termTypeId){
+  var start=document.getElementById(startId);
+  var months=document.getElementById(monthsId);
+  var end=document.getElementById(endId);
+  var termType=termTypeId&&document.getElementById(termTypeId);
+  if(!end)return;
+  if(termType&&termType.value==='无固定期限'){end.value='9999-12-31';return}
+  if(!start||!months||!start.value||!months.value){return}
+  var d=new Date(start.value+'T00:00:00');
+  d.setMonth(d.getMonth()+Number(months.value));
+  d.setDate(d.getDate()-1);
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,'0');
+  var day=String(d.getDate()).padStart(2,'0');
+  end.value=y+'-'+m+'-'+day;
 }
 function setRequired(labelId,required){
   var label=document.getElementById(labelId);
@@ -961,6 +1211,17 @@ function switchOfferScope(scope){
   setRequired('offerPhoneLabel',!isOverseas);
   setRequired('offerCertTypeLabel',!isOverseas);
   setRequired('offerCertNoLabel',!isOverseas);
+  setRequired('offerCertExpiryLabel',!isOverseas);
+  var probationMonths=document.getElementById('offerProbationMonths');
+  var probationEnd=document.getElementById('offerProbationEnd');
+  if(probationMonths){
+    probationMonths.step=isOverseas?'0.1':'1';
+    probationMonths.placeholder=isOverseas?'支持 1 位小数':'请输入正整数';
+  }
+  if(probationEnd){
+    probationEnd.readOnly=!isOverseas;
+    probationEnd.classList.toggle('disabled',!isOverseas);
+  }
   var rehire=document.getElementById('offerRehireFlag');
   var oldNo=document.getElementById('offerOldEmpNo');
   var detectBtn=document.getElementById('offerRehireDetectBtn');
@@ -1036,6 +1297,7 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 document.getElementById('offerModal').addEventListener('click',function(e){if(e.target===this)closeOfferModal()});
 document.getElementById('internOfferModal').addEventListener('click',function(e){if(e.target===this)closeInternOfferModal()});
+document.getElementById('transferStatusModal').addEventListener('click',function(e){if(e.target===this)closeTransferStatusModal()});
 </script>
 </body>
 </html>

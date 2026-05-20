@@ -19,8 +19,12 @@ body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;color
 .breadcrumb{font-size:13px;color:#999ca3}.breadcrumb a{color:#999ca3;text-decoration:none}.breadcrumb a:hover{color:#0E66FB}.breadcrumb span{color:#333947}
 .user-info{font-size:13px;color:#333947}
 .content{flex:1;padding:20px 24px 24px;overflow-y:auto}
-.page-header{display:flex;align-items:center;gap:16px;margin-bottom:16px;background:#fff;border-radius:5px;padding:20px 24px}
+.page-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;background:#fff;border-radius:5px;padding:20px 24px}
 .page-title{font-size:18px;font-weight:600;color:#000819}
+.page-title-block{display:flex;flex-direction:column;gap:8px}
+.doc-meta{display:flex;align-items:center;gap:18px;color:#667085;font-size:13px}
+.doc-meta-item{display:flex;align-items:center;gap:6px}
+.doc-meta-icon{font-size:14px;color:#667085}
 .card{background:#fff;border-radius:5px;margin-bottom:16px}
 .card-header{padding:20px 24px 0;border-bottom:none;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
 .card-title{font-size:14px;font-weight:600;color:#1A2130;padding:4px 10px;background:#E8F0FE;border-radius:3px;display:inline-block}
@@ -72,7 +76,7 @@ td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E
 <body>
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-logo">HR One</div>
     <div class="sidebar-group">
       <div class="sidebar-group-title">招聘管理</div>
       <a class="sidebar-item active" href="招聘需求列表.html">招聘需求</a>
@@ -92,12 +96,21 @@ td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E
   <div class="main">
     <div class="header">
       <div class="breadcrumb">招聘管理 / <a href="招聘需求列表.html">招聘需求</a> / <span>详情</span></div>
-      <div class="user-info">谭花花 (zt24701)</div>
+      <div class="user-info">谭花花 (ZT24701)</div>
     </div>
     <div class="content">
       <div class="page-header">
-        <div class="page-title">产品经理招聘需求</div>
-        <span class="tag tag-orange">审批中</span>
+        <div class="page-title-block">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div class="page-title">产品经理招聘需求</div>
+            <span class="tag tag-orange">审批中</span>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-meta-item"><span class="doc-meta-icon">♙</span><span>审批编号：P20260515154560001</span></div>
+            <div class="doc-meta-item"><span class="doc-meta-icon">♙</span><span>发起人：谭花花 (ZT24701)</span></div>
+            <div class="doc-meta-item"><span class="doc-meta-icon">◷</span><span>发起日期：2026/05/15</span></div>
+          </div>
+        </div>
         <div style="margin-left:auto;display:flex;gap:8px">
           <button class="btn btn-default btn-sm">催办</button>
           <button class="btn btn-default btn-sm">转交</button>
@@ -122,9 +135,9 @@ td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E
             <div class="info-item"><div class="info-label">需求类型</div><div class="info-value">新增</div></div>
             <div class="info-item"><div class="info-label">工作城市</div><div class="info-value">深圳市</div></div>
             <div class="info-item"><div class="info-label">招聘启动日期</div><div class="info-value">2026/01/02</div></div>
-            <div class="info-item"><div class="info-label">期望到岗日期</div><div class="info-value">2026/04/01</div></div>
-            <div class="info-item"><div class="info-label">需求负责人</div><div class="info-value">张三 (zt00001)</div></div>
-            <div class="info-item"><div class="info-label">需求共享人</div><div class="info-value">李四 (zt00002)</div></div>
+            <div class="info-item"><div class="info-label">期望到岗时间</div><div class="info-value">2026/04/01</div></div>
+            <div class="info-item"><div class="info-label">需求负责人</div><div class="info-value">张三 (ZT00001)</div></div>
+            <div class="info-item"><div class="info-label">需求共享人</div><div class="info-value">李四 (ZT00002)、王五 (ZT00003)</div></div>
             <div class="info-item"><div class="info-label">状态</div><div class="info-value"><span class="tag tag-orange">审批中</span></div></div>
           </div>
         </div>
@@ -139,9 +152,9 @@ td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E
               <tr><th>序号</th><th>编制编码</th><th>编制职位</th><th>编制职级</th><th>编制ABC分类</th><th>部门全称</th><th>是否海外编制</th></tr>
             </thead>
             <tbody>
-              <tr><td>1</td><td>202501016001</td><td>产品经理</td><td>P2-1</td><td>A类</td><td>纵腾集团/HRAS/技术部</td><td>国内</td></tr>
-              <tr><td>2</td><td>202501016002</td><td>产品经理</td><td>P2-1</td><td>A类</td><td>纵腾集团/HRAS/技术部</td><td>国内</td></tr>
-              <tr><td>3</td><td>202501016003</td><td>产品经理</td><td>P2-1</td><td>B类</td><td>纵腾集团/HRAS/技术部</td><td>国内</td></tr>
+              <tr><td>1</td><td>202501016001</td><td>产品经理</td><td>P2-1</td><td>A类</td><td>ZT/HRAS/技术部</td><td>国内</td></tr>
+              <tr><td>2</td><td>202501016002</td><td>产品经理</td><td>P2-1</td><td>A类</td><td>ZT/HRAS/技术部</td><td>国内</td></tr>
+              <tr><td>3</td><td>202501016003</td><td>产品经理</td><td>P2-1</td><td>B类</td><td>ZT/HRAS/技术部</td><td>国内</td></tr>
             </tbody>
           </table>
         </div>
@@ -169,21 +182,21 @@ td{font-size:13px;color:#333947;padding:10px 12px;border-bottom:1px solid #E6E6E
             <div class="timeline-item">
               <div class="timeline-dot done"></div>
               <div class="timeline-content">
-                <div class="timeline-operator"><b>师夏青</b> zt24701 提交</div>
+                <div class="timeline-operator"><b>师夏青</b> ZT24701 提交</div>
                 <div class="timeline-meta">2026/03/05 09:00</div>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot done"></div>
               <div class="timeline-content">
-                <div class="timeline-operator"><b>朱雨儿</b> zt23432 同意</div>
+                <div class="timeline-operator"><b>朱雨儿</b> ZT23432 同意</div>
                 <div class="timeline-meta">2026/03/05 09:05 ~ 10:05 · 耗时 1小时</div>
               </div>
             </div>
             <div class="timeline-item">
               <div class="timeline-dot active"></div>
               <div class="timeline-content">
-                <div class="timeline-operator"><b>邱昊天</b> zt23222 审批中</div>
+                <div class="timeline-operator"><b>邱昊天</b> ZT23222 审批中</div>
                 <div class="timeline-meta">2026/03/05 10:05 至今</div>
               </div>
             </div>

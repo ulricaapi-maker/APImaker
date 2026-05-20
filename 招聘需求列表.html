@@ -72,8 +72,11 @@ tr:hover td{background:#f9fafe}
 .modal-close:hover{background:#f5f6f7;color:#333947}
 .modal-body{padding:24px;overflow-y:auto;flex:1}
 .modal-workbench{display:block}
+.modal-workbench>div:first-child{display:flex;flex-direction:column}
 .modal-footer{padding:12px 24px;border-top:1px solid #E6E6E8;display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-shrink:0}
 .form-section{margin-bottom:16px}
+.demand-extra-section{order:1;margin-top:-16px}
+#staffingSection{order:2}
 .form-section-title{font-size:14px;font-weight:600;color:#1A2130;padding:4px 10px;margin-bottom:12px;background:#E8F0FE;border-radius:3px;display:inline-block;line-height:1.5}
 .form-section-body{padding:0}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 32px}
@@ -109,7 +112,7 @@ tr:hover td{background:#f9fafe}
 <body>
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-logo">纵腾 HRMS</div>
+    <div class="sidebar-logo">HR One</div>
     <div class="sidebar-group">
       <div class="sidebar-group-title">招聘管理</div>
       <a class="sidebar-item active" href="招聘需求列表.html">招聘需求</a>
@@ -130,13 +133,13 @@ tr:hover td{background:#f9fafe}
   <div class="main">
     <div class="header">
       <div class="breadcrumb">招聘管理 / <span>招聘需求</span></div>
-      <div class="user-info">谭花花 (zt24701)</div>
+      <div class="user-info">谭花花 (ZT24701)</div>
     </div>
-    <div class="welcome">欢迎回到招聘需求，<b>谭花花</b>(zt24701)&nbsp;&nbsp;&nbsp;今天是2025年5月27日 星期二</div>
+    <div class="welcome">欢迎回到招聘需求，<b>谭花花</b>(ZT24701)</div>
     <div class="content">
       <div class="search-bar">
         <label>编制部门</label>
-        <select><option value="">全部</option><option>纵腾集团/HRAS/技术部</option><option>纵腾集团/HRAS/产品部</option><option>纵腾集团/LBU/物流事业部</option></select>
+        <select><option value="">全部</option><option>ZT/HRAS/技术部</option><option>ZT/HRAS/产品部</option><option>ZT/LBU/物流事业部</option></select>
         <label>招聘需求编码</label>
         <input placeholder="请输入编码">
         <label>状态</label>
@@ -178,7 +181,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>1</td>
                 <td>产品经理</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020001</a></td>
                 <td>P2-3</td>
                 <td>2</td>
@@ -204,7 +207,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>2</td>
                 <td>产品设计</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020002</a></td>
                 <td>P2-1</td>
                 <td>1</td>
@@ -230,7 +233,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>3</td>
                 <td>Java开发</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020003</a></td>
                 <td>P2-1</td>
                 <td>3</td>
@@ -256,7 +259,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>4</td>
                 <td>前端开发</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020004</a></td>
                 <td>P2-2</td>
                 <td>2</td>
@@ -282,7 +285,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>5</td>
                 <td>UI设计</td>
-                <td>纵腾集团/HRAS/产品部</td>
+                <td>ZT/HRAS/产品部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020005</a></td>
                 <td>P2-1</td>
                 <td>1</td>
@@ -308,7 +311,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>6</td>
                 <td>数据分析师</td>
-                <td>纵腾集团/LBU/物流事业部</td>
+                <td>ZT/LBU/物流事业部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020006</a></td>
                 <td>P3-1</td>
                 <td>1</td>
@@ -334,7 +337,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>7</td>
                 <td>测试工程师</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020007</a></td>
                 <td>P2-1</td>
                 <td>2</td>
@@ -360,7 +363,7 @@ tr:hover td{background:#f9fafe}
                 <td><input type="checkbox"></td>
                 <td>8</td>
                 <td>运维工程师</td>
-                <td>纵腾集团/HRAS/技术部</td>
+                <td>ZT/HRAS/技术部</td>
                 <td><a class="btn-text" href="招聘需求详情.html">202601020008</a></td>
                 <td>P2-2</td>
                 <td>1</td>
@@ -428,11 +431,11 @@ tr:hover td{background:#f9fafe}
             <div class="form-label"><span class="required">*</span> 职位</div>
             <select class="form-select" id="positionSelect" onchange="onPositionChange()">
               <option value="">请选择</option>
-              <option value="产品经理" data-dept="纵腾集团/HRAS/技术部" data-level="P2-1" data-abc="A类" data-code="202501016001" data-overseas="国内">产品经理</option>
-              <option value="Java开发" data-dept="纵腾集团/HRAS/技术部" data-level="P2-2" data-abc="A类" data-code="202501016004" data-overseas="国内">Java开发</option>
-              <option value="前端开发" data-dept="纵腾集团/HRAS/技术部" data-level="P2-1" data-abc="B类" data-code="202501016005" data-overseas="国内">前端开发</option>
-              <option value="UI设计" data-dept="纵腾集团/HRAS/产品部" data-level="P2-1" data-abc="A类" data-code="202501016006" data-overseas="国内">UI设计</option>
-              <option value="运营经理" data-dept="GOFO/运营部" data-level="P3-1" data-abc="B类" data-code="202501016007" data-overseas="海外">运营经理</option>
+              <option value="产品经理" data-dept="ZT/HRAS/技术部" data-level="P2-1" data-abc="A类" data-code="202501016001" data-overseas="国内">产品经理</option>
+              <option value="Java开发" data-dept="ZT/HRAS/技术部" data-level="P2-2" data-abc="A类" data-code="202501016004" data-overseas="国内">Java开发</option>
+              <option value="前端开发" data-dept="ZT/HRAS/技术部" data-level="P2-1" data-abc="B类" data-code="202501016005" data-overseas="国内">前端开发</option>
+              <option value="UI设计" data-dept="ZT/HRAS/产品部" data-level="P2-1" data-abc="A类" data-code="202501016006" data-overseas="国内">UI设计</option>
+              <option value="运营经理" data-dept="ZT/运营部" data-level="P3-1" data-abc="B类" data-code="202501016007" data-overseas="海外">运营经理</option>
             </select>
           </div>
           <div class="form-item" id="abcField">
@@ -491,9 +494,8 @@ tr:hover td{background:#f9fafe}
         </div>
       </div>
 
-      <!-- 需求明细 -->
-      <div class="form-section">
-        <div class="form-section-title">需求明细</div>
+      <!-- 需求信息补充字段 -->
+      <div class="form-section demand-extra-section">
         <div class="form-section-body">
         <div class="form-grid">
           <div class="form-item">
@@ -513,7 +515,7 @@ tr:hover td{background:#f9fafe}
             <div class="form-label"><span class="required">*</span> 需求类型</div>
             <select class="form-select" id="demandType" onchange="onDemandTypeChange()">
               <option value="">请选择</option>
-              <option>新增</option>
+              <option>新增编制</option>
               <option>离职替补</option>
               <option>调岗替补</option>
             </select>
@@ -537,28 +539,23 @@ tr:hover td{background:#f9fafe}
             <input class="form-input" type="date" value="2026-05-27">
           </div>
           <div class="form-item">
-            <div class="form-label"><span class="required">*</span> 期望到岗日期</div>
+            <div class="form-label"><span class="required">*</span> 期望到岗时间</div>
             <input class="form-input" type="date">
           </div>
           <div class="form-item">
             <div class="form-label"><span class="required">*</span> 需求负责人 <span class="tip">默认发起人</span></div>
             <select class="form-select">
-              <option>谭花花 (zt24701)</option>
-              <option>张三 (zt00001)</option>
-              <option>李四 (zt00002)</option>
+              <option>谭花花 (ZT24701)</option>
+              <option>张三 (ZT00001)</option>
+              <option>李四 (ZT00002)</option>
             </select>
           </div>
           <div class="form-item">
             <div class="form-label">需求共享人</div>
-            <select class="form-select">
-              <option value="">请选择</option>
-              <option>张三 (zt00001)</option>
-              <option>李四 (zt00002)</option>
+            <select class="form-select" multiple>
+              <option>张三 (ZT00001)</option>
+              <option>李四 (ZT00002)</option>
             </select>
-          </div>
-          <div class="form-item">
-            <div class="form-label">招聘需求编码</div>
-            <input class="form-input disabled" value="自动生成" disabled>
           </div>
         </div>
         </div>
@@ -601,21 +598,21 @@ document.addEventListener('click',function(e){
 });
 
 var demandRules={
-  雇佣关系:'<div class="rule-section"><div class="rule-title">雇佣关系</div><div class="rule-text">字典待业务确认。单选且必填。</div></div>',
-  职位:'<div class="rule-section"><div class="rule-title">职位</div><div class="rule-text">正式员工选择生效的编制分组；实习生选择启用的职位。</div></div>',
+  雇佣关系:'<div class="rule-section"><div class="rule-title">雇佣关系</div><div class="rule-text">字典：雇佣关系。单选且必填。</div></div>',
+  职位:'<div class="rule-section"><div class="rule-title">职位</div><div class="rule-text">正式员工选择生效的编制分组；实习生选择启用的职位；选择左树右表的职位。</div></div>',
   编制ABC分类:'<div class="rule-section"><div class="rule-title">编制ABC分类</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
-  部门全称:'<div class="rule-section"><div class="rule-title">部门全称</div><div class="rule-text">置灰；正式员工根据编制信息自动带出，实习生根据职位选出。</div></div>',
+  部门全称:'<div class="rule-section"><div class="rule-title">部门全称</div><div class="rule-text">置灰；正式员工根据编制信息自动带出；实习生根据职位带出。</div></div>',
   编制职级:'<div class="rule-section"><div class="rule-title">编制职级</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
   是否海外编制:'<div class="rule-section"><div class="rule-title">是否海外编制</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
-  需求职级:'<div class="rule-section"><div class="rule-title">需求职级</div><div class="rule-text">实习生根据职位最低/最高职级选择；正式员工要求职位最低职级 ≤ 需求职级 ≤ 职位最高职级。</div></div>',
+  需求职级:'<div class="rule-section"><div class="rule-title">需求职级</div><div class="rule-text">实习生根据职位最低/最高职级选择；正式员工要求职位最低职级 ≤ 需求职级 ≤ 编制职级。</div></div>',
   需求人数:'<div class="rule-section"><div class="rule-title">需求人数</div><div class="rule-step">1. 正整数。</div><div class="rule-step">2. 正式员工：需求人数 ≤ 编制数。</div><div class="rule-step">3. 填写后即时校验，不通过提示：该编制下可用空余编制数为%数量%，请调整需求人数。</div></div>',
   需求类型:'<div class="rule-section"><div class="rule-title">需求类型</div><div class="rule-text">字典：新增编制/离职替补/调岗替补。单选且必填。</div></div>',
   替补人员:'<div class="rule-section"><div class="rule-title">替补人员</div><div class="rule-text">当需求类型=离职替补/调岗替补时展示、必填、单选；选择范围为所有在职/离职人员，数据源来自 OEHR。</div></div>',
   工作城市:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 字典：工作城市。</div><div class="rule-step">2. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">3. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
   招聘启动日期:'<div class="rule-section"><div class="rule-title">招聘启动日期</div><div class="rule-text">默认需求新建当天，可编辑。</div></div>',
+  期望到岗时间:'<div class="rule-section"><div class="rule-title">期望到岗时间</div><div class="rule-text">必填，时间选择框。</div></div>',
   需求负责人:'<div class="rule-section"><div class="rule-title">需求负责人</div><div class="rule-text">默认发起人，可编辑；选择人员状态=在职/试用的人。</div></div>',
-  需求共享人:'<div class="rule-section"><div class="rule-title">需求共享人</div><div class="rule-text">非必填，人员单选；选择人员状态=在职/试用的人。</div></div>',
-  招聘需求编码:'<div class="rule-section"><div class="rule-title">招聘需求编码</div><div class="rule-text">自动生成。</div></div>'
+  需求共享人:'<div class="rule-section"><div class="rule-title">需求共享人</div><div class="rule-text">非必填，人员多选；选择人员状态=在职/试用的人。</div></div>'
 };
 function getDemandLabelName(label){
   return label.textContent.replace('*','').replace(/规则说明/g,'').trim().split(/\s+/)[0];
