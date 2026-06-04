@@ -195,7 +195,7 @@ tr:hover td{background:#f9fafe}
                 <th>序号</th>
                 <th>Offer编码</th>
                 <th>姓名</th>
-                <th>雇佣关系</th>
+                <th>用工形式</th>
                 <th>录用部门</th>
                 <th>录用职位</th>
                 <th>录用职级</th>
@@ -420,7 +420,8 @@ tr:hover td{background:#f9fafe}
           </div>
           <div class="form-item"><div class="form-label" id="offerCertTypeLabel"><span class="required">*</span> 证件类型</div><select class="form-select"><option value="">请选择</option><option>身份证</option><option>护照</option><option>港澳通行证</option></select></div>
           <div class="form-item"><div class="form-label" id="offerCertNoLabel"><span class="required">*</span> 证件号码</div><input class="form-input" placeholder="请输入证件号码"></div>
-          <div class="form-item"><div class="form-label" id="offerCertExpiryLabel"><span class="required">*</span> 证件到期日</div><input class="form-input" type="date"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 是否长期证件</div><select class="form-select" id="offerLongCertFlag" onchange="toggleOfferCertExpiry()"><option value="">请选择</option><option>是</option><option>否</option></select></div>
+          <div class="form-item" id="offerCertExpiryField" style="display:none;"><div class="form-label" id="offerCertExpiryLabel"><span class="required">*</span> 证件到期日</div><input class="form-input" type="date"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否重聘入职</div><select class="form-select" id="offerRehireFlag"><option value="">请选择</option><option>是</option><option>否</option></select></div>
           <div class="form-item"><div class="form-label">原工号</div><input class="form-input disabled" id="offerOldEmpNo" placeholder="重聘时自动带出" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 最高学历</div><select class="form-select"><option value="">请选择</option><option>博士</option><option>硕士</option><option>本科</option><option>大专</option></select></div>
@@ -462,7 +463,7 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label">职族</div><input class="form-input disabled" value="专业族" disabled></div>
           <div class="form-item"><div class="form-label">职类</div><input class="form-input disabled" value="产品类" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" type="date"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" id="offerPlanEntryDate" type="date" onchange="syncOfferContractStartFromPlan()"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 用工形式</div><select class="form-select" id="offerEmpFormSelect" onchange="toggleOfferTraineeSection()"><option value="">请选择</option><option>正式工</option><option>外包工</option><option>实习生</option><option>管培生</option></select></div>
           <div class="form-item" id="offerEmpType1Field" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型一级</div><select class="form-select"><option value="">请选择</option><option>职能</option><option>营销</option><option>操作</option></select></div>
           <div class="form-item" id="offerEmpType2Field" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型二级</div><select class="form-select"><option value="">请选择</option><option>管培生</option><option>组长</option><option>操作工</option></select></div>
@@ -490,8 +491,8 @@ tr:hover td{background:#f9fafe}
           <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同主体</div><select class="form-select"><option value="">请选择</option><option>ZT</option></select></div>
           <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 期限类型</div><select class="form-select" id="offerTermType" onchange="toggleOfferTermFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option></select></div>
           <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同开始日期</div><input class="form-input" id="offerContractStart" type="date" onchange="calcOfferContractEnd()"></div>
-          <div class="form-item offer-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="offerContractMonths" type="number" min="1" placeholder="请输入正整数" onchange="calcOfferContractEnd()"></div>
-          <div class="form-item offer-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="offerContractEnd" type="date"></div>
+          <div class="form-item offer-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="offerContractMonths" type="number" min="1" placeholder="固定期限时填写正整数" onchange="calcOfferContractEnd()"></div>
+          <div class="form-item offer-contract-field offer-contract-end-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="offerContractEnd" type="date"></div>
         </div>
       </div>
       <!-- 管培生信息 -->
@@ -596,6 +597,8 @@ tr:hover td{background:#f9fafe}
           </div>
           <div class="form-item"><div class="form-label" id="internCertTypeLabel"><span class="required">*</span> 证件类型</div><select class="form-select"><option>身份证</option><option>护照</option><option>港澳居民来往内地通行证</option><option>台湾居民来往大陆通行证</option></select></div>
           <div class="form-item"><div class="form-label" id="internCertNoLabel"><span class="required">*</span> 证件号码</div><input class="form-input" placeholder="请输入证件号码"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 是否长期证件</div><select class="form-select" id="internLongCertFlag" onchange="toggleInternCertExpiry()"><option value="">请选择</option><option>是</option><option>否</option></select></div>
+          <div class="form-item" id="internCertExpiryField" style="display:none;"><div class="form-label" id="internCertExpiryLabel"><span class="required">*</span> 证件到期日</div><input class="form-input" type="date"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 是否重聘入职</div><div class="inline-actions"><select class="form-select" id="internRehireFlag"><option>否</option><option>是</option></select><button type="button" class="btn btn-default btn-mini" id="internRehireDetectBtn" onclick="simulateInternRehireHit()">识别重聘</button></div></div>
           <div class="form-item"><div class="form-label">原工号</div><input class="form-input disabled" id="internOldEmpNo" placeholder="重聘时自动带出" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 最高学历</div><select class="form-select" id="internEducation"><option>本科</option><option>硕士</option><option>大专</option><option>高中/中专</option></select></div>
@@ -631,7 +634,7 @@ tr:hover td{background:#f9fafe}
           <div class="form-item"><div class="form-label">职族</div><input class="form-input disabled" value="职能族" disabled></div>
           <div class="form-item"><div class="form-label">职类</div><input class="form-input disabled" value="人力资源类" disabled></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 领色</div><select class="form-select"><option>白领</option><option>蓝领</option><option>灰领</option></select></div>
-          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" type="date"></div>
+          <div class="form-item"><div class="form-label"><span class="required">*</span> 计划入职日期</div><input class="form-input" id="internPlanEntryDate" type="date" onchange="syncInternContractStartFromPlan()"></div>
           <div class="form-item"><div class="form-label"><span class="required">*</span> 用工形式</div><input class="form-input disabled" value="实习生" disabled></div>
           <div class="form-item intern-overseas-only" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型一级</div><select class="form-select"><option>职能</option><option>营销</option><option>操作</option></select></div>
           <div class="form-item intern-overseas-only" style="display:none;"><div class="form-label"><span class="required">*</span> 员工类型二级</div><select class="form-select"><option>人力资源</option><option>销售</option><option>仓储操作</option></select></div>
@@ -649,8 +652,8 @@ tr:hover td{background:#f9fafe}
           <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同主体</div><select class="form-select"><option value="">请选择</option><option>ZT</option><option>ZT Logistics</option></select></div>
           <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 期限类型</div><select class="form-select" id="internTermType" onchange="toggleInternTermFields()"><option value="">请选择</option><option>固定期限</option><option>无固定期限</option><option>以完成一定任务为期限</option></select></div>
           <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同开始日期</div><input class="form-input" id="internContractStart" type="date" onchange="calcInternContractEnd()"></div>
-          <div class="form-item intern-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="internContractMonths" type="number" min="1" placeholder="请输入正整数" onchange="calcInternContractEnd()"></div>
-          <div class="form-item intern-contract-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="internContractEnd" type="date"></div>
+          <div class="form-item intern-contract-month-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同期限（月）</div><input class="form-input" id="internContractMonths" type="number" min="1" placeholder="固定期限时填写正整数" onchange="calcInternContractEnd()"></div>
+          <div class="form-item intern-contract-field intern-contract-end-field" style="display:none;"><div class="form-label"><span class="required">*</span> 合同结束日期</div><input class="form-input" id="internContractEnd" type="date"></div>
         </div>
       </div>
 
@@ -749,10 +752,11 @@ tr:hover td{background:#f9fafe}
 var offerModalRules={
   工作地区:'<div class="rule-section"><div class="rule-title">工作地区</div><div class="rule-text">取 DW 工作地区。</div></div>',
   个人邮箱:'<div class="rule-section"><div class="rule-title">个人邮箱</div><div class="rule-text">需要进行邮箱格式校验。</div></div>',
-  手机号码:'<div class="rule-section"><div class="rule-title">手机号码</div><div class="rule-step">1. 工作地区=中国大陆时必填。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时非必填。</div><div class="rule-step">3. 使用手机号码控件，支持填写区号。</div></div>',
-  证件类型:'<div class="rule-section"><div class="rule-title">证件类型</div><div class="rule-text">国内必填，海外非必填。</div></div>',
+  手机号码:'<div class="rule-section"><div class="rule-title">手机号码</div><div class="rule-step">1. 工作地区=中国大陆时必填。</div><div class="rule-step">2. 工作地区=中国港澳台/其他国家和地区时非必填。</div><div class="rule-step">3. 使用手机号码控件，支持填写区号。</div><div class="rule-step">4. 给到下游格式为：+区号xxxx，例如 +86138xxxx8888。</div></div>',
+  证件类型:'<div class="rule-section"><div class="rule-title">证件类型</div><div class="rule-text">必填。</div></div>',
   证件号码:'<div class="rule-section"><div class="rule-title">证件号码</div><div class="rule-step">1. 选择证件类型后处于可填写状态。</div><div class="rule-step">2. 国内必填，并按证件类型校验证件号码格式。</div></div>',
-  证件到期日:'<div class="rule-section"><div class="rule-title">证件到期日</div><div class="rule-text">国内必填，海外非必填。</div></div>',
+  是否长期证件:'<div class="rule-section"><div class="rule-title">是否长期证件</div><div class="rule-text">必填。</div></div>',
+  证件到期日:'<div class="rule-section"><div class="rule-title">证件到期日</div><div class="rule-text">当是否长期证件=否时展示且必填；是否长期证件=是时清空并隐藏证件到期日。</div></div>',
   是否重聘入职:'<div class="rule-section"><div class="rule-title">是否重聘入职</div><div class="rule-step">1. 国内根据姓名 + 证件/手机/邮箱识别离职人员记录，优先级为证件、手机号码、邮箱。</div><div class="rule-step">2. 命中后弹窗二次确认。</div><div class="rule-step">3. 确认为重聘后字段置为“是”且不可编辑，并带出原工号、最高学历、籍贯、性别。</div><div class="rule-step">4. 海外由用户手动填写。</div></div>',
   原工号:'<div class="rule-section"><div class="rule-title">原工号</div><div class="rule-text">当是否重聘入职=是时必填；国内确认重聘后带出最近一段任职工号且不可编辑，海外手动填写。</div></div>',
   最高学历:'<div class="rule-section"><div class="rule-title">最高学历</div><div class="rule-text">重聘自动带出且可编辑。</div></div>',
@@ -785,14 +789,14 @@ var offerModalRules={
   员工类型二级:'<div class="rule-section"><div class="rule-title">员工类型二级</div><div class="rule-text">海外员工展示且必填，根据员工类型一级过滤。</div></div>',
   是否有试用期:'<div class="rule-section"><div class="rule-title">是否有试用期</div><div class="rule-text">单选且必填。</div></div>',
   开始日期:'<div class="rule-section"><div class="rule-title">开始日期</div><div class="rule-text">当是否有试用期=是时展示且必填；默认值=计划入职日期，可编辑。</div></div>',
-  '试用期（月）':'<div class="rule-section"><div class="rule-title">试用期（月）</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 国内：填写正整数。</div><div class="rule-step">3. 海外：支持填写 1 位小数。</div></div>',
-  试用期结束日期:'<div class="rule-section"><div class="rule-title">试用期结束日期</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 国内默认值=开始日期 + 试用期月数 - 1天。</div><div class="rule-step">3. 海外若试用期月数为小数，按照 30 天/月换算。</div><div class="rule-step">4. 国内只读，海外可编辑；海外先填写结束日期时，反算试用期（月）。</div></div>',
+  '试用期（月）':'<div class="rule-section"><div class="rule-title">试用期（月）</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 国内：填写正整数，默认值=6，支持编辑。</div><div class="rule-step">3. 海外：支持填写 1 位小数。</div></div>',
+  试用期结束日期:'<div class="rule-section"><div class="rule-title">试用期结束日期</div><div class="rule-step">1. 当是否有试用期=是时展示且必填。</div><div class="rule-step">2. 默认值=开始日期 + 试用期月数 - 1天。</div><div class="rule-step">3. 整数月按自然月计算；小数月的小数部分按 30 天/月折算，例如 1.5 月 = 1 个自然月 + 15 天。</div><div class="rule-step">4. 国内只读，海外可编辑；海外先填写结束日期时，反算试用期（月）。</div></div>',
   合同类型:'<div class="rule-section"><div class="rule-title">合同类型</div><div class="rule-text">单选且必填。</div></div>',
   合同主体:'<div class="rule-section"><div class="rule-title">合同主体</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
-  期限类型:'<div class="rule-section"><div class="rule-title">期限类型</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
-  合同开始日期:'<div class="rule-section"><div class="rule-title">合同开始日期</div><div class="rule-text">当合同类型不等于“无”时展示且必填。</div></div>',
-  '合同期限（月）':'<div class="rule-section"><div class="rule-title">合同期限（月）</div><div class="rule-text">当期限类型=固定期限或以完成一定任务为期限时展示且必填，填写正整数。</div></div>',
-  合同结束日期:'<div class="rule-section"><div class="rule-title">合同结束日期</div><div class="rule-step">1. 当合同类型不等于“无”时展示且必填。</div><div class="rule-step">2. 当期限类型=无固定期限时，默认值=9999-12-31。</div><div class="rule-step">3. 当期限类型=固定期限或以完成一定任务为期限时，默认值=合同开始日期 + 合同期限（月） - 1天，可编辑。</div></div>',
+  期限类型:'<div class="rule-section"><div class="rule-title">期限类型</div><div class="rule-text">当合同类型≠无时展示且必填；当合同类型=无时隐藏并清空。</div></div>',
+  合同开始日期:'<div class="rule-section"><div class="rule-title">合同开始日期</div><div class="rule-text">当合同类型≠无时展示且必填；默认=计划入职日期，可编辑；当合同类型=无时隐藏并清空。</div></div>',
+  '合同期限（月）':'<div class="rule-section"><div class="rule-title">合同期限（月）</div><div class="rule-text">当期限类型=固定期限时展示且必填，填写正整数；当期限类型=无固定期限或以完成一定任务为期限时隐藏并清空。</div></div>',
+  合同结束日期:'<div class="rule-section"><div class="rule-title">合同结束日期</div><div class="rule-step">1. 固定期限：展示且必填，默认值=合同开始日期 + 合同期限（月） - 1天，可编辑。</div><div class="rule-step">2. 无固定期限：展示，默认值=9999-12-31。</div><div class="rule-step">3. 以完成一定任务为期限：隐藏并清空。</div><div class="rule-step">4. 合同类型从非“无”切换为“无”时，期限类型、合同开始日期、合同期限（月）、合同结束日期隐藏并清空。</div></div>',
   工作城市:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">2. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
   办公地点:'<div class="rule-section"><div class="rule-title">办公地点</div><div class="rule-text">字典：办公地址；单选且必填。</div></div>',
   报到地点:'<div class="rule-section"><div class="rule-title">报到地点</div><div class="rule-text">字典：办公地址。</div></div>',
@@ -1075,13 +1079,36 @@ function toggleInternOverseasFields(){
 function toggleInternContractFields(){
   var show=document.getElementById('internContractType').value!=='无'&&document.getElementById('internContractType').value!=='';
   document.querySelectorAll('#internOfferModal .intern-contract-field').forEach(function(el){el.style.display=show?'':'none'});
-  if(!show)document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display='none'});
+  if(!show){
+    document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display='none'});
+    document.querySelectorAll('#internOfferModal .intern-contract-end-field').forEach(function(el){el.style.display='none'});
+    ['internTermType','internContractStart','internContractMonths','internContractEnd'].forEach(clearFieldValue);
+    return;
+  }
+  var start=document.getElementById('internContractStart');
+  var plan=document.getElementById('internPlanEntryDate');
+  if(start&&plan&&plan.value&&!start.value){
+    start.value=plan.value;
+  }
   toggleInternTermFields();
+}
+function syncInternContractStartFromPlan(){
+  var plan=document.getElementById('internPlanEntryDate');
+  var start=document.getElementById('internContractStart');
+  var contractType=document.getElementById('internContractType');
+  if(plan&&start&&contractType&&contractType.value&&contractType.value!=='无'&&!start.value){
+    start.value=plan.value;
+    calcInternContractEnd();
+  }
 }
 function toggleInternTermFields(){
   var v=document.getElementById('internTermType')&&document.getElementById('internTermType').value;
-  var show=v==='固定期限'||v==='以完成一定任务为期限';
-  document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display=show?'':'none'});
+  var showMonth=v==='固定期限';
+  var showEnd=v==='固定期限'||v==='无固定期限';
+  document.querySelectorAll('#internOfferModal .intern-contract-month-field').forEach(function(el){el.style.display=showMonth?'':'none'});
+  document.querySelectorAll('#internOfferModal .intern-contract-end-field').forEach(function(el){el.style.display=showEnd?'':'none'});
+  if(!showMonth)clearFieldValue('internContractMonths');
+  if(!showEnd)clearFieldValue('internContractEnd');
   calcInternContractEnd();
 }
 function calcInternContractEnd(){
@@ -1126,6 +1153,9 @@ function toggleOfferOverseasFields(){
 function toggleOfferProbationFields(){
   var show=document.getElementById('offerProbationFlag').value==='是';
   document.querySelectorAll('#offerModal .offer-probation-field').forEach(function(el){el.style.display=show?'':'none'});
+  var isOverseas=document.getElementById('offerOverseasTab')&&document.getElementById('offerOverseasTab').classList.contains('active');
+  var months=document.getElementById('offerProbationMonths');
+  if(show&&!isOverseas&&months&&!months.value)months.value='6';
 }
 function calcOfferProbationEnd(){
   var start=document.getElementById('offerProbationStart');
@@ -1159,13 +1189,36 @@ function calcOfferProbationMonths(){
 function toggleOfferContractFields(){
   var show=document.getElementById('offerContractType').value!=='无'&&document.getElementById('offerContractType').value!=='';
   document.querySelectorAll('#offerModal .offer-contract-field').forEach(function(el){el.style.display=show?'':'none'});
-  if(!show)document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display='none'});
+  if(!show){
+    document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display='none'});
+    document.querySelectorAll('#offerModal .offer-contract-end-field').forEach(function(el){el.style.display='none'});
+    ['offerTermType','offerContractStart','offerContractMonths','offerContractEnd'].forEach(clearFieldValue);
+    return;
+  }
+  var start=document.getElementById('offerContractStart');
+  var plan=document.getElementById('offerPlanEntryDate');
+  if(start&&plan&&plan.value&&!start.value){
+    start.value=plan.value;
+  }
   toggleOfferTermFields();
+}
+function syncOfferContractStartFromPlan(){
+  var plan=document.getElementById('offerPlanEntryDate');
+  var start=document.getElementById('offerContractStart');
+  var contractType=document.getElementById('offerContractType');
+  if(plan&&start&&contractType&&contractType.value&&contractType.value!=='无'&&!start.value){
+    start.value=plan.value;
+    calcOfferContractEnd();
+  }
 }
 function toggleOfferTermFields(){
   var v=document.getElementById('offerTermType')&&document.getElementById('offerTermType').value;
-  var show=v==='固定期限'||v==='以完成一定任务为期限';
-  document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display=show?'':'none'});
+  var showMonth=v==='固定期限';
+  var showEnd=v==='固定期限'||v==='无固定期限';
+  document.querySelectorAll('#offerModal .offer-contract-month-field').forEach(function(el){el.style.display=showMonth?'':'none'});
+  document.querySelectorAll('#offerModal .offer-contract-end-field').forEach(function(el){el.style.display=showEnd?'':'none'});
+  if(!showMonth)clearFieldValue('offerContractMonths');
+  if(!showEnd)clearFieldValue('offerContractEnd');
   calcOfferContractEnd();
 }
 function calcOfferContractEnd(){
@@ -1199,6 +1252,32 @@ function setRequired(labelId,required){
   }
   if(!required&&mark)mark.remove();
 }
+function clearFieldValue(id){
+  var el=document.getElementById(id);
+  if(el)el.value='';
+}
+function toggleOfferCertExpiry(){
+  var flag=document.getElementById('offerLongCertFlag');
+  var field=document.getElementById('offerCertExpiryField');
+  if(!flag||!field)return;
+  var show=flag.value==='否';
+  field.style.display=show?'':'none';
+  if(!show){
+    var input=field.querySelector('input');
+    if(input)input.value='';
+  }
+}
+function toggleInternCertExpiry(){
+  var flag=document.getElementById('internLongCertFlag');
+  var field=document.getElementById('internCertExpiryField');
+  if(!flag||!field)return;
+  var show=flag.value==='否';
+  field.style.display=show?'':'none';
+  if(!show){
+    var input=field.querySelector('input');
+    if(input)input.value='';
+  }
+}
 function switchOfferScope(scope){
   var isOverseas=scope==='overseas';
   document.getElementById('offerDomesticTab').classList.toggle('active',!isOverseas);
@@ -1210,14 +1289,13 @@ function switchOfferScope(scope){
   workRegion.value=isOverseas?'中国港澳台':'中国大陆';
   workRegion.disabled=!isOverseas;
   setRequired('offerPhoneLabel',!isOverseas);
-  setRequired('offerCertTypeLabel',!isOverseas);
   setRequired('offerCertNoLabel',!isOverseas);
-  setRequired('offerCertExpiryLabel',!isOverseas);
   var probationMonths=document.getElementById('offerProbationMonths');
   var probationEnd=document.getElementById('offerProbationEnd');
   if(probationMonths){
     probationMonths.step=isOverseas?'0.1':'1';
     probationMonths.placeholder=isOverseas?'支持 1 位小数':'请输入正整数';
+    if(!isOverseas&&!probationMonths.value)probationMonths.value='6';
   }
   if(probationEnd){
     probationEnd.readOnly=!isOverseas;
@@ -1256,7 +1334,6 @@ function switchInternOfferScope(scope){
   workRegion.value=isOverseas?'中国港澳台':'中国大陆';
   workRegion.disabled=!isOverseas;
   setRequired('internPhoneLabel',!isOverseas);
-  setRequired('internCertTypeLabel',!isOverseas);
   setRequired('internCertNoLabel',!isOverseas);
   var rehire=document.getElementById('internRehireFlag');
   var oldNo=document.getElementById('internOldEmpNo');

@@ -421,10 +421,11 @@ tr:hover td{background:#f9fafe}
         <div class="form-section-body">
         <div class="form-grid">
           <div class="form-item">
-            <div class="form-label"><span class="required">*</span> 雇佣关系</div>
+            <div class="form-label"><span class="required">*</span> 用工形式</div>
             <select class="form-select" id="empRelation" onchange="onEmpRelationChange()">
               <option value="">请选择</option>
               <option value="正式员工">正式员工</option>
+              <option value="管培生">管培生</option>
               <option value="实习生">实习生</option>
             </select>
           </div>
@@ -447,6 +448,10 @@ tr:hover td{background:#f9fafe}
             <div class="form-label">部门全称</div>
             <input class="form-input disabled" id="deptValue" disabled placeholder="选择职位后自动带出">
           </div>
+          <div class="form-item" id="levelField">
+            <div class="form-label">编制职级</div>
+            <input class="form-input disabled" id="levelValue" disabled placeholder="选择职位后自动带出">
+          </div>
           <div class="form-item" id="overseasField">
             <div class="form-label">是否海外编制</div>
             <input class="form-input disabled" id="overseasValue" disabled placeholder="选择职位后自动带出">
@@ -455,7 +460,7 @@ tr:hover td{background:#f9fafe}
         </div>
       </div>
 
-      <!-- 编制信息（正式员工展示） -->
+      <!-- 编制信息（正式员工/管培生展示） -->
       <div class="form-section" id="staffingSection" style="display:none;">
         <div class="form-section-title">编制信息</div>
         <div class="form-section-body">
@@ -509,7 +514,7 @@ tr:hover td{background:#f9fafe}
             </select>
           </div>
           <div class="form-item">
-            <div class="form-label"><span class="required">*</span> 需求人数 <span class="tip">正式员工：需求人数≤编制数</span></div>
+            <div class="form-label"><span class="required">*</span> 需求人数 <span class="tip">正式员工/管培生：需求人数≤编制数</span></div>
             <input class="form-input" type="number" placeholder="请输入" min="1">
           </div>
           <div class="form-item">
@@ -599,14 +604,14 @@ document.addEventListener('click',function(e){
 });
 
 var demandRules={
-  雇佣关系:'<div class="rule-section"><div class="rule-title">雇佣关系</div><div class="rule-text">字典：雇佣关系。单选且必填。</div></div>',
-  职位:'<div class="rule-section"><div class="rule-title">职位</div><div class="rule-text">正式员工选择生效的编制分组；实习生选择启用的职位；选择左树右表的职位。</div></div>',
+  用工形式:'<div class="rule-section"><div class="rule-title">用工形式</div><div class="rule-text">字典。单选且必填。</div></div>',
+  职位:'<div class="rule-section"><div class="rule-title">职位</div><div class="rule-text">正式员工/管培生选择生效的编制分组；实习生选择启用的职位；选择左树右表的职位。</div></div>',
   编制ABC分类:'<div class="rule-section"><div class="rule-title">编制ABC分类</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
-  部门全称:'<div class="rule-section"><div class="rule-title">部门全称</div><div class="rule-text">置灰；正式员工根据编制信息自动带出；实习生根据职位带出。</div></div>',
+  部门全称:'<div class="rule-section"><div class="rule-title">部门全称</div><div class="rule-text">置灰；正式员工/管培生根据编制信息自动带出；实习生根据职位带出。</div></div>',
   编制职级:'<div class="rule-section"><div class="rule-title">编制职级</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
   是否海外编制:'<div class="rule-section"><div class="rule-title">是否海外编制</div><div class="rule-text">置灰，根据编制信息自动带出；实习生不展示。</div></div>',
-  需求职级:'<div class="rule-section"><div class="rule-title">需求职级</div><div class="rule-text">实习生根据职位最低/最高职级选择；正式员工要求职位最低职级 ≤ 需求职级 ≤ 编制职级。</div></div>',
-  需求人数:'<div class="rule-section"><div class="rule-title">需求人数</div><div class="rule-step">1. 正整数。</div><div class="rule-step">2. 正式员工：需求人数 ≤ 编制数。</div><div class="rule-step">3. 填写后即时校验，不通过提示：该编制下可用空余编制数为%数量%，请调整需求人数。</div></div>',
+  需求职级:'<div class="rule-section"><div class="rule-title">需求职级</div><div class="rule-text">实习生：职位最低职级 ≤ 需求职级 ≤ 职位最高职级；正式员工/管培生：职位最低职级 ≤ 需求职级 ≤ 编制职级。</div></div>',
+  需求人数:'<div class="rule-section"><div class="rule-title">需求人数</div><div class="rule-step">1. 正整数。</div><div class="rule-step">2. 实习生不校验编制数。</div><div class="rule-step">3. 正式员工/管培生：需求人数 ≤ 编制数。</div><div class="rule-step">4. 填写后即时校验，不通过提示：该编制下可用空余编制数为%数量%，请调整需求人数。</div></div>',
   需求类型:'<div class="rule-section"><div class="rule-title">需求类型</div><div class="rule-text">字典：新增编制/离职替补/调岗替补。单选且必填。</div></div>',
   替补人员:'<div class="rule-section"><div class="rule-title">替补人员</div><div class="rule-text">当需求类型=离职替补/调岗替补时展示、必填、单选；选择范围为所有在职/离职人员，数据源来自 OEHR。</div></div>',
   工作城市:'<div class="rule-section"><div class="rule-title">工作城市</div><div class="rule-step">1. 字典：工作城市。</div><div class="rule-step">2. 选择中国时必须填写到市级，否则提示：全国：请统一填写至【市】级。</div><div class="rule-step">3. 选择非中国时必须填写到国家地区，否则提示：国外：请统一填写至具体国家。</div></div>',
@@ -652,11 +657,16 @@ function validateDemandCity(){
 
 function onEmpRelationChange(){
   var v=document.getElementById('empRelation').value;
-  var showStaffing=(v==='正式员工');
+  var showStaffing=(v==='正式员工'||v==='管培生');
   document.getElementById('staffingSection').style.display=showStaffing?'':'none';
   document.getElementById('abcField').style.display=showStaffing?'':'none';
+  document.getElementById('levelField').style.display=showStaffing?'':'none';
   document.getElementById('overseasField').style.display=showStaffing?'':'none';
-  if(!showStaffing){document.getElementById('abcValue').value='';document.getElementById('overseasValue').value=''}
+  if(!showStaffing){
+    document.getElementById('abcValue').value='';
+    document.getElementById('levelValue').value='';
+    document.getElementById('overseasValue').value='';
+  }
 }
 
 function onPositionChange(){
@@ -669,6 +679,7 @@ function onPositionChange(){
   var overseas=opt.getAttribute('data-overseas')||'';
   document.getElementById('abcValue').value=abc;
   document.getElementById('deptValue').value=dept;
+  document.getElementById('levelValue').value=level;
   document.getElementById('overseasValue').value=overseas;
   // Fill staffing table
   if(dept){
